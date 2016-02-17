@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -16,11 +17,14 @@ namespace AshlinCustomerQuery.SearchingClasses.Sage
         /* constructor that initialize GetRequest class */
         public SageSearch()
         {
-            string accId = "21896";
-            string loginId = "SITK67428";
-            string password = "67428SITK";
-
-            get = new GetRequest(accId, loginId, password);
+            using (SqlConnection authenticationConnection = new SqlConnection(Properties.Settings.Default.ASCMcs))
+            {
+                SqlCommand getAuthetication = new SqlCommand("SELECT Username, Field3_Value, Password FROM ASCM_Credentials WHERE Source = \'SageAPI\';", authenticationConnection);
+                authenticationConnection.Open();
+                SqlDataReader reader = getAuthetication.ExecuteReader();
+                reader.Read();
+                get = new GetRequest(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+            }
         }
 
         /* return the confidence level of the given customer's informaiton */

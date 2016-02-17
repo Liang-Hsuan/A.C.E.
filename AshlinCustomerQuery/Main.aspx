@@ -133,6 +133,7 @@
         }
         .auto-style96 {
             height: 23px;
+            text-align: center;
         }
     </style>
 </head>
