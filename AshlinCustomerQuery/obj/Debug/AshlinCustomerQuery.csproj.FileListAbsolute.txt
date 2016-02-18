@@ -64,3 +64,36 @@ C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\AshlinCus
 C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\AshlinCustomerQuery\AshlinCustomerQuery\obj\Debug\AshlinCustomerQuery.csprojResolveAssemblyReference.cache
 C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\AshlinCustomerQuery\AshlinCustomerQuery\obj\Debug\AshlinCustomerQuery.dll
 C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\AshlinCustomerQuery\AshlinCustomerQuery\obj\Debug\AshlinCustomerQuery.pdb
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\ApplicationInsights.config
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\csc.exe
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\Microsoft.CodeAnalysis.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\Microsoft.CSharp.Core.targets
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\Microsoft.VisualBasic.Core.targets
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\System.Collections.Immutable.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\System.Reflection.Metadata.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\vbc.exe
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\VBCSCompiler.exe
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\roslyn\VBCSCompiler.exe.config
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\AshlinCustomerQuery.dll.config
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\AshlinCustomerQuery.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\AshlinCustomerQuery.pdb
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.Agent.Intercept.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.DependencyCollector.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.PerfCounterCollector.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.ServerTelemetryChannel.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.Web.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.WindowsServer.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.ApplicationInsights.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.DependencyCollector.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.ServerTelemetryChannel.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.Web.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.AI.WindowsServer.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.ApplicationInsights.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\obj\Debug\AshlinCustomerQuery.csprojResolveAssemblyReference.cache
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\obj\Debug\AshlinCustomerQuery.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerQuery\AshlinCustomerQuery\obj\Debug\AshlinCustomerQuery.pdb

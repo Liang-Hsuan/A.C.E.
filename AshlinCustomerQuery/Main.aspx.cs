@@ -60,18 +60,6 @@ namespace AshlinCustomerQuery
             shortDescriptionTextbox.Text = skuDropdownlist.SelectedValue;
         }
 
-        #region Name Textboxes
-        /* the event for name textbox that change the back color */
-        protected void firstNameTextbox_TextChanged(object sender, EventArgs e)
-        {
-            firstNameTextbox.BackColor = SystemColors.Window;
-        }
-        protected void lastNameTextbox_TextChanged(object sender, EventArgs e)
-        {
-            lastNameTextbox.BackColor = SystemColors.Window;
-        }
-        #endregion
-
         /* the event for date event button click that change the visibility of the calendar */
         protected void dateEventButton_Click(object sender, EventArgs e)
         {
@@ -162,6 +150,8 @@ namespace AshlinCustomerQuery
             cityTextbox.Text = "";
             provinceTextbox.Text = "";
             countryTextbox.Text = "";
+            numberLabel.Text = "";
+            verificationLabel.Visible = false;
 
             // get data from textboxes
             firstName = firstNameTextbox.Text;
@@ -183,22 +173,6 @@ namespace AshlinCustomerQuery
 
                 return;
             }
-
-            // the case the user only put either first name or last name
-            if (firstName != "" && lastName == "")
-            {
-                lastNameTextbox.BackColor = Color.Red;
-                lastNameTextbox.Text = "Please Also Supply Last Name";
-
-                return;
-            }
-            else if (firstName == "" && lastName != "")
-            {
-                firstNameTextbox.BackColor = Color.Red;
-                firstNameTextbox.Text = "Please Also Supply First Name";
-
-                return;
-            }
             #endregion
 
             #region Searching and Adding
@@ -207,18 +181,22 @@ namespace AshlinCustomerQuery
             BPvalues[][] list = new BPvalues[2][];
 
             // search with name
-            if (firstName != "" && lastName != "")
-                list[0] = search.getCustomersDetails(firstName, lastName);
+            if (firstName != "" && lastName != "")      // the case both firstname and lastname are supplied
+                list[0] = search.getCustomerWithName(firstName, lastName, 3);
+            else if (firstName != "" && lastName == "") // the case only firstname is supplied
+                list[0] = search.getCustomerWithName(firstName, null, 1);
+            else if (firstName == "" && lastName != "") // the case only lastname is supplied
+                list[0] = search.getCustomerWithName(null, lastName, 2);
             else
                 list[0] = null;
 
             // search with contact info
             if (company != "" && email != "")           // the case both company and email are supplied
-                list[1] = search.getCustomersDetails(email, company, 3);
+                list[1] = search.getCustomerWithInfo(email, company, 3);
             else if (company != "" && email == "")      // the case only company is supplied
-                list[1] = search.getCustomersDetails(null, company, 2);
+                list[1] = search.getCustomerWithInfo(null, company, 2);
             else if (company == "" && email != "")      // the case only email is supplied
-                list[1] = search.getCustomersDetails(email, null, 1);
+                list[1] = search.getCustomerWithInfo(email, null, 1);
             else
                 list[1] = null;
 

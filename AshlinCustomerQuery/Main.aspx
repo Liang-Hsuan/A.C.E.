@@ -243,7 +243,7 @@
                     <td class="auto-style45">
                         First Name :</td>
                     <td class="auto-style40">
-                        <asp:TextBox ID="firstNameTextbox" runat="server" Width="151px" AutoPostBack="True" OnTextChanged="firstNameTextbox_TextChanged"></asp:TextBox>
+                        <asp:TextBox ID="firstNameTextbox" runat="server" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style41"></td>
                     <td class="auto-style48">Company Name :</td>
@@ -265,7 +265,7 @@
                     <td class="auto-style45">
                         Last Name :</td>
                     <td class="auto-style40">
-                        <asp:TextBox ID="lastNameTextbox" runat="server" Width="151px" AutoPostBack="True" OnTextChanged="lastNameTextbox_TextChanged"></asp:TextBox>
+                        <asp:TextBox ID="lastNameTextbox" runat="server" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style41"></td>
                     <td class="auto-style48"></td>

@@ -28,13 +28,13 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
         }
 
         /* a method that accept name as parameters to return the customer detail */
-        public BPvalues[] getCustomersDetails(string firstName, string lastName)
+        public BPvalues[] getCustomerWithName(string firstName, string lastName, int choice)
         {
             // local field for storing data
             List<BPvalues> list = new List<BPvalues>();
 
             // get all the id that correspond to the name given
-            string[] idSet = get.getCustomerId(firstName, lastName);
+            string[] idSet = get.getCustomerIdWithName(firstName, lastName, choice);
 
             // the case if there is no result
             if (idSet == null)
@@ -52,13 +52,13 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
         }
 
         /* a method that accept email / company parameters to return the customer detail -> [1] email only, [2] company only, [3] both */
-        public BPvalues[] getCustomersDetails(string email, string company, int choice)
+        public BPvalues[] getCustomerWithInfo(string email, string company, int choice)
         {
             // local field for storing data
             List<BPvalues> list = new List<BPvalues>();
 
             // get all the id that correspond to the informaiton given
-            string[] idSet = get.getCustomerId(email, company, choice);
+            string[] idSet = get.getCustomerIdWithInfo(email, company, choice);
 
             // the case if no result
             if (idSet == null)
@@ -116,10 +116,25 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
             }
 
             #region Customer Search
-            /* get the customer id from the given first name and last name */
-            public string[] getCustomerId(string firstName, string lastName)
+            /* get the customer id from the given first name and last name -> [1] first name only, [2] last name only, [3] both */
+            public string[] getCustomerIdWithName(string firstName, string lastName, int choice)
             {
-                string uri = "https://ws-use.brightpearl.com/public-api/ashlintest/contact-service/contact-search?firstName=" + firstName + "&lastName=" + lastName;
+                // generate uri from user's choice
+                string uri;
+                switch (choice)
+                {
+                    case 1:
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlintest/contact-service/contact-search?firstName=" + firstName;
+                        break;
+                    case 2:
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlintest/contact-service/contact-search?lastName=" + lastName;
+                        break;
+                    case 3:
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlintest/contact-service/contact-search?firstName=" + firstName + "&lastName=" + lastName;
+                        break;
+                    default:
+                        return null;
+                }
 
                 // post request to uri
                 request = WebRequest.Create(uri);
@@ -174,7 +189,7 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
             }
 
             /* get the customer id from the given email address and company name -> [1] email only, [2] company only, [3] both */
-            public string[] getCustomerId(string email, string company, int choice)
+            public string[] getCustomerIdWithInfo(string email, string company, int choice)
             {
                 // generate uri from user's choice
                 string uri;
