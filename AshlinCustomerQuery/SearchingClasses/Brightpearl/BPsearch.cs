@@ -75,6 +75,20 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
             return list.ToArray();
         }
 
+        #region ID Return
+        /* return the list of customer id */
+        public string[] getContactId(string firstName, string lastName)
+        {
+            return get.getCustomerIdWithName(firstName, lastName, 3);
+        }
+
+        /* return the product id of the given sku */
+        public string getProductId(string sku)
+        {
+            return get.getProductId(sku);
+        }
+        #endregion
+
         /* a method that replace the space with %20 from the given string */
         private static string replaceSpace(string englishString)
         {
@@ -309,15 +323,19 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
                 #region Data Retrieve
                 // starting putting data to the BPvalues object, initialize a BPvalues object first
                 BPvalues value = new BPvalues();
+                int index;
 
                 // first name get
-                textJSON = textJSON.Substring(textJSON.IndexOf("firstName") + 12);
-                int index = 0;
-                while (textJSON[index] != '"')
+                if (textJSON.Contains("firstName"))
                 {
-                    index++;
+                    textJSON = textJSON.Substring(textJSON.IndexOf("firstName") + 12);
+                    index = 0;
+                    while (textJSON[index] != '"')
+                    {
+                        index++;
+                    }
+                    value.FirstName = textJSON.Substring(0, index);
                 }
-                value.FirstName = textJSON.Substring(0, index);
 
                 // last name get
                 textJSON = textJSON.Substring(textJSON.IndexOf("lastName") + 11);
@@ -376,6 +394,18 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
                     value.Province = textJSON.Substring(0, index);
                 }
 
+                // postal code get
+                if (textJSON.Contains("postalCode"))
+                {
+                    textJSON = textJSON.Substring(textJSON.IndexOf("postalCode") + 13);
+                    index = 0;
+                    while (textJSON[index] != '"')
+                    {
+                        index++;
+                    }
+                    value.PostalCode = textJSON.Substring(0, index);
+                }
+
                 // country get
                 textJSON = textJSON.Substring(textJSON.IndexOf("countryIsoCode") + 17);
                 index = 0;
@@ -429,6 +459,44 @@ namespace AshlinCustomerQuery.SearchingClasses.Brightpearl
                 return value;
             }
             #endregion
+
+            /* get the product id from the given sku */
+            public string getProductId(string sku)
+            {
+                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlintest/product-service/product-search?SKU=" + sku;
+
+                // post request to uri
+                request = WebRequest.Create(uri);
+                request.Headers.Add("brightpearl-app-ref", appRef);
+                request.Headers.Add("brightpearl-account-token", appToken);
+                request.Method = "GET";
+
+                // get the response from the server
+                response = (HttpWebResponse)request.GetResponse();
+
+                // read all the text from JSON response
+                string textJSON = "";
+                using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    textJSON = streamReader.ReadToEnd();
+                }
+
+                // the case there is no product exists
+                if (textJSON[textJSON.IndexOf("resultsReturned") + 17] - '0' < 1)
+                {
+                    return null;
+                }
+
+                // starting getting product id
+                int index = textJSON.LastIndexOf("results") + 11;
+                int length = index;
+                while (Char.IsNumber(textJSON[length]))
+                {
+                    length++;
+                }
+
+                return textJSON.Substring(index, length - index);
+            }
         }
     }
 }

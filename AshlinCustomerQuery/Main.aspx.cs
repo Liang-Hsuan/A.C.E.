@@ -10,29 +10,12 @@ namespace AshlinCustomerQuery
 {
     public partial class Main : System.Web.UI.Page
     {
-        // fields for order and person / company information
-        private string firstName;
-        private string lastName;
-        private string sage;
-        private string asi;
-        private string company;
-        private string phone;
-        private string email;
-        private string sku;
-        private int quantity;
-        private string theme;
-        private DateTime date;
-        private double budget;
-
         // fields for customer searching
         private BPsearch search = new BPsearch();
         private BPvalues[] value;
 
         // supportin flag
         private int current;            // default set to 1
-
-        // field for dropdown list items
-        private List<ListItem> skuList = new List<ListItem>();
 
         /* page load that initialize the dropdown list items */
         protected void Page_Load(object sender, EventArgs e)
@@ -60,6 +43,7 @@ namespace AshlinCustomerQuery
             shortDescriptionTextbox.Text = skuDropdownlist.SelectedValue;
         }
 
+        #region Calendar Event
         /* the event for date event button click that change the visibility of the calendar */
         protected void dateEventButton_Click(object sender, EventArgs e)
         {
@@ -69,36 +53,12 @@ namespace AshlinCustomerQuery
                 Calendar.Visible = false;
         }
 
-        /* a method that add text and value to the drop down list */
-        private void generateDropDownList()
-        {
-            // adding SKUs to the dropdown list
-            skuList.Add(new ListItem(""));
-            using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
-            {
-                SqlCommand command =
-                    new SqlCommand("SELECT SKU_Ashlin, Short_Description FROM master_SKU_Attributes sku " +
-                                   "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
-                                   "WHERE sku.Active = \'True\';", connection);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1)));
-                }
-            }
-
-            skuDropdownlist.DataSource = skuList;
-            skuDropdownlist.DataTextField = "Text";
-            skuDropdownlist.DataValueField = "Value";
-            skuDropdownlist.DataBind();
-        }
-
         /* the event for calendar date selection that show the date time on the textbox */
         protected void Calendar_SelectionChanged(object sender, EventArgs e)
         {
-            dateEventTextbox.Text = Calendar.SelectedDate.ToString();
+            dateEventTextbox.Text = Calendar.SelectedDate.ToString("yyyy-MM-dd");
         }
+        #endregion
 
         #region Radio Buttons
         /* the event for auto and manual radio button clicks */
@@ -115,6 +75,7 @@ namespace AshlinCustomerQuery
                 address2ResultTextbox.Enabled = false;
                 cityTextbox.Enabled = false;
                 provinceTextbox.Enabled = false;
+                postalCodeTextbox.Enabled = false;
                 countryTextbox.Enabled = false;
             }
         }
@@ -131,6 +92,7 @@ namespace AshlinCustomerQuery
                 address2ResultTextbox.Enabled = true;
                 cityTextbox.Enabled = true;
                 provinceTextbox.Enabled = true;
+                postalCodeTextbox.Enabled = false;
                 countryTextbox.Enabled = true;
             }
         }
@@ -154,14 +116,13 @@ namespace AshlinCustomerQuery
             verificationLabel.Visible = false;
 
             // get data from textboxes
-            firstName = firstNameTextbox.Text;
-            lastName = lastNameTextbox.Text;
-            sage = sageTextbox.Text;
-            asi = asiTextbox.Text;
-            company = companyNameTextbox.Text;
-            phone = phoneTextbox.Text;
-            email = emailTextbox.Text;
-            sage = sageTextbox.Text;
+            string firstName = firstNameTextbox.Text;
+            string lastName = lastNameTextbox.Text;
+            string sage = sageTextbox.Text;
+            string asi = asiTextbox.Text;
+            string company = companyNameTextbox.Text;
+            string phone = phoneTextbox.Text;
+            string email = emailTextbox.Text;
 
             #region Error Checking
             // the case if user haven't provide any thing about customer
@@ -267,21 +228,6 @@ namespace AshlinCustomerQuery
             ViewState["HasSearched"] = true;
         }
 
-        /* a supporting method that take a BPvalues object and display the value on the controls */
-        private void showResult(BPvalues display)
-        {
-            firstNameResultTextbox.Text = display.FirstName;
-            lastNameResultTextbox.Text = display.LastName;
-            phoneResultTextbox.Text = display.Phone;
-            emailResultTextbox.Text = display.Email;
-            companyResultTextbox.Text = display.Company;
-            address1ResultTextbox.Text = display.Address1;
-            address2ResultTextbox.Text = display.Address2;
-            cityTextbox.Text = display.City;
-            provinceTextbox.Text = display.Province;
-            countryTextbox.Text = display.Country;
-        }
-
         #region Next and Prev Buttons
         /* next and prev button event that change the page */
         protected void prevButton_Click(object sender, EventArgs e)
@@ -319,6 +265,100 @@ namespace AshlinCustomerQuery
 
             // save current data
             ViewState["Current"] = current;
+        }
+        #endregion
+
+        protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        {
+            // the case if the user first time click quote button -> they need to log in
+            if (Session["HasLogged"] == null)
+            {
+                usernameTextbox.BackColor = SystemColors.Window;
+                passwordTextbox.BackColor = SystemColors.Window;
+
+                popup.Show();
+
+                return;
+            }
+
+            #region Error Checking
+            // cheeck if the user has fill in all the necessary fields for quote posting
+            if (firstNameResultTextbox.Text.Equals("") || lastNameResultTextbox.Text.Equals("") ||
+                address1ResultTextbox.Text.Equals("") ||
+                cityTextbox.Text.Equals("") || provinceTextbox.Text.Equals("") || countryTextbox.Text.Equals("") ||
+                skuDropdownlist.SelectedIndex.Equals(0) ||
+                quantityTextbox.Text.Equals(""))
+            {
+                string script = "<script>alert(\"Please fill in all the necessary fields (*) in order to place the quote\");</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+
+                return;
+            }
+            #endregion
+
+
+        }
+
+        /* the event for login button in the login board */
+        protected void loginButton_Click(object sender, EventArgs e)
+        {
+            // check if the user put the right username and password
+            if (usernameTextbox.Text == "Leon" && passwordTextbox.Text == "24232335")
+            {
+                Session["HasLogged"] = true;
+            }
+            else
+            {
+                // if the user put the wrong credentials show the login borad again and signal them wrong
+                popup.Show();
+                usernameTextbox.BackColor = Color.Red;
+                passwordTextbox.BackColor = Color.Red;
+            }
+        }
+
+        #region Supporting Methods
+        /* a method that add text and value to the drop down list */
+        private void generateDropDownList()
+        {
+            // local field for storing data
+            List<ListItem> skuList = new List<ListItem>();
+
+            // adding SKUs to the dropdown list
+            skuList.Add(new ListItem(""));
+            using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
+            {
+                SqlCommand command =
+                    new SqlCommand("SELECT SKU_Ashlin, Short_Description FROM master_SKU_Attributes sku " +
+                                   "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
+                                   "WHERE sku.Active = \'True\';", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1)));
+                }
+            }
+
+            skuDropdownlist.DataSource = skuList;
+            skuDropdownlist.DataTextField = "Text";
+            skuDropdownlist.DataValueField = "Value";
+            skuDropdownlist.DataBind();
+        }
+
+        /* a supporting method that take a BPvalues object and display the value on the controls */
+        private void showResult(BPvalues display)
+        {
+            firstNameResultTextbox.Text = display.FirstName;
+            lastNameResultTextbox.Text = display.LastName;
+            phoneResultTextbox.Text = display.Phone;
+            emailResultTextbox.Text = display.Email;
+            companyResultTextbox.Text = display.Company;
+            address1ResultTextbox.Text = display.Address1;
+            address2ResultTextbox.Text = display.Address2;
+            cityTextbox.Text = display.City;
+            provinceTextbox.Text = display.Province;
+            postalCodeTextbox.Text = display.PostalCode;
+            countryTextbox.Text = display.Country;
         }
         #endregion
     }
