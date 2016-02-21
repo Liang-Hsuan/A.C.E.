@@ -200,11 +200,11 @@ namespace AshlinCustomerQuery.PostingClasses
             string textJSON;
             if (productId != null)
             {
-                textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + value.Quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + table.Rows[0][7] + "\"},\"rowTax\":{\"value\":\"" + table.Rows[0][9] + "\"}}}";
+                textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + value.Quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + retriever.getPrice(value.SKU, value.Quantity) + "\"},\"rowTax\":{\"value\":\"" + table.Rows[0][9] + "\"}}}";
             }
             else
             {
-                textJSON = "{\"productName\":\"" + retriever.getProductName(value.SKU) + "\",\"quantity\":{\"magnitude\":\"" + value.Quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + table.Rows[0][7] + "\"},\"rowTax\":{\"value\":\"" + table.Rows[0][9] + "\"}}}";
+                textJSON = "{\"productName\":\"" + retriever.getProductName(value.SKU) + "\",\"quantity\":{\"magnitude\":\"" + value.Quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + retriever.getPrice(value.SKU, value.Quantity) + "\"},\"rowTax\":{\"value\":\"" + table.Rows[0][9] + "\"}}}";
             }
 
 
@@ -293,9 +293,9 @@ namespace AshlinCustomerQuery.PostingClasses
             }
 
             /* a method that return the price of given sku and the value field quantity for calculating discount */
-            public double getPrice(string sku)
+            public double getPrice(string sku, int quantity)
             {
-                // retrieve the price of the product
+                // retrieve the price, imprint flag and number of component of the product
                 SqlCommand command = new SqlCommand("SELECT Base_Price, Imprintable, Components FROM master_SKU_Attributes sku " +  
                                                     "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
                                                     "WHERE SKU_Ashlin = \'" + sku + "\';", connection);
@@ -308,7 +308,6 @@ namespace AshlinCustomerQuery.PostingClasses
                 connection.Close();
 
                 // generate all necessary fields for price calculation
-                int quantity = value.Quantity;
                 double[] discount = getDiscount();
                 double msrp = price * discount[9];
                 if (imprint)
@@ -322,8 +321,22 @@ namespace AshlinCustomerQuery.PostingClasses
                 }
 
                 // price calculation
-                if (quantity == 1)
-                    return msrp * discount[0];
+                if (quantity >= 1 && quantity < 6)
+                    return msrp*discount[0];
+                if (quantity > 6 && quantity <= 24)
+                    return msrp*discount[1];
+                if (quantity > 24 && quantity <= 50)
+                    return msrp*discount[2];
+                if (quantity > 50 && quantity <= 100)
+                    return msrp*discount[3];
+                if (quantity > 100 && quantity <= 250)
+                    return msrp*discount[4];
+                if (quantity > 250 && quantity <= 500)
+                    return msrp*discount[5];
+                if (quantity > 500 && quantity <= 1000)
+                    return msrp*discount[6];
+                if (quantity > 1000 && quantity <= 2500)
+                    return msrp*discount[7];
 
                 return msrp * discount[8];
             }
