@@ -103,6 +103,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\ashlinbpg - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ashlinbpg - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ashlinbpg.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinquery - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinquery - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinquery.pubxml" />

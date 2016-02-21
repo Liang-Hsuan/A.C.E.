@@ -92,7 +92,7 @@ namespace AshlinCustomerQuery
                 address2ResultTextbox.Enabled = true;
                 cityTextbox.Enabled = true;
                 provinceTextbox.Enabled = true;
-                postalCodeTextbox.Enabled = false;
+                postalCodeTextbox.Enabled = true;
                 countryTextbox.Enabled = true;
             }
         }

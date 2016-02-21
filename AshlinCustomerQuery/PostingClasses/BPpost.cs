@@ -20,7 +20,10 @@ namespace AshlinCustomerQuery.PostingClasses
 
         // field for getting customer result
         private BPsearch search = new BPsearch();
-        private BPvalues value;
+        private static BPvalues value;
+
+        // field for getting product information
+        private DataRetrieve retriever = new DataRetrieve();
 
         /* second constructor to initialize the web request of app reference and app token */
         public BPpost(BPvalues value)
@@ -37,7 +40,7 @@ namespace AshlinCustomerQuery.PostingClasses
             }
 
             // initialize BPvalues class
-            this.value = value;
+            BPpost.value = value;
         }
 
         /* post new address to API */
@@ -201,7 +204,7 @@ namespace AshlinCustomerQuery.PostingClasses
             }
             else
             {
-                textJSON = "{\"productName\":\"" + table.Rows[0][3] + "\",\"quantity\":{\"magnitude\":\"" + table.Rows[0][6] + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + table.Rows[0][7] + "\"},\"rowTax\":{\"value\":\"" + table.Rows[0][9] + "\"}}}";
+                textJSON = "{\"productName\":\"" + retriever.getProductName(value.SKU) + "\",\"quantity\":{\"magnitude\":\"" + value.Quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + table.Rows[0][7] + "\"},\"rowTax\":{\"value\":\"" + table.Rows[0][9] + "\"}}}";
             }
 
 
@@ -234,56 +237,142 @@ namespace AshlinCustomerQuery.PostingClasses
         } */
 
         /* post reservation to API */
-      /*  public void postReservationRequest(string orderID, string orderRowID)
+        /*  public void postReservationRequest(string orderID, string orderRowID)
+          {
+              // get product id
+              GetRequest get = new GetRequest(appRef, appToken);
+              string productId = get.getProductId(table.Rows[0][2].ToString());
+
+              string uri = "https://ws-use.brightpearl.com/2.0.0/ashlintest/warehouse-service/order/" + orderID + "/reservation/warehouse/2";
+              request = (HttpWebRequest)WebRequest.Create(uri);
+              request.Method = "POST";
+              request.ContentType = "application/json";
+              request.Headers.Add("brightpearl-app-ref", appRef);
+              request.Headers.Add("brightpearl-account-token", appToken);
+
+              // generate JSON file for order row post
+              string textJSON;
+              if (productId != null)
+              {
+                  textJSON = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowID + "\",\"quantity\":\"" + table.Rows[0][6] + "\"}]}";
+              }
+              else
+              {
+                  return;
+              }
+
+              // turn request string into a byte stream
+              byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+
+              // send request
+              using (Stream requestStream = request.GetRequestStream())
+              {
+                  requestStream.Write(postBytes, 0, postBytes.Length);
+              }
+
+              // no need for response, but for some reason we need to get response so that it can uploaded successfully
+              response = (HttpWebResponse)request.GetResponse();
+              using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+              {
+                  streamReader.ReadToEnd();
+              }
+          } */
+
+        /* 
+         * A inner class that retrieve the data from Design database
+         */
+        class DataRetrieve
         {
-            // get product id
-            GetRequest get = new GetRequest(appRef, appToken);
-            string productId = get.getProductId(table.Rows[0][2].ToString());
+            // field that connection to database to retrieve price of the product
+            private SqlConnection connection;
 
-            string uri = "https://ws-use.brightpearl.com/2.0.0/ashlintest/warehouse-service/order/" + orderID + "/reservation/warehouse/2";
-            request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            request.Headers.Add("brightpearl-app-ref", appRef);
-            request.Headers.Add("brightpearl-account-token", appToken);
-
-            // generate JSON file for order row post
-            string textJSON;
-            if (productId != null)
+            /* constructor that initialize connection field */
+            public DataRetrieve()
             {
-                textJSON = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowID + "\",\"quantity\":\"" + table.Rows[0][6] + "\"}]}";
-            }
-            else
-            {
-                return;
+                connection = new SqlConnection(Properties.Settings.Default.Designcs);
             }
 
-            // turn request string into a byte stream
-            byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
-
-            // send request
-            using (Stream requestStream = request.GetRequestStream())
+            /* a method that return the price of given sku and the value field quantity for calculating discount */
+            public double getPrice(string sku)
             {
-                requestStream.Write(postBytes, 0, postBytes.Length);
+                // retrieve the price of the product
+                SqlCommand command = new SqlCommand("SELECT Base_Price, Imprintable, Components FROM master_SKU_Attributes sku " +  
+                                                    "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
+                                                    "WHERE SKU_Ashlin = \'" + sku + "\';", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                double price = Convert.ToDouble(reader.GetValue(0));
+                bool imprint = reader.GetBoolean(1);
+                int components = Convert.ToInt32(reader.GetValue(2));
+                connection.Close();
+
+                // generate all necessary fields for price calculation
+                int quantity = value.Quantity;
+                double[] discount = getDiscount();
+                double msrp = price * discount[9];
+                if (imprint)
+                {
+                    double runCharge = Math.Round(msrp * 0.05) / 0.6 + components - 1;
+                    if (runCharge > 8)
+                        runCharge = 8;
+                    else if (runCharge < 1)
+                        runCharge = 1;
+                    msrp += runCharge;
+                }
+
+                // price calculation
+                if (quantity == 1)
+                    return msrp * discount[0];
+
+                return msrp * discount[8];
             }
 
-            // no need for response, but for some reason we need to get response so that it can uploaded successfully
-            response = (HttpWebResponse)request.GetResponse();
-            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+            /* a method that get the product name of the given sku */
+            public string getProductName(string sku)
             {
-                streamReader.ReadToEnd();
-            }
-        } */
-    }
+                // get the design code of the sku | and the field will be also the product name for return 
+                string design = sku.Substring(0, sku.IndexOf('-'));
 
-    /* 
-     * A class that retrieve the data from Design database
-     */
-    class DataRetrieve
-    {
-        public DataRetrieve()
-        {
-            
+
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SELECT Short_Description FROM master_Design_Attributes WHERE Design_Service_Code = \'" + design + "\';", connection);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+
+                    design = reader.GetString(0);
+                }
+
+                return design;
+            }
+
+            /* a private supporting method that return the discount matrix */
+            private double[] getDiscount()
+            {
+                double[] list = new double[10];
+
+                //  [0] 1 c net standard, [1] 6 c net standard, [2] 24 c net standard, [3] 50 c net standard, [4] 100 net standard, [5] 250 net standard, [6] 500 net standard, [7] 1000 net standard, [8] 2500 net standard
+                SqlCommand command = new SqlCommand("SELECT [1_Net_Standard Delivery], [6_Net_Standard Delivery], [24_Net_Standard Delivery], [50_Net_Standard Delivery], [100_Net_Standard Delivery], [250_Net_Standard Delivery], [500_Net_Standard Delivery], [1000_Net_Standard Delivery], [2500_Net_Standard Delivery] "
+                                                  + "FROM ref_discount_matrix;", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                for (int i = 0; i <= 8; i++)
+                {
+                    list[i] = reader.GetDouble(i);
+                }
+                reader.Close();
+                // [9] multiplier
+                command = new SqlCommand("SELECT [MSRP Multiplier] FROM ref_msrp_multiplier;", connection);
+                reader = command.ExecuteReader();
+                reader.Read();
+                list[9] = reader.GetDouble(0);
+                connection.Close();
+
+                return list;
+            }
         }
     }
 }
