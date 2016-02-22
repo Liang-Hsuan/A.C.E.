@@ -703,7 +703,7 @@
                 </tr>
             </table>
         </asp:Panel>
-        <asp:Panel ID="Panel3" runat="server" Height="210px" Width="369px" style="display: none">
+        <asp:Panel ID="Panel3" runat="server" DefaultButton="loginButton" Height="210px" Width="369px" style="display: none">
             <table class="auto-style107">
                 <tr>
                     <td class="auto-style112"></td>
