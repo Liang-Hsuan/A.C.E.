@@ -358,83 +358,92 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                         textJSON = substringMethod(textJSON, "lastName", 11);
                         value.LastName = getTarget(textJSON);
 
+                        // get the text only for the current contact id
+                        string copy;
+                        if (textJSON.Contains("contactId"))
+                            copy = textJSON.Remove(textJSON.IndexOf("contactId"));
+                        else
+                            copy = textJSON;
+
                         // address 1 get
-                        if (textJSON.Contains("addressLine1"))
+                        if (copy.Contains("addressLine1"))
                         {
-                            textJSON = substringMethod(textJSON, "addressLine1", 15);
-                            value.Address1 = getTarget(textJSON);
+                            copy = substringMethod(copy, "addressLine1", 15);
+                            value.Address1 = getTarget(copy);
                         }
 
                         // address 2 get
-                        if (textJSON.Contains("addressLine2"))
+                        if (copy.Contains("addressLine2"))
                         {
-                            textJSON = substringMethod(textJSON, "addressLine2", 15);
-                            value.Address2 = getTarget(textJSON);
+                            copy = substringMethod(copy, "addressLine2", 15);
+                            value.Address2 = getTarget(copy);
                         }
 
                         // city get
-                        if (textJSON.Contains("addressLine3"))
+                        if (copy.Contains("addressLine3"))
                         {
-                            textJSON = substringMethod(textJSON, "addressLine3", 15);
-                            value.City = getTarget(textJSON);
+                            copy = substringMethod(copy, "addressLine3", 15);
+                            value.City = getTarget(copy);
                         }
 
                         // province get
-                        if (textJSON.Contains("addressLine4"))
+                        if (copy.Contains("addressLine4"))
                         {
-                            textJSON = substringMethod(textJSON, "addressLine4", 15);
-                            value.Province = getTarget(textJSON);
+                            copy = substringMethod(copy, "addressLine4", 15);
+                            value.Province = getTarget(copy);
                         }
 
                         // postal code get
-                        if (textJSON.Contains("postalCode"))
+                        if (copy.Contains("postalCode"))
                         {
-                            textJSON = substringMethod(textJSON, "postalCode", 13);
-                            value.PostalCode = getTarget(textJSON);
+                            copy = substringMethod(copy, "postalCode", 13);
+                            value.PostalCode = getTarget(copy);
                         }
 
                         // country get
-                        if (textJSON.Contains("countryIsoCode"))
+                        if (copy.Contains("countryIsoCode"))
                         {
-                            textJSON = substringMethod(textJSON, "countryIsoCode", 17);
-                            value.Country = getTarget(textJSON);
+                            copy = substringMethod(copy, "countryIsoCode", 17);
+                            value.Country = getTarget(copy);
                         }
 
                         // email get
                         int length;
-                        if (textJSON[textJSON.IndexOf("emails") + 9] != '}')
+                        if (copy[copy.IndexOf("emails") + 9] != '}')
                         {
-                            textJSON = substringMethod(textJSON, "emails", 7);
-                            index = textJSON.IndexOf("email") + 8;
+                            copy = substringMethod(copy, "emails", 7);
+                            index = copy.IndexOf("email") + 8;
                             length = index;
-                            while (textJSON[length] != '"')
+                            while (copy[length] != '"')
                                 length++;
-                            value.Email = textJSON.Substring(index, length - index);
+                            value.Email = copy.Substring(index, length - index);
                         }
 
                         // phone get
-                        if (textJSON[textJSON.IndexOf("telephones") + 13] != '}')
+                        if (copy[copy.IndexOf("telephones") + 13] != '}')
                         {
-                            textJSON = substringMethod(textJSON, "telephones", 11);
-                            index = textJSON.IndexOf("PRI") + 6;
+                            copy = substringMethod(copy, "telephones", 11);
+                            index = copy.IndexOf("PRI") + 6;
                             length = index;
-                            while (textJSON[length] != '"')
+                            while (copy[length] != '"')
                                 length++;
-                            value.Phone = textJSON.Substring(index, length - index);
+                            value.Phone = copy.Substring(index, length - index);
                         }
 
                         // company get
-                        textJSON = substringMethod(textJSON, "organisation", 13);
-                        if (textJSON.Contains("name"))
+                        copy = substringMethod(copy, "organisation", 13);
+                        if (copy.Contains("name"))
                         {
-                            index = textJSON.IndexOf("name") + 7;
+                            index = copy.IndexOf("name") + 7;
                             length = index;
-                            while (textJSON[length] != '"')
+                            while (copy[length] != '"')
                                 length++;
-                            value.Company = textJSON.Substring(index, length - index);
+                            value.Company = copy.Substring(index, length - index);
                         }
                         #endregion
 
+                        // final correction and adding
+                        textJSON = substringMethod(textJSON, "contactId", 10);
                         valueList.Add(value);
                     }
                 }

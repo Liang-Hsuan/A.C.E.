@@ -176,7 +176,7 @@
         }
         .auto-style131 {
             text-align: center;
-            height: 104px;
+            height: 105px;
         }
         .modalBackground {
             background-color: white;
@@ -211,11 +211,11 @@
         }
         .auto-style151 {
             width: 118px;
-            height: 41px;
+            height: 40px;
         }
         .auto-style152 {
             width: 249px;
-            height: 41px;
+            height: 40px;
         }
         .auto-style153 {
             width: 118px;
@@ -231,13 +231,6 @@
             background-color: #F0F0F0;
             font-size: xx-large;
             text-align: center;
-        }
-        .auto-style167 {
-            width: 170px;
-            text-align: right;
-        }
-        .auto-style168 {
-            width: 224px;
         }
         .auto-style170 {
             height: 76px;
@@ -282,11 +275,19 @@
         }
         .auto-style195 {
             width: 274px;
-            height: 23px;
+            height: 22px;
             text-align: right;
         }
         .auto-style196 {
             height: 33px;
+        }
+        .auto-style199 {
+            width: 249px;
+            height: 23px;
+        }
+        .auto-style200 {
+            width: 274px;
+            height: 22px;
         }
     </style>
     <script type="text/javascript">
@@ -842,7 +843,7 @@
                 </table>
                 
             </asp:Panel>
-            <asp:Panel ID="welcomePanel" runat="server" BorderColor="Black" BorderWidth="3px" Height="275px" Width="500px" BackColor="White">
+            <asp:Panel ID="welcomePanel" runat="server" BorderColor="Black" BorderWidth="3px" Height="280px" Width="500px" BackColor="White">
                 <table class="auto-style111">
                     <tr>
                         <td class="auto-style64" colspan="2" style="background-color: #F0F0F0"><strong><span class="auto-style106">Welcome To</span><br class="auto-style106" /> <span class="auto-style106">Ashlin Customer Enquiry Form</span></strong></td>
@@ -871,7 +872,7 @@
                     </tr>
                 </table>
             </asp:Panel>
-            <asp:Panel ID="asiPanel" runat="server" BackColor="White" BorderColor="Black" BorderWidth="3px" Height="275px" Width="500px">
+            <asp:Panel ID="asiPanel" runat="server" BackColor="White" BorderColor="Black" BorderWidth="3px" Height="280px" Width="500px">
                 <table class="auto-style111">
                     <tr>
                         <td colspan="2" class="auto-style132"><strong>Please Enter Your ASI Number</strong></td>
@@ -910,7 +911,7 @@
                     </tr>
                 </table>
             </asp:Panel>
-            <asp:Panel ID="searchPanel" runat="server" DefaultButton="searchButton" BackColor="White" BorderColor="Black" BorderWidth="3px" Height="275px" Width="500px">
+            <asp:Panel ID="searchPanel" runat="server" DefaultButton="searchButton" BackColor="White" BorderColor="Black" BorderWidth="3px" Height="283px" Width="500px">
                 <table class="auto-style111">
                     <tr>
                         <td class="auto-style160" colspan="3"><strong>Please Enter Information
@@ -924,15 +925,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style167">First Name :</td>
-                        <td class="auto-style168">
+                        <td class="auto-style186">First Name :</td>
+                        <td class="auto-style187">
                             <asp:TextBox ID="searchFirstNameTextbox" runat="server" Width="155px"></asp:TextBox>
                         </td>
-                        <td class="auto-style144">&nbsp;</td>
+                        <td class="auto-style199"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style167">Last Name :</td>
-                        <td class="auto-style168">
+                        <td class="auto-style186">Last Name :</td>
+                        <td class="auto-style187">
                             <asp:TextBox ID="searchLastNameTextbox" runat="server" Width="155px"></asp:TextBox>
                         </td>
                         <td class="auto-style144" rowspan="2">
@@ -946,11 +947,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style167">Email :</td>
-                        <td class="auto-style168">
+                        <td class="auto-style186">Email :</td>
+                        <td class="auto-style187">
                             <asp:TextBox ID="searchEmailTextbox" runat="server" Width="155px"></asp:TextBox>
                         </td>
-                        <td class="auto-style144">&nbsp;</td>
+                        <td class="auto-style199"></td>
                     </tr>
                     <tr>
                         <td class="auto-style128" colspan="3">
@@ -962,7 +963,7 @@
                 </table>
                 
             </asp:Panel>
-            <asp:Panel ID="resultPanel" runat="server" Height="316px" Width="550px" BackColor="White" BorderColor="Black" BorderWidth="3px">
+            <asp:Panel ID="resultPanel" runat="server" Height="325px" Width="550px" BackColor="White" BorderColor="Black" BorderWidth="3px">
                 <table class="auto-style174">
                     <tr>
                         <td class="auto-style170" colspan="2"><strong>Customer Search Result</strong></td>
@@ -984,7 +985,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style177">Email :</td>
+                        <td class="auto-style200">Email :</td>
                     </tr>
                     <tr>
                         <td class="auto-style177">
@@ -992,7 +993,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style177">Phone :</td>
+                        <td class="auto-style200">Phone :</td>
                     </tr>
                     <tr>
                         <td class="auto-style177">
