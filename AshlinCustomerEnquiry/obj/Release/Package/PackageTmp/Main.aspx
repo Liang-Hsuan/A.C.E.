@@ -154,13 +154,13 @@
         .auto-style111 {
             width: 500px;
             height: 280px;
-            height: 100%;
         }
         .auto-style123 {
             width: 253px;
         }
         .auto-style125 {
             width: 293px;
+            height: 23px;
         }
         .auto-style126 {
             width: 293px;
@@ -242,8 +242,7 @@
         }
         .auto-style174 {
             width: 550px;
-            height: 325;
-            height: 100%;
+            height: 325px;
         }
         .auto-style177 {
             width: 274px;
@@ -847,14 +846,14 @@
                 </table>
                 
             </asp:Panel>
-            <asp:Panel ID="welcomePanel" runat="server" BorderColor="Black" BorderWidth="3px" Height="280px" Width="500px" BackColor="White">
-                <table class="auto-style111">
+            <asp:Panel ID="welcomePanel" runat="server" Height="280px" Width="500px" BackColor="White">
+                <table class="auto-style111" style="border-style: solid; border-width: 3px">
                     <tr>
                         <td class="auto-style64" colspan="2" style="background-color: #F0F0F0"><strong><span class="auto-style106">Welcome To</span><br class="auto-style106"/> <span class="auto-style106">Ashlin Customer Enquiry Form</span></strong></td>
                     </tr>
                     <tr>
-                        <td class="auto-style125">&nbsp;</td>
-                        <td class="auto-style123">&nbsp;</td>
+                        <td class="auto-style125"></td>
+                        <td class="auto-style127"></td>
                     </tr>
                     <tr>
                         <td class="auto-style126">Do you want to use <strong>Look Up Wizard</strong> ?</td>
@@ -876,8 +875,8 @@
                     </tr>
                 </table>
             </asp:Panel>
-            <asp:Panel ID="asiPanel" runat="server" BackColor="White" BorderColor="Black" BorderWidth="3px" Height="280px" Width="500px">
-                <table class="auto-style111">
+            <asp:Panel ID="asiPanel" runat="server" BackColor="White" Height="280px" Width="500px">
+                <table class="auto-style111" style="border-style: solid; border-width: 3px">
                     <tr>
                         <td colspan="2" class="auto-style132"><strong>Please Enter Your ASI Number</strong></td>
                     </tr>
@@ -915,8 +914,8 @@
                     </tr>
                 </table>
             </asp:Panel>
-            <asp:Panel ID="searchPanel" runat="server" DefaultButton="searchButton" BackColor="White" BorderColor="Black" BorderWidth="3px" Height="280px" Width="500px">
-                <table class="auto-style111">
+            <asp:Panel ID="searchPanel" runat="server" DefaultButton="searchButton" BackColor="White" Height="280px" Width="500px">
+                <table class="auto-style111" style="border-style: solid; border-width: 3px">
                     <tr>
                         <td class="auto-style160" colspan="3"><strong>Please Enter Information
                             <br />
@@ -967,8 +966,8 @@
                 </table>
                 
             </asp:Panel>
-            <asp:Panel ID="resultPanel" runat="server" Height="325px" Width="550px" BackColor="White" BorderColor="Black" BorderWidth="3px">
-                <table class="auto-style174">
+            <asp:Panel ID="resultPanel" runat="server" Height="325px" Width="550px" BackColor="White">
+                <table class="auto-style174" style="border-style: solid; border-width: 3px">
                     <tr>
                         <td class="auto-style170" colspan="2"><strong>Customer Search Result</strong></td>
                     </tr>

@@ -247,17 +247,22 @@ namespace AshlinCustomerEnquiry
         {
             int i = listbox.SelectedIndex;
 
-            firstNameTextbox.Text = value[i].FirstName;
-            lastNameTextbox.Text = value[i].LastName;
-            phoneTextbox.Text = value[i].Phone;
-            emailTextbox.Text = value[i].Email;
-            companyTextbox.Text = value[i].Company;
-            address1Textbox.Text = value[i].Address1;
-            address2Textbox.Text = value[i].Address2;
-            cityTextbox.Text = value[i].City;
-            provinceTextbox.Text = value[i].Province;
-            postalCodeTextbox.Text = value[i].PostalCode;
-            countryTextbox.Text = value[i].Country;
+            if (i >= 0)
+            {
+                firstNameTextbox.Text = value[i].FirstName;
+                lastNameTextbox.Text = value[i].LastName;
+                phoneTextbox.Text = value[i].Phone;
+                emailTextbox.Text = value[i].Email;
+                companyTextbox.Text = value[i].Company;
+                address1Textbox.Text = value[i].Address1;
+                address2Textbox.Text = value[i].Address2;
+                cityTextbox.Text = value[i].City;
+                provinceTextbox.Text = value[i].Province;
+                postalCodeTextbox.Text = value[i].PostalCode;
+                countryTextbox.Text = value[i].Country;
+            }
+            else
+                resultPopup.Show();
         }
 
         /* the event for back button click that goes back to search panel */
