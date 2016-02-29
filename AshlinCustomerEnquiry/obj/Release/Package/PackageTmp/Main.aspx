@@ -5,6 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link rel="shortcut icon" href="image/ashlin.ico" type="image/x-icon" />
     <title>Ashlin Customer Enquiry</title>
     <style type="text/css">
          .auto-style93 {
@@ -155,9 +156,6 @@
             width: 500px;
             height: 280px;
         }
-        .auto-style123 {
-            width: 253px;
-        }
         .auto-style125 {
             width: 293px;
             height: 23px;
@@ -291,6 +289,33 @@
         .auto-style200 {
             width: 274px;
             height: 22px;
+        }
+        .auto-style205 {
+            width: 174px;
+            height: 23px;
+        }
+        .auto-style208 {
+            width: 350px;
+            height: 170px;
+        }
+        .auto-style211 {
+            width: 174px;
+        }
+        .auto-style213 {
+            width: 103px;
+            text-align: right;
+        }
+        .auto-style214 {
+            width: 103px;
+            text-align: right;
+            height: 23px;
+        }
+        .auto-style215 {
+            height: 43px;
+            text-align: center;
+        }
+        .auto-style216 {
+            height: 20px;
         }
     </style>
     <script type="text/javascript">
@@ -602,7 +627,7 @@
                     <td class="auto-style99"></td>
                 </tr>
             </table>
-            <asp:Panel ID="Panel1" runat="server" BackColor="#F0F0F0">
+            <asp:Panel ID="orderPanel" runat="server" BackColor="#F0F0F0">
                 <table class="auto-style5">
                     <tr>
                         <td class="auto-style34">&nbsp;</td>
@@ -812,7 +837,7 @@
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style64" colspan="2" rowspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" TabIndex="54" Width="50px" />
+                            <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" TabIndex="54" Width="50px" OnClick="quoteButton_Click" />
                             <strong><em>Quote</em></strong></td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
@@ -924,7 +949,7 @@
                     <tr>
                         <td class="auto-style196" colspan="2"><strong>Customer Information :</strong></td>
                         <td class="auto-style191">
-                            <asp:Label ID="tooManyResultLabel" runat="server" Font-Size="Medium" ForeColor="Red" Text="Too many results found" Visible="False" Font-Bold="True" TabIndex="7"></asp:Label>
+                            <asp:Label ID="tooManyResultLabel" runat="server" Font-Size="11pt" ForeColor="Red" Text="Too many results found" Visible="False" Font-Bold="True" TabIndex="7"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -1015,6 +1040,38 @@
                     </tr>
                 </table>
             </asp:Panel>
+            <asp:Panel ID="loginPanel" runat="server" DefaultButton="loginButton" Height="170px" Width="350px" BackColor="White">
+                <table class="auto-style208" style="border-style: solid; border-width: 3px">
+                    <tr>
+                        <td colspan="2" style="background-color: #F0F0F0"><strong>Please Login To Continue</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="auto-style216"></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style214">Username :</td>
+                        <td class="auto-style205">
+                            <asp:TextBox ID="usernameTextbox" runat="server" Width="170px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style213">Password :</td>
+                        <td class="auto-style211">
+                            <asp:TextBox ID="passwordTextbox" TextMode="Password" runat="server" Width="170px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style215" colspan="2">
+                            <asp:Button ID="loginCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <asp:Button ID="loginButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Login" Width="60px" OnClick="loginButton_Click" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"  style="background-color: #F0F0F0">&nbsp;</td>
+                    </tr>
+                </table>
+            </asp:Panel>
             <br />
         </div>
         
@@ -1025,6 +1082,8 @@
         <ajax:ModalPopupExtender ID="searchPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="searchPanel" CancelControlID="searchCancelButton"
             BackgroundCssClass="modalBackground"/>
         <ajax:ModalPopupExtender ID="resultPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="resultPanel" CancelControlID="enterManuallyButton"
+            BackgroundCssClass="modalBackground"/>
+        <ajax:ModalPopupExtender ID="loginPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="loginPanel" CancelControlID="loginCancelButton"
             BackgroundCssClass="modalBackground"/>
     </form>
 </body>

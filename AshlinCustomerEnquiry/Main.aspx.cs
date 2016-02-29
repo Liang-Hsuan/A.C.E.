@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Web.UI.WebControls;
 
 namespace AshlinCustomerEnquiry
@@ -320,5 +321,36 @@ namespace AshlinCustomerEnquiry
             resultCompanyTextbox.Text = display.Company;
         }
         #endregion
+
+        protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        {
+            // the case if the user first time click quote button -> they need to log in
+            if (Session["HasLogged"] == null)
+            {
+                usernameTextbox.BackColor = SystemColors.Window;
+                passwordTextbox.BackColor = SystemColors.Window;
+
+                loginPopup.Show();
+
+                return;
+            }
+        }
+
+        /* the event for login button in the login board */
+        protected void loginButton_Click(object sender, EventArgs e)
+        {
+            // check if the user put the right username and password
+            if (usernameTextbox.Text == "Leon" && passwordTextbox.Text == "24232335")
+            {
+                Session["HasLogged"] = true;
+            }
+            else
+            {
+                // if the user put the wrong credentials show the login borad again and signal them wrong
+                loginPopup.Show();
+                usernameTextbox.BackColor = Color.Red;
+                passwordTextbox.BackColor = Color.Red;
+            }
+        }
     }
 }

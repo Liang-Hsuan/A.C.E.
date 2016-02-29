@@ -211,13 +211,13 @@ namespace AshlinCustomerEnquiry {
         protected global::System.Web.UI.WebControls.RadioButton enableRadioButton;
         
         /// <summary>
-        /// Panel1 control.
+        /// orderPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
+        protected global::System.Web.UI.WebControls.Panel orderPanel;
         
         /// <summary>
         /// rushCheckboxList control.
@@ -598,6 +598,51 @@ namespace AshlinCustomerEnquiry {
         protected global::System.Web.UI.WebControls.Button resultBackButton;
         
         /// <summary>
+        /// loginPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel loginPanel;
+        
+        /// <summary>
+        /// usernameTextbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox usernameTextbox;
+        
+        /// <summary>
+        /// passwordTextbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox passwordTextbox;
+        
+        /// <summary>
+        /// loginCancelButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button loginCancelButton;
+        
+        /// <summary>
+        /// loginButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button loginButton;
+        
+        /// <summary>
         /// welcomePopup control.
         /// </summary>
         /// <remarks>
@@ -632,5 +677,14 @@ namespace AshlinCustomerEnquiry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.ModalPopupExtender resultPopup;
+        
+        /// <summary>
+        /// loginPopup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender loginPopup;
     }
 }

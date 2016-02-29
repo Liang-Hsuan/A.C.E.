@@ -97,6 +97,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="image\ashlin.ico" />
     <Content Include="image\quote.png" />
     <Content Include="image\search.png" />
     <Content Include="packages.config" />
