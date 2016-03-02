@@ -1,8 +1,11 @@
-﻿using AshlinCustomerEnquiry.supportingClasses.brightpearl;
+﻿using AshlinCustomerEnquiry.supportingClasses.asi;
+using AshlinCustomerEnquiry.supportingClasses.brightpearl;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Net;
+using System.Net.Mail;
 using System.Web.UI.WebControls;
 
 namespace AshlinCustomerEnquiry
@@ -11,6 +14,9 @@ namespace AshlinCustomerEnquiry
     {
         // field for storing customer data
         private BPvalues[] value;
+
+        // field for ASI 
+        private ASI asi;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,6 +28,10 @@ namespace AshlinCustomerEnquiry
                 rushCheckboxList.Attributes.Add("onclick", "return HandleOnCheckRush()");
                 logoCheckboxList.Attributes.Add("onclick", "return HandleOnCheckLogo()");
 
+                // initialize ASI object and store it
+                asi = new ASI();
+                Session["ASI"] = asi;
+
                 welcomePopup.Show();
             }
             else
@@ -32,6 +42,7 @@ namespace AshlinCustomerEnquiry
                 // restore value
                 if (ViewState["Value"] != null)
                     value = (BPvalues[]) ViewState["Value"];
+                asi = (ASI) Session["ASI"];
             }
         }
 
@@ -122,11 +133,94 @@ namespace AshlinCustomerEnquiry
         }
         #endregion
 
+        #region ASI Panel
+        /* asi next button click that search the company info from the user input asi number */
+        protected void asiNextButton_Click(object sender, EventArgs e)
+        {
+            // reset textbox color
+            asiTextbox.BackColor = SystemColors.Window;
+
+            if (asiTextbox.Text != "")
+            {
+                // get company information from the asi number that user entered
+                BPvalues asiValue = asi.getCompanyInfo(asiTextbox.Text);
+
+                // the case if the asi number does not exist -> return
+                if (asiValue == null)
+                {
+                    asiTextbox.BackColor = Color.Red;
+                    asiPopup.Show();
+
+                    return;
+                }
+
+                // down to business
+                BPconnect search = new BPconnect();
+
+                // search result by company name
+                BPvalues[] value = search.getCustomerWithInfo(null, asiValue.Company, 2);
+
+                #region Error Check
+                // the case if there is no result or there are too many result
+                if (value == null)
+                {
+                    // inform user there is not existing cusomter on the database from the company
+                    string script = "<script>alert(\"There is no customer exist from this company. Please enter information manually\");</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+
+                    // show company info on the form
+                    phoneTextbox.Text = asiValue.Phone;
+                    emailTextbox.Text = asiValue.Email;
+                    companyTextbox.Text = asiValue.Company;
+                    address1Textbox.Text = asiValue.Address1;
+                    address2Textbox.Text = asiValue.Address2;
+                    cityTextbox.Text = asiValue.City;
+                    provinceTextbox.Text = asiValue.Province;
+                    postalCodeTextbox.Text = asiValue.PostalCode;
+                    countryTextbox.Text = asiValue.Country;
+
+                    return;
+                }
+                else if (value[0].FirstName == "-1")
+                {
+                    tooManyResultLabel.Visible = true;
+                    searchPopup.Show();
+
+                    return;
+                }
+                #endregion
+
+                // show all the result 
+                listbox.Items.Clear();
+                foreach (BPvalues result in value)
+                {
+                    ListItem item = new ListItem(result.FirstName + " " + result.LastName);
+                    listbox.Items.Add(item);
+                }
+                showResult(value[0]);
+
+                // show result panel
+                asiPopup.Hide();
+                resultPopup.Show();
+
+                // save viewstate
+                ViewState["Value"] = value;
+            }
+            else
+            {
+                // the case if user did not put anything on the textbox -> signal them
+                asiTextbox.BackColor = Color.Red;
+                asiPopup.Show();
+            }
+        }
+
+        /* the event for asi skip button click that jump to search panel */
         protected void asiSkipButton_Click(object sender, EventArgs e)
         {
             asiPopup.Hide();
             searchPopup.Show();
         }
+        #endregion
 
         #region Search Panel
         /* search button click that search the customer from brightpearl database from the given information */
@@ -147,6 +241,7 @@ namespace AshlinCustomerEnquiry
             {
                 string script = "<script>alert(\"Please provide some information about the customer\");</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+                searchPopup.Show();
 
                 return;
             }
@@ -274,6 +369,89 @@ namespace AshlinCustomerEnquiry
         }
         #endregion
 
+        /* the event for quote button clicks that will call login panel if the user has not logged in and create quote */
+        protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        {
+            // set label to visible
+            newQuoteLabel.Visible = false;
+
+            // the case if the user first time click quote button -> they need to log in
+            if (Session["HasLogged"] == null)
+            {
+                usernameTextbox.BackColor = SystemColors.Window;
+                passwordTextbox.BackColor = SystemColors.Window;
+
+                loginPopup.Show();
+
+                return;
+            }
+
+            // get the order detail
+            string orderDetail = "Customer Information:\n\r" +
+                                 "Name: " + firstNameTextbox.Text + " " + lastNameTextbox.Text + "\nPhone: " + phoneTextbox.Text + "\nEmail: " + emailTextbox.Text + "\nCompany: " + companyTextbox.Text
+                               + "\nAddress1: " + address1Textbox.Text + "\nAddress2: " + address2Textbox.Text + "\nCity: " + cityTextbox.Text + "\nProvince / State: " + provinceTextbox.Text +
+                                 "\nPostal Code: " + postalCodeTextbox.Text + "\nCountry: " + countryTextbox.Text + "\n\n\r" +
+                                 "Order Detail:\n\r" +
+                                 "Rush Order: ";
+            if (rushCheckboxList.SelectedIndex == 0)
+                orderDetail += "Yes\n";
+            else
+                orderDetail += "No\n";
+            orderDetail += "With Logo: ";
+            if (logoCheckboxList.SelectedIndex == 0)
+                orderDetail += "Yes\n";
+            else
+                orderDetail += "No\n";
+            orderDetail += "SKU 1: " + skuDropdownlist1.SelectedItem + "    " + skuDropdownlist1.SelectedValue;
+            if (skuDropdownlist2.SelectedIndex != 0)
+                orderDetail += "\nSKU 2: " + skuDropdownlist2.SelectedItem + "    " + skuDropdownlist2.SelectedValue;
+            if (skuDropdownlist3.SelectedIndex != 0)
+                orderDetail += "\nSKU 3: " + skuDropdownlist3.SelectedItem + "    " + skuDropdownlist3.SelectedValue;
+            orderDetail += "\nInteresting Quantities: ";
+            foreach(ListItem checkbox in quantityCheckboxList.Items)
+            {
+                if (checkbox.Selected)
+                    orderDetail += checkbox.Value + ",";
+            }
+            if (orderDetail[orderDetail.Length - 1] == ',')
+                orderDetail = orderDetail.Remove(orderDetail.Length - 1);
+            orderDetail += "\nDate of Event: " + dateEventTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
+
+            // send message
+            MailMessage mail = new MailMessage();
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+
+            mail.From = new MailAddress("intern1002@ashlinbpg.com");
+            mail.To.Add("intern1002@ashlinbpg.com");
+            mail.Subject = "NEW ORDER QUOTE";
+            mail.Body = orderDetail;
+
+            client.Port = 587;
+            client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
+            client.EnableSsl = true;
+            client.Send(mail);
+
+            // set label to visible to inidcate success
+            newQuoteLabel.Visible = true;
+        }
+
+        /* the event for login button in the login board */
+        protected void loginButton_Click(object sender, EventArgs e)
+        {
+            // check if the user put the right username and password
+            if (usernameTextbox.Text == "Leon" && passwordTextbox.Text == "24232335")
+            {
+                Session["HasLogged"] = true;
+            }
+            else
+            {
+                // if the user put the wrong credentials show the login borad again and signal them wrong
+                loginPopup.Show();
+                usernameTextbox.BackColor = Color.Red;
+                passwordTextbox.BackColor = Color.Red;
+            }
+        }
+
         #region Supporting Methods
         /* a method that add text and value to the drop down list */
         private void generateDropDownList()
@@ -321,36 +499,5 @@ namespace AshlinCustomerEnquiry
             resultCompanyTextbox.Text = display.Company;
         }
         #endregion
-
-        protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
-        {
-            // the case if the user first time click quote button -> they need to log in
-            if (Session["HasLogged"] == null)
-            {
-                usernameTextbox.BackColor = SystemColors.Window;
-                passwordTextbox.BackColor = SystemColors.Window;
-
-                loginPopup.Show();
-
-                return;
-            }
-        }
-
-        /* the event for login button in the login board */
-        protected void loginButton_Click(object sender, EventArgs e)
-        {
-            // check if the user put the right username and password
-            if (usernameTextbox.Text == "Leon" && passwordTextbox.Text == "24232335")
-            {
-                Session["HasLogged"] = true;
-            }
-            else
-            {
-                // if the user put the wrong credentials show the login borad again and signal them wrong
-                loginPopup.Show();
-                usernameTextbox.BackColor = Color.Red;
-                passwordTextbox.BackColor = Color.Red;
-            }
-        }
     }
 }

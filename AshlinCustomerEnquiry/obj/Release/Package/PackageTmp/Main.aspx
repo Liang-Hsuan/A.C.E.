@@ -141,6 +141,7 @@
         .auto-style104 {
             font-size: small;
             height: 23px;
+            width: 121px;
         }
         .auto-style105 {
             height: 23px;
@@ -744,7 +745,7 @@
                         <td class="auto-style40">&nbsp;</td>
                         <td class="auto-style45">Quantity :</td>
                         <td class="auto-style103" colspan="4">
-                            <asp:CheckBoxList ID="quantityCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="19px" RepeatDirection="Horizontal" RepeatLayout="Flow" Width="338px" TabIndex="49">
+                            <asp:CheckBoxList ID="quantityCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="19px" RepeatDirection="Horizontal" RepeatLayout="Flow" Width="350px" TabIndex="49">
                                 <asp:ListItem Selected="True">1</asp:ListItem>
                                 <asp:ListItem>6</asp:ListItem>
                                 <asp:ListItem>24</asp:ListItem>
@@ -824,8 +825,8 @@
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style64">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="auto-style64">&nbsp;</td>
+                        <td class="auto-style64" colspan="2">&nbsp;&nbsp;<asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" Text="New Quote Created !" Visible="False"></asp:Label>
+                            &nbsp;&nbsp;&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
                         <td class="auto-style39">&nbsp;</td>
@@ -900,7 +901,7 @@
                     </tr>
                 </table>
             </asp:Panel>
-            <asp:Panel ID="asiPanel" runat="server" BackColor="White" Height="280px" Width="500px">
+            <asp:Panel ID="asiPanel" runat="server" DefaultButton="asiNextButton" BackColor="White" Height="280px" Width="500px">
                 <table class="auto-style111" style="border-style: solid; border-width: 3px">
                     <tr>
                         <td colspan="2" class="auto-style132"><strong>Please Enter Your ASI Number</strong></td>
@@ -913,7 +914,7 @@
                         <td class="auto-style147"><strong>ASI # :</strong></td>
                         <td class="auto-style150">
                             <asp:TextBox ID="asiTextbox" runat="server" Width="178px" TabIndex="3"></asp:TextBox>
-                            <asp:Button ID="asiNextButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Next" Width="60px" TabIndex="4" />
+                            <asp:Button ID="asiNextButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Next" Width="60px" TabIndex="4" OnClick="asiNextButton_Click" />
                         </td>
                     </tr>
                     <tr>

@@ -104,7 +104,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\ashlinbpg - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinbpg - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ashlinbpg - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinbpg - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinbpg.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -148,6 +150,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="supportingClasses\asi\ASI.cs" />
     <Compile Include="supportingClasses\brightpearl\BPconnect.cs" />
     <Compile Include="supportingClasses\brightpearl\BPvalues.cs" />
   </ItemGroup>
