@@ -77,6 +77,17 @@ namespace AshlinCustomerEnquiry
         {
             dateEventTextbox.Text = calendar.SelectedDate.ToString("yyyy-MM-dd");
         }
+
+        /* set the canlender can only select the day after today */
+        protected void calendar_DayRender(object sender, DayRenderEventArgs e)
+        {
+            DateTime date = DateTime.Today;
+            if (e.Day.Date <= date)
+            {
+                e.Day.IsSelectable = false;
+                e.Cell.ForeColor = Color.Gray;
+            }
+        }
         #endregion
 
         #region Radio Buttons
@@ -178,6 +189,9 @@ namespace AshlinCustomerEnquiry
                     provinceTextbox.Text = asiValue.Province;
                     postalCodeTextbox.Text = asiValue.PostalCode;
                     countryTextbox.Text = asiValue.Country;
+
+                    firstNameTextbox.Text = "";
+                    lastNameTextbox.Text = "";
 
                     return;
                 }

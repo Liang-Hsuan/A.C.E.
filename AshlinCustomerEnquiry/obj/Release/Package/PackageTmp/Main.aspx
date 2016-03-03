@@ -728,7 +728,7 @@
                             <asp:TextBox ID="shortDescriptionTextbox3" runat="server" TabIndex="48" Width="151px" Enabled="False" Height="20px" style="overflow: auto" TextMode="MultiLine"></asp:TextBox>
                         </td>
                         <td colspan="2" rowspan="8">
-                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" OnSelectionChanged="calendar_SelectionChanged" Visible="False" TabIndex="52">
+                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" OnSelectionChanged="calendar_SelectionChanged" Visible="False" TabIndex="52" OnDayRender="calendar_DayRender">
                                 <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
                                 <NextPrevStyle VerticalAlign="Bottom" />
                                 <OtherMonthDayStyle ForeColor="#808080" />
