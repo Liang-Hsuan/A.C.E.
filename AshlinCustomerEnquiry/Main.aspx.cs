@@ -35,7 +35,7 @@ namespace AshlinCustomerEnquiry
 
                 // initialize BPconnect object and store it
                 bp = new BPconnect();
-                Session["BPconnect"] = bp;
+                ViewState["BPconnect"] = bp;
 
                 welcomePopup.Show();
             }
@@ -48,7 +48,7 @@ namespace AshlinCustomerEnquiry
                 if (ViewState["Value"] != null)
                     value = (BPvalues[]) ViewState["Value"];
                 asi = (ASI) Session["ASI"];
-                bp = (BPconnect) Session["BPconnect"];
+                bp = (BPconnect) ViewState["BPconnect"];
             }
         }
 

@@ -419,8 +419,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     uri += list[i] + ',';
 
                 uri = uri.Remove(uri.LastIndexOf(',')) + "?includeOptional=customFields,postalAddresses";
-                Console.WriteLine(uri);
-                Console.ReadLine();
 
                 request = WebRequest.Create(uri);
                 request.Headers.Add("brightpearl-app-ref", appRef);
@@ -673,7 +671,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             // fields for credentials
             private string appRef;
             private string appToken;
-
+            
             // field for price calculation
             Price price = new Price();
 
@@ -946,7 +944,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
     public class Price
     {
         // fields for storing discount matrix values
-        double[] list = new double[11];
+        private double[] list = new double[11];
 
         /* constructor that initialize discount matrix list field */
         public Price()
@@ -977,10 +975,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         public double getPrice(string sku, int quantity, bool imprint, bool rush)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
-            double msrp = list[9] * getPrice(sku);
+            double msrp = list[10] * getPrice(sku);
 
             if (imprint)
             {
+                // the case if it is imprinted
                 // calculate run charge
                 double runcharge = Math.Round(msrp * 0.05) / 0.6;
                 if (runcharge > 8)
@@ -988,7 +987,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 else if (runcharge < 1)
                     runcharge = 1;
 
-                // the case if it is imprinted
                 if (rush)
                 {
                     // the case if it is rush
@@ -1041,22 +1039,22 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 {
                     // the case if it is rush
                     if (quantity < 6)
-                        msrp *= list[0];
-                    if (quantity >= 6 && quantity < 25)
+                        msrp *= list[0] * list[9];
+                    else if (quantity >= 6 && quantity < 25)
                         msrp *= list[1] * list[9];
-                    if (quantity >= 25 && quantity < 50)
+                    else if (quantity >= 25 && quantity < 50)
                         msrp *= list[2] * list[9];
-                    if (quantity >= 50 && quantity < 100)
+                    else if (quantity >= 50 && quantity < 100)
                         msrp *= list[3] * list[9];
-                    if (quantity >= 100 && quantity < 250)
+                    else if (quantity >= 100 && quantity < 250)
                         msrp *= list[4] * list[9];
-                    if (quantity >= 250 && quantity < 500)
+                    else if (quantity >= 250 && quantity < 500)
                         msrp *= list[5] * list[9];
-                    if (quantity >= 500 && quantity < 1000)
+                    else if (quantity >= 500 && quantity < 1000)
                         msrp *= list[6] * list[9];
-                    if (quantity >= 1000 && quantity < 2500)
+                    else if (quantity >= 1000 && quantity < 2500)
                         msrp *= list[7] * list[9];
-                    if (quantity >= 2500)
+                    else 
                         msrp *= list[8] * list[9];
                 }
                 else
@@ -1064,21 +1062,21 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     // the case if it is not rush
                     if (quantity < 6)
                         msrp *= list[0];
-                    if (quantity >= 6 && quantity < 25)
+                    else if (quantity >= 6 && quantity < 25)
                         msrp *= list[1];
-                    if (quantity >= 25 && quantity < 50)
+                    else if (quantity >= 25 && quantity < 50)
                         msrp *= list[2];
-                    if (quantity >= 50 && quantity < 100)
+                    else if (quantity >= 50 && quantity < 100)
                         msrp *= list[3];
-                    if (quantity >= 100 && quantity < 250)
+                    else if (quantity >= 100 && quantity < 250)
                         msrp *= list[4];
-                    if (quantity >= 250 && quantity < 500)
+                    else if (quantity >= 250 && quantity < 500)
                         msrp *= list[5];
-                    if (quantity >= 500 && quantity < 1000)
+                    else if (quantity >= 500 && quantity < 1000)
                         msrp *= list[6];
-                    if (quantity >= 1000 && quantity < 2500)
+                    else if (quantity >= 1000 && quantity < 2500)
                         msrp *= list[7];
-                    if (quantity >= 2500)
+                    else
                         msrp *= list[8];
                 }
             }
