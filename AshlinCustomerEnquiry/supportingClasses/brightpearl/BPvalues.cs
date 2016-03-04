@@ -22,8 +22,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         public string Country { get; set; }
 
         // field for order information
-        public string SKU { get; set; }
-        public int Quantity { get; set; }
+        public string[] SKU { get; set; }
+        public string[] Description { get; set; }
+        public int[] Quantity { get; set; }
+        public bool Logo { get; set; }
+        public bool Rush { get; set; }
 
         /* first constructor with no arguments */
         public BPvalues()
@@ -42,13 +45,16 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Country = "";
 
             // order field
-            SKU = "";
-            Quantity = 0;
+            SKU = new string[0];
+            Description = new string[0];
+            Quantity = new int[0];
+            Logo = true;
+            Rush = false;
         }
 
         /* seconde constructor that accept all fields parameters */
         public BPvalues(string firstName, string lastName, string company, string phone, string email, string address1, string address2, string city, string province, string postalCode, string country,
-                        string sku, int quantity)
+                        string[] sku, string[] description,  int[] quantity, bool logo, bool rush)
         {
             // customer information
             FirstName = firstName;
@@ -65,7 +71,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             // order information
             SKU = sku;
+            Description = description;
             quantity = Quantity;
+            Logo = logo;
+            Rush = rush;
         }
     }
 }

@@ -15,8 +15,9 @@ namespace AshlinCustomerEnquiry
         // field for storing customer data
         private BPvalues[] value;
 
-        // field for ASI 
+        // field for ASI and Brightpearl
         private ASI asi;
+        private BPconnect bp;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,6 +33,10 @@ namespace AshlinCustomerEnquiry
                 asi = new ASI();
                 Session["ASI"] = asi;
 
+                // initialize BPconnect object and store it
+                bp = new BPconnect();
+                Session["BPconnect"] = bp;
+
                 welcomePopup.Show();
             }
             else
@@ -43,6 +48,7 @@ namespace AshlinCustomerEnquiry
                 if (ViewState["Value"] != null)
                     value = (BPvalues[]) ViewState["Value"];
                 asi = (ASI) Session["ASI"];
+                bp = (BPconnect) Session["BPconnect"];
             }
         }
 
@@ -165,11 +171,8 @@ namespace AshlinCustomerEnquiry
                     return;
                 }
 
-                // down to business
-                BPconnect search = new BPconnect();
-
                 // search result by company name
-                BPvalues[] value = search.getCustomerWithInfo(null, asiValue.Company, 2);
+                BPvalues[] value = bp.getCustomerWithInfo(null, asiValue.Company, 2);
 
                 #region Error Check
                 // the case if there is no result or there are too many result
@@ -400,6 +403,7 @@ namespace AshlinCustomerEnquiry
                 return;
             }
 
+            #region Email 
             // get the order detail
             string orderDetail = "Customer Information:\n\r" +
                                  "Name: " + firstNameTextbox.Text + " " + lastNameTextbox.Text + "\nPhone: " + phoneTextbox.Text + "\nEmail: " + emailTextbox.Text + "\nCompany: " + companyTextbox.Text
@@ -444,6 +448,30 @@ namespace AshlinCustomerEnquiry
             client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
             client.EnableSsl = true;
             client.Send(mail);
+            #endregion
+
+            #region Brightpearl
+            // adding sku list
+            Dictionary<string, string> skuList = new Dictionary<string, string>();
+            skuList.Add(skuDropdownlist1.SelectedItem.ToString(), skuDropdownlist1.SelectedValue);
+            if (skuDropdownlist2.SelectedIndex > 0)
+                skuList.Add(skuDropdownlist2.SelectedItem.ToString(), skuDropdownlist2.SelectedValue);
+            if (skuDropdownlist3.SelectedIndex > 0)
+                skuList.Add(skuDropdownlist3.SelectedItem.ToString(), skuDropdownlist3.SelectedValue);
+
+            // adding quantity list
+            List<int> quantityList = new List<int>();
+            foreach (ListItem item in quantityCheckboxList.Items)
+            {
+                if (item.Selected)
+                    quantityList.Add(Convert.ToInt32(item.Value));
+            }
+
+            BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
+                                            postalCodeTextbox.Text, countryTextbox.Text, new List<string>(skuList.Keys).ToArray(), new List<string>(skuList.Values).ToArray(), quantityList.ToArray(), Convert.ToBoolean(logoCheckboxList.SelectedValue), Convert.ToBoolean(rushCheckboxList.SelectedValue));
+
+            bp.postOrder(bpValue);
+            #endregion
 
             // set label to visible to inidcate success
             newQuoteLabel.Visible = true;
