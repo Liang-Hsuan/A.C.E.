@@ -23,7 +23,7 @@ namespace AshlinCustomerEnquiry
         {
             if (!IsPostBack)
             {
-                generateDropDownList();
+                initialization();
 
                 // add function to checkbox list -> only allow one selection
                 rushCheckboxList.Attributes.Add("onclick", "return HandleOnCheckRush()");
@@ -35,7 +35,7 @@ namespace AshlinCustomerEnquiry
 
                 // initialize BPconnect object and store it
                 bp = new BPconnect();
-                ViewState["BPconnect"] = bp;
+                Session["BPconnect"] = bp;
 
                 welcomePopup.Show();
             }
@@ -48,7 +48,7 @@ namespace AshlinCustomerEnquiry
                 if (ViewState["Value"] != null)
                     value = (BPvalues[]) ViewState["Value"];
                 asi = (ASI) Session["ASI"];
-                bp = (BPconnect) ViewState["BPconnect"];
+                bp = (BPconnect) Session["BPconnect"];
             }
         }
 
@@ -386,6 +386,75 @@ namespace AshlinCustomerEnquiry
         }
         #endregion
 
+        #region Update Panel
+        /* update link button clicks that show the update panel */
+        protected void updateLinkButton_Click(object sender, EventArgs e)
+        {
+            // the case if the user first time click quote button -> they need to log in
+            if (Session["HasLogged"] == null)
+            {
+                usernameTextbox.BackColor = SystemColors.Window;
+                passwordTextbox.BackColor = SystemColors.Window;
+
+                loginPopup.Show();
+
+                return;
+            }
+
+            // set textboxes back color to normal
+            newUsernameTextbox.BackColor = SystemColors.Window;
+            newPasswordTextbox.BackColor = SystemColors.Window;
+            enterAgainTextbox.BackColor = SystemColors.Window;
+
+            // show udpate panel for updating credentials
+            updatePopup.Show();
+        }
+
+        /* update button clicks that update the credentials login for the webstie */
+        protected void updateButton_Click(object sender, EventArgs e)
+        {
+            // get user input
+            string username = newUsernameTextbox.Text;
+            string[] password = { newPasswordTextbox.Text, enterAgainTextbox.Text };
+
+            #region Error Check
+            if (username == "")
+            {
+                newUsernameTextbox.BackColor = Color.Red;
+                updatePopup.Show();
+                return;
+            }
+            else if (password[0] == "")
+            {
+                newPasswordTextbox.BackColor = Color.Red;
+                updatePopup.Show();
+                return;
+            }
+            else if (password[1] == "")
+            {
+                enterAgainTextbox.BackColor = Color.Red;
+                updatePopup.Show();
+                return;
+            }
+            else if (password[0] != password[1])
+            {
+                newPasswordTextbox.BackColor = Color.Red;
+                enterAgainTextbox.BackColor = Color.Red;
+                updatePopup.Show();
+                return;
+            }
+            #endregion
+
+            // start updating username and password
+            using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
+            {
+                SqlCommand command = new SqlCommand("UPDATE ASCM_Credentials SET Username = \'" + username + "\', Password = \'" + password[0] + "\' WHERE Source = 'Ashlin Customer Enquiry';", connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+        #endregion
+
         /* the event for quote button clicks that will call login panel if the user has not logged in and create quote */
         protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
         {
@@ -403,51 +472,69 @@ namespace AshlinCustomerEnquiry
                 return;
             }
 
+            #region Error Checking
+            // adding quantity list
+            List<int> quantityList = new List<int>();
+            foreach (ListItem item in quantityCheckboxList.Items)
+            {
+                if (item.Selected)
+                    quantityList.Add(Convert.ToInt32(item.Value));
+            }
+
+            if (firstNameTextbox.Text == "" || lastNameTextbox.Text == "" || address1Textbox.Text == "" || cityTextbox.Text == "" || 
+                provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || skuDropdownlist1.SelectedIndex < 1 || quantityList.Count < 1)
+            {
+                string script = "<script>alert(\"Please provide information on all the necessary fields (*)\");</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+                return;
+            }
+            #endregion
+
             #region Email 
             // get the order detail
-            string orderDetail = "Customer Information:\n\r" +
-                                 "Name: " + firstNameTextbox.Text + " " + lastNameTextbox.Text + "\nPhone: " + phoneTextbox.Text + "\nEmail: " + emailTextbox.Text + "\nCompany: " + companyTextbox.Text
-                               + "\nAddress1: " + address1Textbox.Text + "\nAddress2: " + address2Textbox.Text + "\nCity: " + cityTextbox.Text + "\nProvince / State: " + provinceTextbox.Text +
-                                 "\nPostal Code: " + postalCodeTextbox.Text + "\nCountry: " + countryTextbox.Text + "\n\n\r" +
-                                 "Order Detail:\n\r" +
-                                 "Rush Order: ";
-            if (rushCheckboxList.SelectedIndex == 0)
-                orderDetail += "Yes\n";
-            else
-                orderDetail += "No\n";
-            orderDetail += "With Logo: ";
-            if (logoCheckboxList.SelectedIndex == 0)
-                orderDetail += "Yes\n";
-            else
-                orderDetail += "No\n";
-            orderDetail += "SKU 1: " + skuDropdownlist1.SelectedItem + "    " + skuDropdownlist1.SelectedValue;
-            if (skuDropdownlist2.SelectedIndex != 0)
-                orderDetail += "\nSKU 2: " + skuDropdownlist2.SelectedItem + "    " + skuDropdownlist2.SelectedValue;
-            if (skuDropdownlist3.SelectedIndex != 0)
-                orderDetail += "\nSKU 3: " + skuDropdownlist3.SelectedItem + "    " + skuDropdownlist3.SelectedValue;
-            orderDetail += "\nInteresting Quantities: ";
-            foreach(ListItem checkbox in quantityCheckboxList.Items)
-            {
-                if (checkbox.Selected)
-                    orderDetail += checkbox.Value + ",";
-            }
-            if (orderDetail[orderDetail.Length - 1] == ',')
-                orderDetail = orderDetail.Remove(orderDetail.Length - 1);
-            orderDetail += "\nDate of Event: " + dateEventTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
+             string orderDetail = "Customer Information:\n\r" +
+                                  "Name: " + firstNameTextbox.Text + " " + lastNameTextbox.Text + "\nPhone: " + phoneTextbox.Text + "\nEmail: " + emailTextbox.Text + "\nCompany: " + companyTextbox.Text
+                                + "\nAddress1: " + address1Textbox.Text + "\nAddress2: " + address2Textbox.Text + "\nCity: " + cityTextbox.Text + "\nProvince / State: " + provinceTextbox.Text +
+                                  "\nPostal Code: " + postalCodeTextbox.Text + "\nCountry: " + countryTextbox.Text + "\n\n\r" +
+                                  "Order Detail:\n\r" +
+                                  "Rush Order: ";
+             if (rushCheckboxList.SelectedIndex == 0)
+                 orderDetail += "Yes\n";
+             else
+                 orderDetail += "No\n";
+             orderDetail += "With Logo: ";
+             if (logoCheckboxList.SelectedIndex == 0)
+                 orderDetail += "Yes\n";
+             else
+                 orderDetail += "No\n";
+             orderDetail += "SKU 1: " + skuDropdownlist1.SelectedItem + "    " + skuDropdownlist1.SelectedValue;
+             if (skuDropdownlist2.SelectedIndex != 0)
+                 orderDetail += "\nSKU 2: " + skuDropdownlist2.SelectedItem + "    " + skuDropdownlist2.SelectedValue;
+             if (skuDropdownlist3.SelectedIndex != 0)
+                 orderDetail += "\nSKU 3: " + skuDropdownlist3.SelectedItem + "    " + skuDropdownlist3.SelectedValue;
+             orderDetail += "\nInteresting Quantities: ";
+             foreach(ListItem checkbox in quantityCheckboxList.Items)
+             {
+                 if (checkbox.Selected)
+                     orderDetail += checkbox.Value + ",";
+             }
+             if (orderDetail[orderDetail.Length - 1] == ',')
+                 orderDetail = orderDetail.Remove(orderDetail.Length - 1);
+             orderDetail += "\nDate of Event: " + dateEventTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
 
-            // send message
-            MailMessage mail = new MailMessage();
-            SmtpClient client = new SmtpClient("smtp.gmail.com");
+             // send message
+             MailMessage mail = new MailMessage();
+             SmtpClient client = new SmtpClient("smtp.gmail.com");
 
-            mail.From = new MailAddress("intern1002@ashlinbpg.com");
-            mail.To.Add("intern1002@ashlinbpg.com");
-            mail.Subject = "NEW ORDER QUOTE";
-            mail.Body = orderDetail;
+             mail.From = new MailAddress("intern1002@ashlinbpg.com");
+             mail.To.Add("juanne.kochhar@ashlinbpg.com");
+             mail.Subject = "NEW ORDER QUOTE";
+             mail.Body = orderDetail;
 
-            client.Port = 587;
-            client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
-            client.EnableSsl = true;
-            client.Send(mail);
+             client.Port = 587;
+             client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
+             client.EnableSsl = true;
+             client.Send(mail); 
             #endregion
 
             #region Brightpearl
@@ -459,16 +546,19 @@ namespace AshlinCustomerEnquiry
             if (skuDropdownlist3.SelectedIndex > 0)
                 skuList.Add(skuDropdownlist3.SelectedItem.ToString(), skuDropdownlist3.SelectedValue);
 
-            // adding quantity list
-            List<int> quantityList = new List<int>();
-            foreach (ListItem item in quantityCheckboxList.Items)
-            {
-                if (item.Selected)
-                    quantityList.Add(Convert.ToInt32(item.Value));
-            }
+            // asssign boolean values
+            bool rush; bool logo;
+            if (rushCheckboxList.SelectedIndex != 0 && rushCheckboxList.SelectedIndex != 1)
+                rush = false;
+            else
+                rush = Convert.ToBoolean(rushCheckboxList.SelectedValue);
+            if (logoCheckboxList.SelectedIndex != 0 && logoCheckboxList.SelectedIndex != 1)
+                logo = true;
+            else
+                logo = Convert.ToBoolean(logoCheckboxList.SelectedValue);
 
             BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
-                                            postalCodeTextbox.Text, countryTextbox.Text, new List<string>(skuList.Keys).ToArray(), new List<string>(skuList.Values).ToArray(), quantityList.ToArray(), Convert.ToBoolean(logoCheckboxList.SelectedValue), Convert.ToBoolean(rushCheckboxList.SelectedValue));
+                                            postalCodeTextbox.Text, countryTextbox.Text, new List<string>(skuList.Keys).ToArray(), new List<string>(skuList.Values).ToArray(), quantityList.ToArray(), logo, rush);
 
             bp.postOrder(bpValue);
             #endregion
@@ -480,11 +570,9 @@ namespace AshlinCustomerEnquiry
         /* the event for login button in the login board */
         protected void loginButton_Click(object sender, EventArgs e)
         {
-            // check if the user put the right username and password
-            if (usernameTextbox.Text == "Leon" && passwordTextbox.Text == "24232335")
-            {
+             // check if the user put the right username and password
+            if (usernameTextbox.Text.Equals((string)Application["USERNAME"]) && passwordTextbox.Text.Equals((string)Application["PASSWORD"]))
                 Session["HasLogged"] = true;
-            }
             else
             {
                 // if the user put the wrong credentials show the login borad again and signal them wrong
@@ -496,8 +584,9 @@ namespace AshlinCustomerEnquiry
 
         #region Supporting Methods
         /* a method that add text and value to the drop down list */
-        private void generateDropDownList()
+        private void initialization()
         {
+            #region Drop Down List
             // local field for storing data
             List<ListItem> skuList = new List<ListItem>();
 
@@ -531,6 +620,19 @@ namespace AshlinCustomerEnquiry
             skuDropdownlist3.DataTextField = "Text";
             skuDropdownlist3.DataValueField = "Value";
             skuDropdownlist3.DataBind();
+            #endregion
+
+            // retrieve username and password
+            using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
+            {
+                SqlCommand command = new SqlCommand("SELECT [Username], [Password] FROM ASCM_Credentials WHERE Source = 'Ashlin Customer Enquiry'", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+
+                Application["USERNAME"] = reader.GetString(0);
+                Application["PASSWORD"] = reader.GetString(1);
+            }
         }
 
         /* a supporting method that take a BPvalues object and display the value on the controls */

@@ -72,7 +72,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             // order information
             SKU = sku;
             Description = description;
-            quantity = Quantity;
+            Quantity = quantity;
             Logo = logo;
             Rush = rush;
         }

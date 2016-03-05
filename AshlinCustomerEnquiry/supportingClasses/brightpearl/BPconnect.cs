@@ -18,7 +18,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         private GetRequest get;
         private PostRequest post;
 
-        /* constructor that initialize GetRequest class */
+        /* constructor that initialize authentication for request classes */
         public BPconnect()
         {
             // initialize API authentication
@@ -737,8 +737,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // generate JSON file for contact post
-                string textJSON = "{\"firstName\":\"" + value.FirstName + "\",\"lastName\":\"" + value.LastName + "\",\"postAddressIds\":{\"DEF\":" + addressID + ",\"BIL\":" + addressID + ",\"DEL\":" + addressID + "}," +
-                                  "\"communication\":{\"telephones\":{\"PRI\":\"" + value.Phone + "\"}},\"relationshipToAccount\":{\"isSupplier\": false,\"isStaff\":false,\"isCustomer\":true},\"financialDetails\":{\"priceListId\": 5}}";
+                string textJSON = "{\"firstName\":\"" + value.FirstName + "\",\"lastName\":\"" + value.LastName + "\",\"postAddressIds\":{\"DEF\":" + addressID + ",\"BIL\":" + addressID + ",\"DEL\":" + addressID + "},\"organisation\":{\"name\":\"" + value.Company + "\"}," +
+                                  "\"communication\":{\"emails\":{\"PRI\":{\"email\":\"" + value.Email + "\"}},\"telephones\":{\"PRI\":\"" + value.Phone + "\"}},\"relationshipToAccount\":{\"isSupplier\": false,\"isStaff\":false,\"isCustomer\":true},\"financialDetails\":{\"priceListId\": 5}}";
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
@@ -779,15 +779,29 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-app-ref", appRef);
                 request.Headers.Add("brightpearl-account-token", appToken);
 
+                #region Flags
                 // get channel id from the country of the customer
                 string channelId;
                 if (value.Country.Contains("US"))
-                    channelId = "12";
-                else
                     channelId = "13";
+                else
+                    channelId = "14";
+
+
+                // get price list id depending on rush and logo
+                int priceListId;
+                if (value.Logo && value.Rush)
+                    priceListId = 8;
+                else if (value.Logo && !value.Rush)
+                    priceListId = 5;
+                else if (!value.Logo && value.Rush)
+                    priceListId = 7;
+                else
+                    priceListId = 6;
+                #endregion
 
                 // generate JSON file for order post
-                string textJSON = "{\"orderTypeCode\":\"SO\",\"placeOn\":\"" + DateTime.Today.ToString("yyyy-MM-dd") + "T00:00:00+00:00\",\"orderStatus\":{\"orderStatusId\":3}," +
+                string textJSON = "{\"orderTypeCode\":\"SO\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3}," +
                                   "\"currency\":{\"orderCurrencyCode\":\"CAD\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + channelId + "}}}";
 
 
@@ -805,11 +819,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 {
                     response = (HttpWebResponse)request.GetResponse();
                 }
-                catch    // HTTP response 500
+                catch    // HTTP response 500 or 503
                 {
                     return "Error";    // cannot post order, return error instead
                 }
-
+            
                 string result;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
                 {
@@ -817,7 +831,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
 
                 result = substringMethod(result, ":", 1);
-
                 return getTarget(result);  //return the order ID
             }
 
@@ -844,13 +857,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 bool rush = value.Rush;
                 if (productId != null)
                 {
-                    textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + price.getPrice(sku, quantity, imprint, rush) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
+                    textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + Math.Round(price.getPrice(sku, quantity, imprint, rush), 2) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
                 }
                 else
                 {
-                    textJSON = "{\"productName\":\"" + value.Description[skuIndex] + " "+ sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + price.getPrice(sku, quantity, imprint, rush) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
+                    textJSON = "{\"productName\":\"" + value.Description[skuIndex] + " " + sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + Math.Round(price.getPrice(sku, quantity, imprint, rush), 2) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
                 }
-
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
@@ -868,7 +880,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
                 catch
                 {
-                    return "Error";        // 503 Server Unabailable
+                    return "Error";        // 500 server internal error or 503 Server Unavailable
                 }
                 string result;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
@@ -877,8 +889,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
 
                 result = substringMethod(result, ":", 1);
-
-                return getTarget(result);  //return the order row ID
+                return getTarget(result);   //return the order row ID
             }
 
             /* post reservation request to API and return the message*/
@@ -951,14 +962,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         {
             SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs);
 
-            //  [0] 1 net standard, [1] 6 net standard, [2] 24 net standard, [3] 50 net standard, [4] 100 net standard, [5] 250 net standard, [6] 500 net standard, [7] 1000 net standard, [8] 2500 net standard, [9] rush net
+            // [0] 1 net standard, [1] 6 net standard, [2] 24 net standard, [3] 50 net standard, [4] 100 net standard, [5] 250 net standard, [6] 500 net standard, [7] 1000 net standard, [8] 2500 net standard, [9] rush net
             SqlCommand command = new SqlCommand("SELECT [1_Net_Standard Delivery], [6_Net_Standard Delivery], [24_Net_Standard Delivery], [50_Net_Standard Delivery], [100_Net_Standard Delivery], [250_Net_Standard Delivery], [500_Net_Standard Delivery], [1000_Net_Standard Delivery], [2500_Net_Standard Delivery], [RUSH_Net_25_wks] "
                                               + "FROM ref_discount_matrix;", connection);
 
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            for (int i = 0; i <= 8; i++)
+            for (int i = 0; i <= 9; i++)
             {
                 list[i] = reader.GetDouble(i);
             }
@@ -967,7 +978,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             command = new SqlCommand("SELECT [MSRP Multiplier] FROM ref_msrp_multiplier;", connection);
             reader = command.ExecuteReader();
             reader.Read();
-            list[9] = reader.GetDouble(0);
+            list[10] = reader.GetDouble(0);
             connection.Close();
         }
 
@@ -981,7 +992,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             {
                 // the case if it is imprinted
                 // calculate run charge
-                double runcharge = Math.Round(msrp * 0.05) / 0.6;
+                double runcharge = Math.Round((msrp * 0.05) / 0.6, 2);
                 if (runcharge > 8)
                     runcharge = 8;
                 else if (runcharge < 1)
@@ -1094,6 +1105,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 SqlCommand command = new SqlCommand("SELECT Base_Price FROM master_SKU_Attributes WHERE SKU_Ashlin = \'" + sku + "\';", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
 
                 basePrice = Convert.ToDouble(reader.GetValue(0));
             }

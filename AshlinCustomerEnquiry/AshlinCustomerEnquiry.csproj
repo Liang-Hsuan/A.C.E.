@@ -104,13 +104,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\ashlinbpg - FTP %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\ashlinbpg - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinbpg - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ashlinbpg - Web Deploy %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\ashlinbpg - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\ashlinbpg - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\ashlinbpg.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

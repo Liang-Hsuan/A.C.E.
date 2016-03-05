@@ -156,6 +156,8 @@
         .auto-style111 {
             width: 500px;
             height: 280px;
+            border-style: solid; 
+            border-width: 3px;
         }
         .auto-style125 {
             width: 293px;
@@ -242,6 +244,8 @@
         .auto-style174 {
             width: 550px;
             height: 325px;
+            border-style: solid; 
+            border-width: 3px;
         }
         .auto-style177 {
             width: 274px;
@@ -298,6 +302,8 @@
         .auto-style208 {
             width: 350px;
             height: 170px;
+            border-style: solid; 
+            border-width: 3px;
         }
         .auto-style211 {
             width: 174px;
@@ -317,6 +323,42 @@
         }
         .auto-style216 {
             height: 20px;
+        }
+        .auto-style218 {
+            text-align: right;
+        }
+        .auto-style225 {
+            height: 23px;
+            width: 68%;
+        }
+        .auto-style227 {
+            height: 40px;
+            text-align: center;
+        }
+        .auto-style229 {
+            height: 23px;
+            width: 171px;
+            text-align: left;
+        }
+        .auto-style230 {
+            width: 108px;
+            text-align: right;
+            height: 23px;
+        }
+        .auto-style231 {
+            width: 350px;
+            height: 170px;
+            border-style: solid;
+            border-width: 3px
+        }
+        .auto-style235 {
+            height: 23px;
+            width: 171px;
+        }
+        .auto-style236 {
+            width: 125px;
+            text-align: right;
+            height: 23px;
         }
     </style>
     <script type="text/javascript">
@@ -351,7 +393,7 @@
                 <td class="auto-style34">&nbsp;</td>
                 <td class="auto-style34">&nbsp;</td>
                 <td class="auto-style34" rowspan="3">
-                    <asp:HyperLink ID="logoLink" runat="server" ImageUrl="~/image/AshlinIcon.png" ImageWidth="140px" NavigateUrl="http://www.ashlinbpg.com/retail/" ToolTip="go to Ashlin website" TabIndex="22">go to Ashlin website</asp:HyperLink>
+                    <asp:HyperLink ID="logoLink" runat="server" ImageUrl="~/image/AshlinIcon.png" ImageWidth="140px" NavigateUrl="http://www.ashlinbpg.com/retail/" ToolTip="go to Ashlin website" TabIndex="31">go to Ashlin website</asp:HyperLink>
                 </td>
                 <td class="auto-style34" rowspan="3">&nbsp;</td>
                 <td class="auto-style34" rowspan="3">&nbsp;</td>
@@ -380,10 +422,10 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td colspan="4">Become a Fan:<br />
-                    <asp:HyperLink ID="facebook" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/facebook.png" ImageWidth="20px" NavigateUrl="https://www.facebook.com/ashlinbpg" Width="20px" TabIndex="23">go to Facebook</asp:HyperLink>
-                    &nbsp;&nbsp;<asp:HyperLink ID="twitter" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/twitter.png" ImageWidth="20px" NavigateUrl="https://twitter.com/ashlinbpg" Width="20px" TabIndex="24">go to Twitter</asp:HyperLink>
-                    &nbsp;&nbsp;<asp:HyperLink ID="pinterest" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/pinterest.png" ImageWidth="20px" NavigateUrl="https://www.pinterest.com/ashlinbpg/" Width="20px" TabIndex="25">go to Pinterest</asp:HyperLink>
-                    &nbsp;&nbsp;<asp:HyperLink ID="linkedin" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/linkedin.png" ImageWidth="20px" NavigateUrl="https://www.linkedin.com/company/ashlin-bpg-marketing" Width="20px" TabIndex="26">go to Linkedin</asp:HyperLink>
+                    <asp:HyperLink ID="facebook" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/facebook.png" ImageWidth="20px" NavigateUrl="https://www.facebook.com/ashlinbpg" Width="20px" TabIndex="32">go to Facebook</asp:HyperLink>
+                    &nbsp;&nbsp;<asp:HyperLink ID="twitter" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/twitter.png" ImageWidth="20px" NavigateUrl="https://twitter.com/ashlinbpg" Width="20px" TabIndex="33">go to Twitter</asp:HyperLink>
+                    &nbsp;&nbsp;<asp:HyperLink ID="pinterest" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/pinterest.png" ImageWidth="20px" NavigateUrl="https://www.pinterest.com/ashlinbpg/" Width="20px" TabIndex="34">go to Pinterest</asp:HyperLink>
+                    &nbsp;&nbsp;<asp:HyperLink ID="linkedin" runat="server" Height="20px" ImageHeight="20px" ImageUrl="~/image/linkedin.png" ImageWidth="20px" NavigateUrl="https://www.linkedin.com/company/ashlin-bpg-marketing" Width="20px" TabIndex="35">go to Linkedin</asp:HyperLink>
                 </td>
                 <td class="auto-style35">&nbsp;</td>
                 <td class="auto-style35">&nbsp;</td>
@@ -418,7 +460,7 @@
                     <td class="auto-style38">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style91" rowspan="2">
-                        <asp:ImageButton ID="wizardButton" runat="server" CssClass="wizard" Height="40px" ImageUrl="~/image/wizard.png" ToolTip="use Wizard" Width="33px" TabIndex="32" />
+                        <asp:ImageButton ID="wizardButton" runat="server" CssClass="wizard" Height="40px" ImageUrl="~/image/wizard.png" ToolTip="use Wizard" Width="33px" TabIndex="36" />
                     </td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
@@ -447,12 +489,12 @@
                     <td class="auto-style82">
                         First Name :</td>
                     <td class="auto-style81">
-                        <asp:TextBox ID="firstNameTextbox" runat="server" Enabled="False" TabIndex="27" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="firstNameTextbox" runat="server" Enabled="False" TabIndex="37" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style38">*</td>
                     <td class="auto-style91">Address 1 :</td>
                     <td class="auto-style18" rowspan="2">
-                        <asp:TextBox ID="address1Textbox" runat="server" Enabled="False" Height="40px" style="overflow: auto" TabIndex="33" TextMode="MultiLine" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="address1Textbox" runat="server" Enabled="False" Height="40px" style="overflow: auto" TabIndex="42" TextMode="MultiLine" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style18">*</td>
                     <td class="auto-style18">&nbsp;</td>
@@ -464,7 +506,7 @@
                     <td class="auto-style81">&nbsp;</td>
                     <td class="auto-style82">Last Name:</td>
                     <td class="auto-style81">
-                        <asp:TextBox ID="lastNameTextbox" runat="server" Enabled="False" TabIndex="28" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="lastNameTextbox" runat="server" Enabled="False" TabIndex="38" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style38">*</td>
                     <td class="auto-style91">&nbsp;</td>
@@ -483,7 +525,7 @@
                     <td class="auto-style38">&nbsp;</td>
                     <td class="auto-style91">Address 2 :</td>
                     <td class="auto-style18" rowspan="2">
-                        <asp:TextBox ID="address2Textbox" runat="server" Enabled="False" Height="40px" style="overflow: auto" TabIndex="34" TextMode="MultiLine" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="address2Textbox" runat="server" Enabled="False" Height="40px" style="overflow: auto" TabIndex="43" TextMode="MultiLine" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
@@ -495,7 +537,7 @@
                     <td class="auto-style81">&nbsp;</td>
                     <td class="auto-style82">Phone Number :</td>
                     <td class="auto-style81">
-                        <asp:TextBox ID="phoneTextbox" runat="server" Enabled="False" TabIndex="29" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="phoneTextbox" runat="server" Enabled="False" TabIndex="39" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style38">&nbsp;</td>
                     <td class="auto-style91">&nbsp;</td>
@@ -510,12 +552,12 @@
                     <td class="auto-style81">&nbsp;</td>
                     <td class="auto-style82">Email Address :</td>
                     <td class="auto-style81">
-                        <asp:TextBox ID="emailTextbox" runat="server" Enabled="False" TabIndex="30" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="emailTextbox" runat="server" Enabled="False" TabIndex="40" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style38">&nbsp;</td>
                     <td class="auto-style91">City :</td>
                     <td class="auto-style18">
-                        <asp:TextBox ID="cityTextbox" runat="server" Enabled="False" TabIndex="35" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="cityTextbox" runat="server" Enabled="False" TabIndex="44" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style18">*</td>
                     <td class="auto-style18">&nbsp;</td>
@@ -531,7 +573,7 @@
                     <td class="auto-style38">&nbsp;</td>
                     <td class="auto-style91">Province / State : </td>
                     <td class="auto-style18">
-                        <asp:TextBox ID="provinceTextbox" runat="server" Enabled="False" Width="151px" TabIndex="36"></asp:TextBox>
+                        <asp:TextBox ID="provinceTextbox" runat="server" Enabled="False" Width="151px" TabIndex="45"></asp:TextBox>
                     </td>
                     <td class="auto-style18">*</td>
                     <td class="auto-style18">&nbsp;</td>
@@ -547,7 +589,7 @@
                     <td class="auto-style38">&nbsp;</td>
                     <td class="auto-style91">Postal Code :</td>
                     <td class="auto-style18">
-                        <asp:TextBox ID="postalCodeTextbox" runat="server" Enabled="False" Width="151px" TabIndex="37"></asp:TextBox>
+                        <asp:TextBox ID="postalCodeTextbox" runat="server" Enabled="False" Width="151px" TabIndex="46"></asp:TextBox>
                     </td>
                     <td class="auto-style18">*</td>
                     <td class="auto-style18">&nbsp;</td>
@@ -559,12 +601,12 @@
                     <td class="auto-style81">&nbsp;</td>
                     <td class="auto-style82">Company Name :</td>
                     <td class="auto-style81">
-                        <asp:TextBox ID="companyTextbox" runat="server" Enabled="False" TabIndex="31" Width="151px"></asp:TextBox>
+                        <asp:TextBox ID="companyTextbox" runat="server" Enabled="False" TabIndex="41" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style38">&nbsp;</td>
                     <td class="auto-style91">Country :</td>
                     <td class="auto-style18">
-                        <asp:TextBox ID="countryTextbox" runat="server" Enabled="False" Width="151px" TabIndex="38"></asp:TextBox>
+                        <asp:TextBox ID="countryTextbox" runat="server" Enabled="False" Width="151px" TabIndex="47"></asp:TextBox>
                     </td>
                     <td class="auto-style18">*</td>
                     <td class="auto-style18">&nbsp;</td>
@@ -620,10 +662,10 @@
                     <td class="auto-style99"></td>
                     <td class="auto-style72">
                         <asp:RadioButton ID="disableRadioButton" runat="server" AutoPostBack="True" Checked="True" Font-Overline="False" Font-Size="Small" 
-                            OnCheckedChanged="disableRadioButton_CheckedChanged" GroupName="enableDisableRadioButtonGroup" TabIndex="39" Text="Disable Editing" />
+                            OnCheckedChanged="disableRadioButton_CheckedChanged" GroupName="enableDisableRadioButtonGroup" TabIndex="48" Text="Disable Editing" />
 &nbsp;
                         <asp:RadioButton ID="enableRadioButton" runat="server" AutoPostBack="True" Font-Size="Small" 
-                            OnCheckedChanged="enableRadioButton_CheckedChanged" GroupName="enableDisableRadioButtonGroup" TabIndex="40" Text="Enable Editing" />
+                            OnCheckedChanged="enableRadioButton_CheckedChanged" GroupName="enableDisableRadioButtonGroup" TabIndex="49" Text="Enable Editing" />
                     </td>
                     <td class="auto-style99"></td>
                 </tr>
@@ -666,7 +708,7 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style101">Rush Order :</td>
                         <td class="auto-style104">
-                            <asp:CheckBoxList ID="rushCheckboxList" runat="server" Height="20px" Width="151px" CellPadding="0" CellSpacing="0" Font-Size="Small" RepeatDirection="Horizontal" TabIndex="41">
+                            <asp:CheckBoxList ID="rushCheckboxList" runat="server" Height="20px" Width="151px" CellPadding="0" CellSpacing="0" Font-Size="Small" RepeatDirection="Horizontal" TabIndex="50">
                                 <asp:ListItem Value="true">Yes</asp:ListItem>
                                 <asp:ListItem Value="false">No</asp:ListItem>
                             </asp:CheckBoxList>
@@ -679,7 +721,7 @@
                         <td class="auto-style105">
                             With Logo :</td>
                         <td class="auto-style103">
-                            <asp:CheckBoxList ID="logoCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="20px" RepeatDirection="Horizontal" Width="151px" TabIndex="42">
+                            <asp:CheckBoxList ID="logoCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="20px" RepeatDirection="Horizontal" Width="151px" TabIndex="51">
                                 <asp:ListItem Value="true">Yes</asp:ListItem>
                                 <asp:ListItem Value="false">No</asp:ListItem>
                             </asp:CheckBoxList>
@@ -692,19 +734,19 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style45">First Item # :</td>
                         <td class="auto-style40">
-                            <asp:DropDownList ID="skuDropdownlist1" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist1_SelectedIndexChanged" AutoPostBack="True" TabIndex="43">
+                            <asp:DropDownList ID="skuDropdownlist1" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist1_SelectedIndexChanged" AutoPostBack="True" TabIndex="52">
                             </asp:DropDownList>
                         </td>
                         <td class="auto-style41">*</td>
                         <td class="auto-style48">Second Item # :</td>
                         <td class="auto-style42">
-                            <asp:DropDownList ID="skuDropdownlist2" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist2_SelectedIndexChanged" AutoPostBack="True" TabIndex="45">
+                            <asp:DropDownList ID="skuDropdownlist2" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist2_SelectedIndexChanged" AutoPostBack="True" TabIndex="53">
                             </asp:DropDownList>
                         </td>
                         <td class="auto-style41"></td>
                         <td class="auto-style48">Third Item # :</td>
                         <td class="auto-style43">
-                            <asp:DropDownList ID="skuDropdownlist3" runat="server" AutoPostBack="True" TabIndex="47" Width="151px" OnSelectedIndexChanged="skuDropdownlist3_SelectedIndexChanged">
+                            <asp:DropDownList ID="skuDropdownlist3" runat="server" AutoPostBack="True" TabIndex="54" Width="151px" OnSelectedIndexChanged="skuDropdownlist3_SelectedIndexChanged">
                             </asp:DropDownList>
                         </td>
                         <td class="auto-style63">&nbsp;</td>
@@ -715,20 +757,20 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style45">&nbsp;</td>
                         <td class="auto-style40">
-                            <asp:TextBox ID="shortDescriptionTextbox1" runat="server" Enabled="False" Height="20px" style="overflow: auto" TabIndex="44" TextMode="MultiLine" Width="151px"></asp:TextBox>
+                            <asp:TextBox ID="shortDescriptionTextbox1" runat="server" Enabled="False" Height="20px" style="overflow: auto" TabIndex="55" TextMode="MultiLine" Width="151px"></asp:TextBox>
                         </td>
                         <td class="auto-style41"></td>
                         <td class="auto-style48"></td>
                         <td class="auto-style42">
-                            <asp:TextBox ID="shortDescriptionTextbox2" runat="server" Enabled="False" Height="20px" style="overflow: auto" TabIndex="46" TextMode="MultiLine" Width="151px"></asp:TextBox>
+                            <asp:TextBox ID="shortDescriptionTextbox2" runat="server" Enabled="False" Height="20px" style="overflow: auto" TabIndex="56" TextMode="MultiLine" Width="151px"></asp:TextBox>
                         </td>
                         <td class="auto-style41"></td>
                         <td class="auto-style48">&nbsp;</td>
                         <td class="auto-style43">
-                            <asp:TextBox ID="shortDescriptionTextbox3" runat="server" TabIndex="48" Width="151px" Enabled="False" Height="20px" style="overflow: auto" TextMode="MultiLine"></asp:TextBox>
+                            <asp:TextBox ID="shortDescriptionTextbox3" runat="server" TabIndex="57" Width="151px" Enabled="False" Height="20px" style="overflow: auto" TextMode="MultiLine"></asp:TextBox>
                         </td>
                         <td colspan="2" rowspan="8">
-                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" OnSelectionChanged="calendar_SelectionChanged" Visible="False" TabIndex="52" OnDayRender="calendar_DayRender">
+                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" OnSelectionChanged="calendar_SelectionChanged" Visible="False" TabIndex="61" OnDayRender="calendar_DayRender">
                                 <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
                                 <NextPrevStyle VerticalAlign="Bottom" />
                                 <OtherMonthDayStyle ForeColor="#808080" />
@@ -745,7 +787,7 @@
                         <td class="auto-style40">&nbsp;</td>
                         <td class="auto-style45">Quantity :</td>
                         <td class="auto-style103" colspan="4">
-                            <asp:CheckBoxList ID="quantityCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="19px" RepeatDirection="Horizontal" RepeatLayout="Flow" Width="350px" TabIndex="49">
+                            <asp:CheckBoxList ID="quantityCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="19px" RepeatDirection="Horizontal" RepeatLayout="Flow" Width="350px" TabIndex="58">
                                 <asp:ListItem Selected="True">1</asp:ListItem>
                                 <asp:ListItem>6</asp:ListItem>
                                 <asp:ListItem>24</asp:ListItem>
@@ -760,8 +802,8 @@
                         <td class="auto-style41">&nbsp;</td>
                         <td class="auto-style48">Date for Event :</td>
                         <td class="auto-style43">
-                            <asp:TextBox ID="dateEventTextbox" runat="server" TabIndex="50" Width="106px"></asp:TextBox>
-                            <asp:Button ID="dateEventButton" runat="server" OnClick="dateEventButton_Click" Text="..." Width="37px" TabIndex="51" />
+                            <asp:TextBox ID="dateEventTextbox" runat="server" TabIndex="59" Width="106px"></asp:TextBox>
+                            <asp:Button ID="dateEventButton" runat="server" OnClick="dateEventButton_Click" Text="..." Width="37px" TabIndex="60" />
                         </td>
                     </tr>
                     <tr>
@@ -784,7 +826,7 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style45">Additional Info :</td>
                         <td colspan="4" rowspan="3">
-                            <asp:TextBox ID="additionalInfoTextbox" runat="server" Height="66px" style="overflow: auto" TextMode="MultiLine" Width="400px" TabIndex="53"></asp:TextBox>
+                            <asp:TextBox ID="additionalInfoTextbox" runat="server" Height="66px" style="overflow: auto" TextMode="MultiLine" Width="400px" TabIndex="62"></asp:TextBox>
                         </td>
                         <td class="auto-style41"></td>
                         <td class="auto-style48">&nbsp;</td>
@@ -825,7 +867,7 @@
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style64" colspan="2">&nbsp;&nbsp;<asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" Text="New Quote Created !" Visible="False"></asp:Label>
+                        <td class="auto-style64" colspan="2">&nbsp;&nbsp;<asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" Text="New Quote Created !" Visible="False" TabIndex="63"></asp:Label>
                             &nbsp;&nbsp;&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
@@ -838,7 +880,7 @@
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style64" colspan="2" rowspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" TabIndex="54" Width="50px" OnClick="quoteButton_Click" />
+                            <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" TabIndex="65" Width="50px" OnClick="quoteButton_Click" />
                             <strong><em>Quote</em></strong></td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
@@ -861,8 +903,9 @@
                             <asp:Label ID="uselessLabel" runat="server" style="display: none"></asp:Label>
                         </td>
                         <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
+                        <td class="auto-style218" colspan="2">
+                            <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" OnClick="updateLinkButton_Click" TabIndex="64">update Username and Password</asp:LinkButton>
+                        </td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
@@ -873,7 +916,7 @@
                 
             </asp:Panel>
             <asp:Panel ID="welcomePanel" runat="server" Height="280px" Width="500px" BackColor="White">
-                <table class="auto-style111" style="border-style: solid; border-width: 3px">
+                <table class="auto-style111">
                     <tr>
                         <td class="auto-style64" colspan="2" style="background-color: #F0F0F0"><strong><span class="auto-style106">Welcome To</span><br class="auto-style106"/> <span class="auto-style106">Ashlin Customer Enquiry Form</span></strong></td>
                     </tr>
@@ -891,18 +934,18 @@
                     </tr>
                     <tr>
                         <td class="auto-style131" colspan="2">
-                            <asp:Image ID="welcomeWizardImage" runat="server" Height="70px" ImageUrl="~/image/wizard.png" Width="60px" />
+                            <asp:Image ID="welcomeWizardImage" runat="server" Height="70px" ImageUrl="~/image/wizard.png" Width="60px" TabIndex="2" />
                         </td>
                     </tr>
                     <tr>
                         <td class="auto-style128" colspan="2">
-                            <asp:Button ID="welcomeSkipButton" runat="server" Text="Skip" Width="70px" OnClick="welcomeSkipButton_Click" TabIndex="2" />
+                            <asp:Button ID="welcomeSkipButton" runat="server" Text="Skip" Width="70px" OnClick="welcomeSkipButton_Click" TabIndex="3" />
                         </td>
                     </tr>
                 </table>
             </asp:Panel>
             <asp:Panel ID="asiPanel" runat="server" DefaultButton="asiNextButton" BackColor="White" Height="280px" Width="500px">
-                <table class="auto-style111" style="border-style: solid; border-width: 3px">
+                <table class="auto-style111">
                     <tr>
                         <td colspan="2" class="auto-style132"><strong>Please Enter Your ASI Number</strong></td>
                     </tr>
@@ -913,8 +956,8 @@
                     <tr>
                         <td class="auto-style147"><strong>ASI # :</strong></td>
                         <td class="auto-style150">
-                            <asp:TextBox ID="asiTextbox" runat="server" Width="178px" TabIndex="3"></asp:TextBox>
-                            <asp:Button ID="asiNextButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Next" Width="60px" TabIndex="4" OnClick="asiNextButton_Click" />
+                            <asp:TextBox ID="asiTextbox" runat="server" Width="178px" TabIndex="4"></asp:TextBox>
+                            <asp:Button ID="asiNextButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Next" Width="60px" TabIndex="5" OnClick="asiNextButton_Click" />
                         </td>
                     </tr>
                     <tr>
@@ -933,15 +976,15 @@
                     </tr>
                     <tr>
                         <td class="auto-style128" colspan="2">
-                            <asp:Button ID="asiCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" TabIndex="5" />
+                            <asp:Button ID="asiCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" TabIndex="6" />
                             &nbsp;&nbsp;
-                            <asp:Button ID="asiSkipButton" runat="server" Text="Skip" Width="70px" OnClick="asiSkipButton_Click" TabIndex="6" />
+                            <asp:Button ID="asiSkipButton" runat="server" Text="Skip" Width="70px" OnClick="asiSkipButton_Click" TabIndex="7" />
                         </td>
                     </tr>
                 </table>
             </asp:Panel>
             <asp:Panel ID="searchPanel" runat="server" DefaultButton="searchButton" BackColor="White" Height="280px" Width="500px">
-                <table class="auto-style111" style="border-style: solid; border-width: 3px">
+                <table class="auto-style111">
                     <tr>
                         <td class="auto-style160" colspan="3"><strong>Please Enter Information
                             <br />
@@ -950,20 +993,20 @@
                     <tr>
                         <td class="auto-style196" colspan="2"><strong>Customer Information :</strong></td>
                         <td class="auto-style191">
-                            <asp:Label ID="tooManyResultLabel" runat="server" Font-Size="11pt" ForeColor="Red" Text="Too many results found" Visible="False" Font-Bold="True" TabIndex="7"></asp:Label>
+                            <asp:Label ID="tooManyResultLabel" runat="server" Font-Size="11pt" ForeColor="Red" Text="Too many results found" Visible="False" Font-Bold="True" TabIndex="8"></asp:Label>
                         </td>
                     </tr>
                     <tr>
                         <td class="auto-style186">First Name :</td>
                         <td class="auto-style187">
-                            <asp:TextBox ID="searchFirstNameTextbox" runat="server" Width="155px" TabIndex="8"></asp:TextBox>
+                            <asp:TextBox ID="searchFirstNameTextbox" runat="server" Width="155px" TabIndex="9"></asp:TextBox>
                         </td>
                         <td class="auto-style199"></td>
                     </tr>
                     <tr>
                         <td class="auto-style186">Last Name :</td>
                         <td class="auto-style187">
-                            <asp:TextBox ID="searchLastNameTextbox" runat="server" Width="155px" TabIndex="9"></asp:TextBox>
+                            <asp:TextBox ID="searchLastNameTextbox" runat="server" Width="155px" TabIndex="10"></asp:TextBox>
                         </td>
                         <td class="auto-style144" rowspan="2">
                             <asp:ImageButton ID="searchButton" runat="server" ImageUrl="~/image/search.png" CssClass="search" Width="50px" OnClick="searchButton_Click" TabIndex="12"/>
@@ -972,13 +1015,13 @@
                     <tr>
                         <td class="auto-style186">Company Name :</td>
                         <td class="auto-style187">
-                            <asp:TextBox ID="searchCompanyTextbox" runat="server" Width="155px" TabIndex="10"></asp:TextBox>
+                            <asp:TextBox ID="searchCompanyTextbox" runat="server" Width="155px" TabIndex="11"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td class="auto-style186">Email :</td>
                         <td class="auto-style187">
-                            <asp:TextBox ID="searchEmailTextbox" runat="server" Width="155px" TabIndex="11"></asp:TextBox>
+                            <asp:TextBox ID="searchEmailTextbox" runat="server" Width="155px" TabIndex="12"></asp:TextBox>
                         </td>
                         <td class="auto-style199"></td>
                     </tr>
@@ -993,7 +1036,7 @@
                 
             </asp:Panel>
             <asp:Panel ID="resultPanel" runat="server" Height="325px" Width="550px" BackColor="White">
-                <table class="auto-style174" style="border-style: solid; border-width: 3px">
+                <table class="auto-style174">
                     <tr>
                         <td class="auto-style170" colspan="2"><strong>Customer Search Result</strong></td>
                     </tr>
@@ -1042,7 +1085,7 @@
                 </table>
             </asp:Panel>
             <asp:Panel ID="loginPanel" runat="server" DefaultButton="loginButton" Height="170px" Width="350px" BackColor="White">
-                <table class="auto-style208" style="border-style: solid; border-width: 3px">
+                <table class="auto-style208">
                     <tr>
                         <td colspan="2" style="background-color: #F0F0F0"><strong>Please Login To Continue</strong></td>
                     </tr>
@@ -1052,24 +1095,59 @@
                     <tr>
                         <td class="auto-style214">Username :</td>
                         <td class="auto-style205">
-                            <asp:TextBox ID="usernameTextbox" runat="server" Width="170px"></asp:TextBox>
+                            <asp:TextBox ID="usernameTextbox" runat="server" Width="170px" TabIndex="22"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td class="auto-style213">Password :</td>
                         <td class="auto-style211">
-                            <asp:TextBox ID="passwordTextbox" TextMode="Password" runat="server" Width="170px"></asp:TextBox>
+                            <asp:TextBox ID="passwordTextbox" TextMode="Password" runat="server" Width="170px" TabIndex="23"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td class="auto-style215" colspan="2">
-                            <asp:Button ID="loginCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" />
+                            <asp:Button ID="loginCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" TabIndex="24" />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:Button ID="loginButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Login" Width="60px" OnClick="loginButton_Click" />
+                            <asp:Button ID="loginButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Login" Width="60px" OnClick="loginButton_Click" TabIndex="25" />
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2"  style="background-color: #F0F0F0">&nbsp;</td>
+                    </tr>
+                </table>
+            </asp:Panel>
+            <asp:Panel ID="updatePanel" runat="server" DefaultButton="updateButton" BackColor="White" Height="170px" Width="350px">
+                <table class="auto-style231">
+                    <tr>
+                        <td colspan="2" style="background-color: #F0F0F0"><strong>Enter New Credentials</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style236">New Username :</td>
+                        <td class="auto-style229">
+                            <asp:TextBox ID="newUsernameTextbox" runat="server" Width="170px" TabIndex="26"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style236">New Password :</td>
+                        <td class="auto-style235">
+                            <asp:TextBox ID="newPasswordTextbox" runat="server" TextMode="Password" Width="170px" TabIndex="27"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style236">Enter Again :</td>
+                        <td class="auto-style235">
+                            <asp:TextBox ID="enterAgainTextbox" runat="server" TextMode="Password" Width="170px" TabIndex="28"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style227" colspan="2">
+                            <asp:Button ID="updateCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" TabIndex="29" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <asp:Button ID="updateButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Update" Width="60px" OnClick="updateButton_Click" TabIndex="30" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="background-color: #F0F0F0">&nbsp;</td>
                     </tr>
                 </table>
             </asp:Panel>
@@ -1085,6 +1163,8 @@
         <ajax:ModalPopupExtender ID="resultPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="resultPanel" CancelControlID="enterManuallyButton"
             BackgroundCssClass="modalBackground"/>
         <ajax:ModalPopupExtender ID="loginPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="loginPanel" CancelControlID="loginCancelButton"
+            BackgroundCssClass="modalBackground"/>
+        <ajax:ModalPopupExtender ID="updatePopup" runat="server" TargetControlID="uselessLabel" PopupControlID="updatePanel" CancelControlID="updateCancelButton"
             BackgroundCssClass="modalBackground"/>
     </form>
 </body>
