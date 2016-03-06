@@ -187,7 +187,8 @@
             opacity: 0.8;
             z-index: 10000;
         }
-        .auto-style132 {
+
+         .auto-style132 {
             font-size: xx-large;
             text-align: center;
             height: 76px;
@@ -968,7 +969,7 @@
                     <tr>
                         <td class="auto-style153"></td>
                         <td class="auto-style154">
-                            <em>System powered by ASI<span style="color: rgb(84, 84, 84); font-family: arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 18.2px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: rgb(255, 255, 255);"> ®</span></em></td>
+                            <em>System powered by ASI<span> ®</span></em></td>
                     </tr>
                     <tr>
                         <td class="auto-style151"></td>

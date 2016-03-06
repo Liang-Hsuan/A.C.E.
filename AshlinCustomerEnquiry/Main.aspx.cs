@@ -579,7 +579,7 @@ namespace AshlinCustomerEnquiry
         protected void loginButton_Click(object sender, EventArgs e)
         {
              // check if the user put the right username and password
-            if (usernameTextbox.Text.Equals((string)Application["USERNAME"]) && passwordTextbox.Text.Equals((string)Application["PASSWORD"]))
+            if (usernameTextbox.Text.Trim().Equals((string)Application["USERNAME"]) && passwordTextbox.Text.Equals((string)Application["PASSWORD"]))
                 Session["HasLogged"] = true;
             else
             {
