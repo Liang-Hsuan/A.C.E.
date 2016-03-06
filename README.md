@@ -11,11 +11,15 @@
 
 -> Greatly enhance quote generation, accuracy, and paper preservation.
 
+-------------
+
 **The safty of this application:**
 
 -> the program can handle server error so that you don't need to worry about any crash or duplicate order being posted.
 
 -> the program is flexible, due to searching information all from the database and various APIs.
+
+-------------
 
 <br/>
 **Note:**
