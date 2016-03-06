@@ -72,10 +72,7 @@ namespace AshlinCustomerEnquiry
         /* the event for date event button click that change the visibility of the calendar */
         protected void dateEventButton_Click(object sender, EventArgs e)
         {
-            if (!calendar.Visible)
-                calendar.Visible = true;
-            else
-                calendar.Visible = false;
+            calendar.Visible = !calendar.Visible;
         }
 
         /* the event for calendar date selection that show the date time on the textbox */
@@ -198,7 +195,8 @@ namespace AshlinCustomerEnquiry
 
                     return;
                 }
-                else if (value[0].FirstName == "-1")
+
+                if (value[0].FirstName == "-1")
                 {
                     tooManyResultLabel.Visible = true;
                     searchPopup.Show();
@@ -418,25 +416,35 @@ namespace AshlinCustomerEnquiry
             string[] password = { newPasswordTextbox.Text, enterAgainTextbox.Text };
 
             #region Error Check
+            // username check
             if (username == "")
             {
                 newUsernameTextbox.BackColor = Color.Red;
                 updatePopup.Show();
                 return;
             }
-            else if (password[0] == "")
+            newUsernameTextbox.BackColor = SystemColors.Window;
+
+            // password check
+            if (password[0] == "")
             {
                 newPasswordTextbox.BackColor = Color.Red;
                 updatePopup.Show();
                 return;
             }
-            else if (password[1] == "")
+            newPasswordTextbox.BackColor = SystemColors.Window;
+
+            // password confirm check
+            if (password[1] == "")
             {
                 enterAgainTextbox.BackColor = Color.Red;
                 updatePopup.Show();
                 return;
             }
-            else if (password[0] != password[1])
+            enterAgainTextbox.BackColor = SystemColors.Window;
+
+            // overall password check
+            if (password[0] != password[1])
             {
                 newPasswordTextbox.BackColor = Color.Red;
                 enterAgainTextbox.BackColor = Color.Red;

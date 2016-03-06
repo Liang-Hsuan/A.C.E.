@@ -46,7 +46,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             // the case if there is no result or there are too many result
             if (idSet == null)
                 return null;
-            else if (idSet[0] == "-1")
+
+            if (idSet[0] == "-1")
             {
                 BPvalues[] invalid = new BPvalues[1];
                 invalid[0] = new BPvalues();
@@ -68,7 +69,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             {
                 return null;
             }
-            else if (idSet[0] == "-1")
+
+            if (idSet[0] == "-1")
             {
                 BPvalues[] invalid = new BPvalues[1];
                 invalid[0] = new BPvalues();
@@ -124,7 +126,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                             do
                             {
                                 Thread.Sleep(5000);
-                                post.postReservationRequest(orderId, orderRowId, value, i, j);
+                                reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
                             } while (reservation == "Error");
                         }
                     }
@@ -173,7 +175,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                             do
                             {
                                 Thread.Sleep(5000);
-                                post.postReservationRequest(orderId, orderRowId, value, i, j);
+                                reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
                             } while (reservation == "Error");
                         }
                     }
@@ -200,8 +202,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         /* a method that substring the given string */
         private static string substringMethod(string original, string startingString, int additionIndex)
         {
-            string copy = original;
-            copy = original.Substring(original.IndexOf(startingString) + additionIndex);
+            string copy = original.Substring(original.IndexOf(startingString) + additionIndex);
 
             return copy;
         }
@@ -233,9 +234,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     englishList.Add('0');
                 }
                 else
-                {
                     englishList.Add(ch);
-                }
             }
 
             return englishString;
@@ -307,7 +306,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // the case there is no customer exists or the result is too many
                 if (number < 1)
                     return null;
-                else if (number > 500)
+                if (number > 500)
                 {
                     string[] invalid = { "-1" };
                     return invalid;
@@ -376,7 +375,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // the case there is no customer exists or there are too many results
                 if (number < 1)
                     return null;
-                else if (number > 500)
+                if (number > 500)
                 {
                     string[] invalid = { "-1" };
                     return invalid;
@@ -721,7 +720,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
 
                 result = substringMethod(result, ":", 1);
-
                 return getTarget(result);  //return the addresss ID
             }
 
@@ -757,15 +755,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     result = streamReader.ReadToEnd();
                 }
 
-                int index = result.IndexOf(":") + 1;
-                int length = index;
-                while (Char.IsNumber(result[length]))
-                {
-                    length++;
-                }
-                string contactID = result.Substring(index, length - index);
-
-                return contactID;  //return the contact ID
+                result = substringMethod(result, ":", 1);
+                return getTarget(result);  //return the contact ID
             }
 
             /* post new order to API */
@@ -781,11 +772,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 #region Flags
                 // get channel id from the country of the customer
-                string channelId;
-                if (value.Country.Contains("US"))
-                    channelId = "13";
-                else
-                    channelId = "14";
+                var channelId = value.Country.Contains("US") ? "13" : "14";
 
 
                 // get price list id depending on rush and logo
@@ -856,13 +843,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
                 if (productId != null)
-                {
                     textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + Math.Round(price.getPrice(sku, quantity, imprint, rush), 2) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
-                }
                 else
-                {
                     textJSON = "{\"productName\":\"" + value.Description[skuIndex] + " " + sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + Math.Round(price.getPrice(sku, quantity, imprint, rush), 2) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
-                }
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
@@ -909,13 +892,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // generate JSON file for order row post
                 string textJSON;
                 if (productId != null)
-                {
                     textJSON = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowID + "\",\"quantity\":\"" + value.Quantity[quantityIndex] + "\"}]}";
-                }
                 else
-                {
                     return null;
-                }
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);

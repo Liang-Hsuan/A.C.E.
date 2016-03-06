@@ -105,57 +105,46 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             }
 
             #region Data Retrieve
-            // fields for storing data
-            string company;
-            string email;
-            string phone;
-            string address1;
-            string address2;
-            string city;
-            string province;
-            string postalCode;
-            string country;
-
             // start getting data
             // company
             textJSON = substringMethod(textJSON, "\"Name\"", 8);
-            company = getTarget(textJSON);
+            string company = getTarget(textJSON);
 
             // email
             textJSON = substringMethod(textJSON, "\"Address\"", 11);
-            email = getTarget(textJSON);
+            string email = getTarget(textJSON);
 
             // phone
             textJSON = substringMethod(textJSON, "\"PhoneNumber\"", 15);
-            phone = getTarget(textJSON);
+            string phone = getTarget(textJSON);
             if (phone == "null" || phone == "ull")
                 phone = "";
 
             // address1
             textJSON = substringMethod(textJSON, "\"AddressLine1\"", 16);
-            address1 = getTarget(textJSON);
+            string address1 = getTarget(textJSON);
 
             // address 2
             textJSON = substringMethod(textJSON, "\"AddressLine2\"", 16);
-            address2 = getTarget(textJSON);
+            string address2 = getTarget(textJSON);
             if (address2 == "null" || address2 == "ull")
                 address2 = "";
 
             // city
             textJSON = substringMethod(textJSON, "\"City\"", 8);
-            city = getTarget(textJSON);
+            string city = getTarget(textJSON);
 
             // province
             textJSON = substringMethod(textJSON, "\"State\"", 9);
-            province = getTarget(textJSON);
+            string province = getTarget(textJSON);
 
             // postal code 
             textJSON = substringMethod(textJSON, "\"ZipCode\"", 11);
-            postalCode = getTarget(textJSON);
+            string postalCode = getTarget(textJSON);
 
             // country
             textJSON = substringMethod(textJSON, "\"CountryCode\"", 15);
-            country = getTarget(textJSON);
+            string country = getTarget(textJSON);
             if (country == "null" || country == "ull")
                 country = "";
             #endregion
