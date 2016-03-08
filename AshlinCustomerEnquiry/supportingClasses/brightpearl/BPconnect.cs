@@ -66,9 +66,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             // the case if no result or there are too many result
             if (idSet == null)
-            {
                 return null;
-            }
 
             if (idSet[0] == "-1")
             {
@@ -736,7 +734,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // generate JSON file for contact post
                 string textJSON = "{\"firstName\":\"" + value.FirstName + "\",\"lastName\":\"" + value.LastName + "\",\"postAddressIds\":{\"DEF\":" + addressID + ",\"BIL\":" + addressID + ",\"DEL\":" + addressID + "},\"organisation\":{\"name\":\"" + value.Company + "\"}," +
-                                  "\"communication\":{\"emails\":{\"PRI\":{\"email\":\"" + value.Email + "\"}},\"telephones\":{\"PRI\":\"" + value.Phone + "\"}},\"relationshipToAccount\":{\"isSupplier\": false,\"isStaff\":false,\"isCustomer\":true},\"financialDetails\":{\"priceListId\": 5}}";
+                                  "\"communication\":{\"emails\":{\"PRI\":{\"email\":\"" + value.Email + "\"}},\"telephones\":{\"PRI\":\"" + value.Phone + "\"}},\"contactStatus\":{\"current\":{\"contactStatusId\":9}},\"relationshipToAccount\":{\"isSupplier\": false,\"isStaff\":false,\"isCustomer\":true},\"financialDetails\":{\"priceListId\": 5}}";
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
@@ -772,8 +770,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 #region Flags
                 // get channel id from the country of the customer
-                var channelId = value.Country.Contains("US") ? "13" : "14";
-
+                string[] currencyAndchannelId = value.Country.Contains("US") ? new[]{ "USD", "13"} : new[]{ "CAD", "14"}; 
 
                 // get price list id depending on rush and logo
                 int priceListId;
@@ -789,7 +786,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // generate JSON file for order post
                 string textJSON = "{\"orderTypeCode\":\"SO\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3}," +
-                                  "\"currency\":{\"orderCurrencyCode\":\"CAD\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + channelId + "}}}";
+                                  "\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[1] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
 
 
                 // turn request string into a byte stream
