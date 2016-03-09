@@ -27,6 +27,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         public int[] Quantity { get; set; }
         public bool Logo { get; set; }
         public bool Rush { get; set; }
+        public string Comment { get; set; }
 
         /* first constructor with no arguments */
         public BPvalues()
@@ -50,11 +51,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Quantity = new int[0];
             Logo = true;
             Rush = false;
+            Comment = "";
         }
 
         /* seconde constructor that accept all fields parameters */
         public BPvalues(string firstName, string lastName, string company, string phone, string email, string address1, string address2, string city, string province, string postalCode, string country,
-                        string[] sku, string[] description,  int[] quantity, bool logo, bool rush)
+                        string[] sku, string[] description,  int[] quantity, bool logo, bool rush, string comment)
         {
             // customer information
             FirstName = firstName;
@@ -75,6 +77,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Quantity = quantity;
             Logo = logo;
             Rush = rush;
+            Comment = comment;
         }
     }
 }

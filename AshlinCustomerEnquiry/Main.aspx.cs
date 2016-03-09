@@ -152,7 +152,7 @@ namespace AshlinCustomerEnquiry
         protected void asiNextButton_Click(object sender, EventArgs e)
         {
             // reset textbox color
-            asiTextbox.BackColor = SystemColors.Window;
+            asiTextbox.BackColor = Color.White;
 
             if (asiTextbox.Text != "")
             {
@@ -391,8 +391,8 @@ namespace AshlinCustomerEnquiry
             // the case if the user first time click quote button -> they need to log in
             if (Session["HasLogged"] == null)
             {
-                usernameTextbox.BackColor = SystemColors.Window;
-                passwordTextbox.BackColor = SystemColors.Window;
+                usernameTextbox.BackColor = Color.White;
+                passwordTextbox.BackColor = Color.White;
 
                 loginPopup.Show();
 
@@ -400,9 +400,9 @@ namespace AshlinCustomerEnquiry
             }
 
             // set textboxes back color to normal
-            newUsernameTextbox.BackColor = SystemColors.Window;
-            newPasswordTextbox.BackColor = SystemColors.Window;
-            enterAgainTextbox.BackColor = SystemColors.Window;
+            newUsernameTextbox.BackColor = Color.White;
+            newPasswordTextbox.BackColor = Color.White;
+            enterAgainTextbox.BackColor = Color.White;
 
             // show udpate panel for updating credentials
             updatePopup.Show();
@@ -423,7 +423,7 @@ namespace AshlinCustomerEnquiry
                 updatePopup.Show();
                 return;
             }
-            newUsernameTextbox.BackColor = SystemColors.Window;
+            newUsernameTextbox.BackColor = Color.White;
 
             // password check
             if (password[0] == "")
@@ -432,7 +432,7 @@ namespace AshlinCustomerEnquiry
                 updatePopup.Show();
                 return;
             }
-            newPasswordTextbox.BackColor = SystemColors.Window;
+            newPasswordTextbox.BackColor = Color.White;
 
             // password confirm check
             if (password[1] == "")
@@ -441,7 +441,7 @@ namespace AshlinCustomerEnquiry
                 updatePopup.Show();
                 return;
             }
-            enterAgainTextbox.BackColor = SystemColors.Window;
+            enterAgainTextbox.BackColor = Color.White;
 
             // overall password check
             if (password[0] != password[1])
@@ -472,8 +472,8 @@ namespace AshlinCustomerEnquiry
             // the case if the user first time click quote button -> they need to log in
             if (Session["HasLogged"] == null)
             {
-                usernameTextbox.BackColor = SystemColors.Window;
-                passwordTextbox.BackColor = SystemColors.Window;
+                usernameTextbox.BackColor = Color.White;
+                passwordTextbox.BackColor = Color.White;
 
                 loginPopup.Show();
 
@@ -500,7 +500,7 @@ namespace AshlinCustomerEnquiry
 
             #region Email 
             // get the order detail
-             string orderDetail = "Customer Information:\n\r" +
+            string orderDetail = "Customer Information:\n\r" +
                                   "Name: " + firstNameTextbox.Text + " " + lastNameTextbox.Text + "\nPhone: " + phoneTextbox.Text + "\nEmail: " + emailTextbox.Text + "\nCompany: " + companyTextbox.Text
                                 + "\nAddress1: " + address1Textbox.Text + "\nAddress2: " + address2Textbox.Text + "\nCity: " + cityTextbox.Text + "\nProvince / State: " + provinceTextbox.Text +
                                   "\nPostal Code: " + postalCodeTextbox.Text + "\nCountry: " + countryTextbox.Text + "\n\n\r" +
@@ -566,7 +566,7 @@ namespace AshlinCustomerEnquiry
                 logo = Convert.ToBoolean(logoCheckboxList.SelectedValue);
 
             BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
-                                            postalCodeTextbox.Text, countryTextbox.Text, new List<string>(skuList.Keys).ToArray(), new List<string>(skuList.Values).ToArray(), quantityList.ToArray(), logo, rush);
+                                            postalCodeTextbox.Text, countryTextbox.Text, new List<string>(skuList.Keys).ToArray(), new List<string>(skuList.Values).ToArray(), quantityList.ToArray(), logo, rush, additionalInfoTextbox.Text);
 
             bp.postOrder(bpValue);
             #endregion

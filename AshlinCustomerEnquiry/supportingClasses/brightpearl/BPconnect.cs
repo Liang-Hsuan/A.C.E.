@@ -129,6 +129,17 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                         }
                     }
                 }
+
+                //post comment
+                string comment = post.patchComment(orderId, value.Comment);
+                if (comment == "Error")
+                {
+                    do
+                    {
+                        Thread.Sleep(5000);
+                        comment = post.patchComment(orderId, value.Comment);
+                    } while (comment == "Error");
+                }
                 #endregion
             }
             else
@@ -177,6 +188,17 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                             } while (reservation == "Error");
                         }
                     }
+                }
+
+                //post comment
+                string comment = post.patchComment(orderId, value.Comment);
+                if (comment == "Error")
+                {
+                    do
+                    {
+                        Thread.Sleep(5000);
+                        comment = post.patchComment(orderId, value.Comment);
+                    } while (comment == "Error");
                 }
                 #endregion
             }
@@ -786,7 +808,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // generate JSON file for order post
                 string textJSON = "{\"orderTypeCode\":\"SO\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3}," +
-                                  "\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[1] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
+                                  "\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
 
 
                 // turn request string into a byte stream
@@ -920,6 +942,42 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
 
                 return null;
+            }
+
+            /* patch comment custom field request */
+            public string patchComment(string orderId, string comment)
+            {
+                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order/" + orderId + "/custom-field";
+
+                request = (HttpWebRequest)WebRequest.Create(uri);
+                request.Method = "PATCH";
+                request.ContentType = "application/json";
+                request.Headers.Add("brightpearl-app-ref", appRef);
+                request.Headers.Add("brightpearl-account-token", appToken);
+
+                // generate JSON field
+                string textJSON = "[{\"op\":\"add\",\"path\":\"/PCF_ORDERCOM\",\"value\":\"" + comment + "\"}]";
+
+                // turn request string into a byte stream
+                byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+
+                // send request
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    requestStream.Write(postBytes, 0, postBytes.Length);
+                }
+
+                // get the response from the server
+               // try      // might have server internal error, so do it in try and catch
+               // {
+                    response = (HttpWebResponse)request.GetResponse();
+               // }
+                //catch    // HTTP response 500 or 503
+               // {
+                //    return "Error";    // cannot post comment, return error instead
+                //}
+
+                return "";
             }
         }
     }

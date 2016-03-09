@@ -149,7 +149,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
                 country = "";
             #endregion
 
-            return new BPvalues("", "", company, phone, email, address1, address2, city, province, postalCode, country, new string[0], new string[0], new int[0], true, false);
+            return new BPvalues("", "", company, phone, email, address1, address2, city, province, postalCode, country, new string[0], new string[0], new int[0], true, false, null);
         }
 
         #region Supporting Methods

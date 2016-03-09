@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="IIS Web Application Name" description="" value="ashlinbpg" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^\\\\Mac\\Home\\Documents\\Visual\ Studio\ 2015\\Projects\\AshlinCustomerEnquiry\\AshlinCustomerEnquiry\\obj\\Release\\Package\\PackageTmp$" />
-    <parameterEntry kind="ProviderPath" scope="setAcl" match="^\\\\Mac\\Home\\Documents\\Visual\ Studio\ 2015\\Projects\\AshlinCustomerEnquiry\\AshlinCustomerEnquiry\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Intern1001\\Desktop\\F15_Intern\\Visual\ Studio\ project\\workplace\\ACE\ testing\ new\ version\\AshlinCustomerEnquiry\\AshlinCustomerEnquiry\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Intern1001\\Desktop\\F15_Intern\\Visual\ Studio\ project\\workplace\\ACE\ testing\ new\ version\\AshlinCustomerEnquiry\\AshlinCustomerEnquiry\\obj\\Release\\Package\\PackageTmp$" />
   </parameter>
 </parameters>

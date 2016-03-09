@@ -98,8 +98,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="image\ashlin.ico" />
+    <Content Include="image\facebook.png" />
+    <Content Include="image\linkedin.png" />
+    <Content Include="image\pinterest.png" />
     <Content Include="image\quote.png" />
     <Content Include="image\search.png" />
+    <Content Include="image\twitter.png" />
+    <Content Include="image\wallpaper.jpg" />
+    <Content Include="image\wizard-black.png" />
+    <Content Include="image\wizard.png" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -120,11 +127,6 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="image\AshlinIcon.png" />
-    <Content Include="image\facebook.png" />
-    <Content Include="image\linkedin.png" />
-    <Content Include="image\pinterest.png" />
-    <Content Include="image\twitter.png" />
-    <Content Include="image\wizard.png" />
     <Content Include="Main.aspx" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
