@@ -1,27 +1,16 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="AshlinCustomerEnquiry.Main" %>
 <%@ Register Assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" TagPrefix="ajax"%>
-
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="shortcut icon" href="image/ashlin.ico" type="image/x-icon" />
     <title>Ashlin Customer Enquiry</title>
     <style type="text/css">
-         .auto-style93 {
-             width: 100%;
-         }
         .auto-style34 {
             width: 121px;
         }
-        .auto-style97 {
-            width: 480px;
-        }
         .auto-style35 {
             width: 122px;
-        }
-        .auto-style2 {
-            width: 481px;
         }
         .auto-style71 {
             width: 100%;
@@ -352,32 +341,45 @@
             text-align: right;
             height: 23px;
         }
+        .auto-style237 {
+            width: 121px;
+            height: 40px;
+        }
+        .auto-style238 {
+            width: 15px;
+            height: 40px;
+        }
+        .auto-style240 {
+            width: 122px;
+            height: 51px;
+        }
+        .auto-style241 {
+            width: 151px;
+            overflow: auto;
+            height: 51px;
+        }
+        .auto-style242 {
+            height: 51px;
+        }
+        .auto-style243 {
+            width: 121px;
+            height: 51px;
+        }
+        .auto-style244 {
+            width: 15px;
+            height: 51px;
+        }
+        .auto-style245 {
+            height: 51px;
+            text-align: center;
+        }
     </style>
-    <script type="text/javascript">
-        //the funciton for rush checkbox list
-        var objChkd1;
-        var chkLst1 = document.getElementById('rushCheckboxList');
-        function HandleOnCheckRush() {
-            if (objChkd1 && objChkd1.checked)
-                objChkd1.checked = false;
-            objChkd1 = event.srcElement;
-        }
-
-        // the function for logo checkbox list
-        var objChkd2;
-        var chkLst2 = document.getElementById('logoCheckboxList');
-        function HandleOnCheckLogo() {
-            if (objChkd2 && objChkd2.checked)
-                objChkd2.checked = false;
-            objChkd2 = event.srcElement;
-        }
-    </script>
 </head>
-<body style="height: 941px; background-color:tan">
+<body style="height: 1012px; background-color:tan">
     <form id="form1" runat="server">
     <asp:ScriptManager runat="server" ID="ScriptManager"/>
     <div>  
-        <table class="auto-style93">
+        <table style="width: 100%">
             <tr>
                 <td class="auto-style34">&nbsp;</td>
                 <td class="auto-style34">&nbsp;</td>
@@ -389,7 +391,7 @@
                 <td class="auto-style34" rowspan="3">&nbsp;</td>
                 <td class="auto-style34" rowspan="3">&nbsp;</td>
                 <td class="auto-style34">
-                    <h1 class="auto-style97" style="text-align: center; font-size: 40px">Ashlin BPG Marketing Inc</h1>
+                    <h1 style="text-align: center; font-size: 40px; width: 480px">Ashlin BPG Marketing Inc</h1>
                 </td>
                 <td class="auto-style35">&nbsp;</td>
                 <td class="auto-style35">&nbsp;</td>
@@ -408,7 +410,7 @@
                 <td class="auto-style34">&nbsp;</td>
                 <td class="auto-style34">&nbsp;</td>
                 <td class="auto-style34">
-                    <h2 class="auto-style2" style="text-align: center">Customer Enquiry Form</h2>
+                    <h2 style="text-align: center; width: 481px;">Customer Enquiry Form</h2>
                 </td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -482,12 +484,12 @@
                     <td>
                         <asp:TextBox ID="firstNameTextbox" runat="server" Enabled="False" TabIndex="37" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style38">*</td>
+                    <td class="auto-style38"><span style="color: #FFFFFF;">*</span></td>
                     <td class="auto-style91"><span style="color: #FFFFFF;">Address 1 :</span></td>
                     <td class="auto-style18" rowspan="2">
                         <asp:TextBox ID="address1Textbox" runat="server" Enabled="False" Height="40px" style="overflow: auto" TabIndex="42" TextMode="MultiLine" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style18">*</td>
+                    <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
                 </tr>
@@ -499,7 +501,7 @@
                     <td class="auto-style81">
                         <asp:TextBox ID="lastNameTextbox" runat="server" Enabled="False" TabIndex="38" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style38">*</td>
+                    <td class="auto-style38"><span style="color: #FFFFFF;">*</span></td>
                     <td class="auto-style91">&nbsp;</td>
                     <td class="auto-style18">
                         &nbsp;</td>
@@ -550,7 +552,7 @@
                     <td class="auto-style18">
                         <asp:TextBox ID="cityTextbox" runat="server" Enabled="False" TabIndex="44" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style18">*</td>
+                    <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
                 </tr>
@@ -566,7 +568,7 @@
                     <td class="auto-style18">
                         <asp:TextBox ID="provinceTextbox" runat="server" Enabled="False" Width="151px" TabIndex="45"></asp:TextBox>
                     </td>
-                    <td class="auto-style18">*</td>
+                    <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
                 </tr>
@@ -582,7 +584,7 @@
                     <td class="auto-style18">
                         <asp:TextBox ID="postalCodeTextbox" runat="server" Enabled="False" Width="151px" TabIndex="46"></asp:TextBox>
                     </td>
-                    <td class="auto-style18">*</td>
+                    <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
                 </tr>
@@ -599,7 +601,7 @@
                     <td class="auto-style18">
                         <asp:TextBox ID="countryTextbox" runat="server" Enabled="False" Width="151px" TabIndex="47"></asp:TextBox>
                     </td>
-                    <td class="auto-style18">*</td>
+                    <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
                     <td class="auto-style18">&nbsp;</td>
                     <td class="auto-style18">&nbsp;</td>
                 </tr>
@@ -728,7 +730,7 @@
                             <asp:DropDownList ID="skuDropdownlist1" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist1_SelectedIndexChanged" AutoPostBack="True" TabIndex="52">
                             </asp:DropDownList>
                         </td>
-                        <td class="auto-style41">*</td>
+                        <td class="auto-style41"><span style="color: #FFFFFF;">*</span></td>
                         <td class="auto-style48"><span style="color: #ffffff">Second Item # :</span></td>
                         <td class="auto-style42">
                             <asp:DropDownList ID="skuDropdownlist2" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist2_SelectedIndexChanged" AutoPostBack="True" TabIndex="53">
@@ -760,18 +762,8 @@
                         <td class="auto-style43">
                             <asp:TextBox ID="shortDescriptionTextbox3" runat="server" TabIndex="57" Width="151px" Enabled="False" Height="20px" style="overflow: auto" TextMode="MultiLine"></asp:TextBox>
                         </td>
-                        <td colspan="2" rowspan="8">
-                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" OnSelectionChanged="calendar_SelectionChanged" Visible="False" TabIndex="61" OnDayRender="calendar_DayRender">
-                                <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
-                                <NextPrevStyle VerticalAlign="Bottom" />
-                                <OtherMonthDayStyle ForeColor="#808080" />
-                                <SelectedDayStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
-                                <SelectorStyle BackColor="#CCCCCC" />
-                                <TitleStyle BackColor="#999999" BorderColor="Black" Font-Bold="True" />
-                                <TodayDayStyle BackColor="#CCCCCC" ForeColor="Black" />
-                                <WeekendDayStyle BackColor="#FFFFCC" />
-                            </asp:Calendar>
-                        </td>
+                        <td colspan="2">
+                            &nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style40">&nbsp;</td>
@@ -789,12 +781,24 @@
                                 <asp:ListItem>1000</asp:ListItem>
                                 <asp:ListItem>2500</asp:ListItem>
                             </asp:CheckBoxList>
-                            *</td>
+                            <span style="color: #FFFFFF;">*</span></td>
                         <td class="auto-style41">&nbsp;</td>
                         <td class="auto-style48"><span style="color: #ffffff">Date for Event :</span></td>
                         <td class="auto-style43">
                             <asp:TextBox ID="dateEventTextbox" runat="server" TabIndex="59" Width="106px"></asp:TextBox>
                             <asp:Button ID="dateEventButton" runat="server" OnClick="dateEventButton_Click" Text="..." Width="37px" TabIndex="60" />
+                        </td>
+                        <td colspan="2" rowspan="7">
+                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" OnDayRender="calendar_DayRender" OnSelectionChanged="calendar_SelectionChanged" TabIndex="61" Visible="False" Width="200px">
+                                <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
+                                <NextPrevStyle VerticalAlign="Bottom" />
+                                <OtherMonthDayStyle ForeColor="#808080" />
+                                <SelectedDayStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
+                                <SelectorStyle BackColor="#CCCCCC" />
+                                <TitleStyle BackColor="#999999" BorderColor="Black" Font-Bold="True" />
+                                <TodayDayStyle BackColor="#CCCCCC" ForeColor="Black" />
+                                <WeekendDayStyle BackColor="#FFFFCC" />
+                            </asp:Calendar>
                         </td>
                     </tr>
                     <tr>
@@ -862,6 +866,18 @@
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
                         <td class="auto-style39">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style243"></td>
+                        <td class="auto-style243"></td>
+                        <td class="auto-style243"></td>
+                        <td class="auto-style243"></td>
+                        <td class="auto-style244"></td>
+                        <td class="auto-style245" colspan="2"></td>
+                        <td class="auto-style244"></td>
+                        <td class="auto-style240"></td>
+                        <td class="auto-style241"></td>
+                        <td class="auto-style242" colspan="2"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34">&nbsp;</td>
@@ -1154,8 +1170,7 @@
                 </table>
             </asp:Panel>
             <br />
-        </div>
-        
+        </div>      
         <ajax:ModalPopupExtender ID="welcomePopup" runat="server" TargetControlID="uselessLabel" PopupControlID="welcomePanel" CancelControlID="welcomeNoButton"
             BackgroundCssClass="modalBackground"/>
         <ajax:ModalPopupExtender ID="asiPopup" runat="server" TargetControlID="wizardButton" PopupControlID="asiPanel" CancelControlID="asiCancelButton"
@@ -1169,5 +1184,24 @@
         <ajax:ModalPopupExtender ID="updatePopup" runat="server" TargetControlID="uselessLabel" PopupControlID="updatePanel" CancelControlID="updateCancelButton"
             BackgroundCssClass="modalBackground"/>
     </form>
+    <script type="text/javascript">
+        //the funciton for rush checkbox list
+        var objChkd1;
+        var chkLst1 = document.getElementById('rushCheckboxList');
+        function HandleOnCheckRush() {
+            if (objChkd1 && objChkd1.checked)
+                objChkd1.checked = false;
+            objChkd1 = event.srcElement;
+        }
+
+        // the function for logo checkbox list
+        var objChkd2;
+        var chkLst2 = document.getElementById('logoCheckboxList');
+        function HandleOnCheckLogo() {
+            if (objChkd2 && objChkd2.checked)
+                objChkd2.checked = false;
+            objChkd2 = event.srcElement;
+        }
+    </script>
 </body>
 </html>

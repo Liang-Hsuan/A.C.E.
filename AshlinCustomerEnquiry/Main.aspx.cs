@@ -542,7 +542,7 @@ namespace AshlinCustomerEnquiry
              client.Port = 587;
              client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
              client.EnableSsl = true;
-             client.Send(mail); 
+             client.Send(mail);
             #endregion
 
             #region Brightpearl

@@ -117,8 +117,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                             } while (orderRowId == "Error");
                         }
 
-                        // post reservation 
-                        string reservation = post.postReservationRequest(orderId, orderRowId, value, i , j);
+                        // post reservation (not doing it right now)
+                        /* string reservation = post.postReservationRequest(orderId, orderRowId, value, i , j);
                         if (reservation == "Error")
                         {
                             do
@@ -126,7 +126,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                                 Thread.Sleep(5000);
                                 reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
                             } while (reservation == "Error");
-                        }
+                        } */
                     }
                 }
 
@@ -149,7 +149,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 string addressId = post.postAddressRequest(value);
                 contactId = post.postContactRequest(addressId, value);
 
-                // post order
                 // post order
                 string orderId = post.postOrderRequest(contactId, value);
                 if (orderId == "Error")
@@ -177,8 +176,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                             } while (orderRowId == "Error");
                         }
 
-                        // post reservation 
-                        string reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
+                        // post reservation (not doing it right now)
+                        /* string reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
                         if (reservation == "Error")
                         {
                             do
@@ -186,7 +185,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                                 Thread.Sleep(5000);
                                 reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
                             } while (reservation == "Error");
-                        }
+                        } */
                     }
                 }
 
@@ -855,16 +854,91 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-app-ref", appRef);
                 request.Headers.Add("brightpearl-account-token", appToken);
 
-                // generate JSON file for order row post
-                string textJSON;
+                // flags creation
                 string sku = value.SKU[skuIndex];
                 int quantity = value.Quantity[quantityIndex];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
-                if (productId != null)
-                    textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + Math.Round(price.getPrice(sku, quantity, imprint, rush), 2) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
+                double netPrice = price.getPrice(sku, quantity, imprint, rush) * quantity;
+
+                string taxCode;
+                double taxRate;
+                if (value.Country.Contains("US"))
+                {
+                    // the case if it's US order, no need tax
+                    taxCode = "Z";
+                    taxRate = 0;
+                }
                 else
-                    textJSON = "{\"productName\":\"" + value.Description[skuIndex] + " " + sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"T\",\"rowNet\":{\"value\":\"" + Math.Round(price.getPrice(sku, quantity, imprint, rush), 2) + "\"},\"rowTax\":{\"value\":\"0\"}}}";
+                {
+                    // the case if it's CA order, get tax code depend on region
+                    switch (value.Province)
+                    {
+                        case "NB":
+                            taxCode = "NB";
+                            taxRate = 0.13;
+                            break;
+                        case "NF":
+                            taxCode = "NF";
+                            taxRate = 0.13;
+                            break;
+                        case "NL":
+                            taxCode = "NL";
+                            taxRate = 0.13;
+                            break;
+                        case "NS":
+                            taxCode = "NS";
+                            taxRate = 0.13;
+                            break;
+                        case "ON":
+                            taxCode = "ON";
+                            taxRate = 0.13;
+                            break;
+                        case "PEI":
+                            taxCode = "PEI";
+                            taxRate = 0.14;
+                            break;
+                        case "BC":
+                            taxCode = "BC";
+                            taxRate = 0.05;
+                            break;
+                        case "MAN":
+                            taxCode = "MAN";
+                            taxRate = 0.05;
+                            break;
+                        case "PQ":
+                            taxCode = "PQ";
+                            taxRate = 0.05;
+                            break;
+                        case "SK":
+                            taxCode = "SK";
+                            taxRate = 0.05;
+                            break;
+                        case "AB":
+                            taxCode = "AB";
+                            taxRate = 0.05;
+                            break;
+                        case "NV":
+                            taxCode = "NV";
+                            taxRate = 0.05;
+                            break;
+                        case "YK":
+                            taxCode = "YK";
+                            taxRate = 0.05;
+                            break;
+                        default:
+                            taxCode = "N";
+                            taxRate = 0;
+                            break;
+                    }
+                }
+
+                // generate JSON file for order row post
+                string textJSON;
+                if (productId != null)
+                    textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
+                else
+                    textJSON = "{\"productName\":\"" + value.Description[skuIndex] + " " + sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
@@ -1026,7 +1100,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             {
                 // the case if it is imprinted
                 // calculate run charge
-                double runcharge = Math.Round((msrp * 0.05) / 0.6, 2);
+                double runcharge = (msrp * 0.05) / 0.6;
                 if (runcharge > 8)
                     runcharge = 8;
                 else if (runcharge < 1)
@@ -1037,9 +1111,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     // the case if it is rush
                     if (quantity < 6)
                         return (msrp + runcharge) * list[0] * list[9];
-                    if (quantity >= 6 && quantity < 25)
+                    if (quantity >= 6 && quantity < 24)
                         return (msrp + runcharge) * list[1] * list[9];
-                    if (quantity >= 25 && quantity < 50)
+                    if (quantity >= 24 && quantity < 50)
                         return (msrp + runcharge) * list[2] * list[9];
                     if (quantity >= 50 && quantity < 100)
                         return (msrp + runcharge) * list[3] * list[9];
@@ -1059,9 +1133,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     // the case if it is not rush
                     if (quantity < 6)
                         return (msrp + runcharge) * list[0];
-                    if (quantity >= 6 && quantity < 25)
+                    if (quantity >= 6 && quantity < 24)
                         return (msrp + runcharge) * list[1];
-                    if (quantity >= 25 && quantity < 50)
+                    if (quantity >= 24 && quantity < 50)
                         return (msrp + runcharge) * list[2];
                     if (quantity >= 50 && quantity < 100)
                         return (msrp + runcharge) * list[3];
@@ -1085,9 +1159,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     // the case if it is rush
                     if (quantity < 6)
                         msrp *= list[0] * list[9];
-                    else if (quantity >= 6 && quantity < 25)
+                    else if (quantity >= 6 && quantity < 24)
                         msrp *= list[1] * list[9];
-                    else if (quantity >= 25 && quantity < 50)
+                    else if (quantity >= 24 && quantity < 50)
                         msrp *= list[2] * list[9];
                     else if (quantity >= 50 && quantity < 100)
                         msrp *= list[3] * list[9];
@@ -1107,9 +1181,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     // the case if it is not rush
                     if (quantity < 6)
                         msrp *= list[0];
-                    else if (quantity >= 6 && quantity < 25)
+                    else if (quantity >= 6 && quantity < 24)
                         msrp *= list[1];
-                    else if (quantity >= 25 && quantity < 50)
+                    else if (quantity >= 24 && quantity < 50)
                         msrp *= list[2];
                     else if (quantity >= 50 && quantity < 100)
                         msrp *= list[3];
