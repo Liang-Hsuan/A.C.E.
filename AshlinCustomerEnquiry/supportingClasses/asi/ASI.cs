@@ -18,7 +18,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
         private HttpWebResponse response;
 
         // field for storing auth token
-        private string token;
+        private readonly string token;
 
         /* constructor that retrieve the auth token in order to do the request after */
         public ASI()
@@ -66,9 +66,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             response = (HttpWebResponse)request.GetResponse();
             string result;
             using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-            {
                 result = streamReader.ReadToEnd();
-            }
 
             // set token value
             result = substringMethod(result, "\"", 1);
@@ -100,9 +98,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             // read all the text from JSON response
             string textJSON;
             using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-            {
                 textJSON = streamReader.ReadToEnd();
-            }
 
             #region Data Retrieve
             // start getting data
@@ -156,10 +152,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
         /* a method that substring the given string */
         private static string substringMethod(string original, string startingString, int additionIndex)
         {
-            string copy = original;
-            copy = original.Substring(original.IndexOf(startingString) + additionIndex);
-
-            return copy;
+            return original.Substring(original.IndexOf(startingString) + additionIndex);
         }
 
         /* a method that get the next target token */
@@ -167,9 +160,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
         {
             int i = 0;
             while (text[i] != '"' && text[i] != ',' && text[i] != '}')
-            {
                 i++;
-            }
 
             return text.Substring(0, i);
         }

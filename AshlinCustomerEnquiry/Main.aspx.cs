@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web.UI.WebControls;
@@ -482,18 +483,13 @@ namespace AshlinCustomerEnquiry
 
             #region Error Checking
             // adding quantity list
-            List<int> quantityList = new List<int>();
-            foreach (ListItem item in quantityCheckboxList.Items)
-            {
-                if (item.Selected)
-                    quantityList.Add(Convert.ToInt32(item.Value));
-            }
+            List<int> quantityList = (from ListItem item in quantityCheckboxList.Items where item.Selected select Convert.ToInt32(item.Value)).ToList();
 
             if (firstNameTextbox.Text == "" || lastNameTextbox.Text == "" || address1Textbox.Text == "" || cityTextbox.Text == "" || 
                 provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || skuDropdownlist1.SelectedIndex < 1 || quantityList.Count < 1)
             {
                 string script = "<script>alert(\"Please provide information on all the necessary fields (*)\");</script>";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+                Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
                 return;
             }
             #endregion
@@ -521,12 +517,8 @@ namespace AshlinCustomerEnquiry
              if (skuDropdownlist3.SelectedIndex != 0)
                  orderDetail += "\nSKU 3: " + skuDropdownlist3.SelectedItem + "    " + skuDropdownlist3.SelectedValue;
              orderDetail += "\nInteresting Quantities: ";
-             foreach(ListItem checkbox in quantityCheckboxList.Items)
-             {
-                 if (checkbox.Selected)
-                     orderDetail += checkbox.Value + ",";
-             }
-             if (orderDetail[orderDetail.Length - 1] == ',')
+            orderDetail = quantityCheckboxList.Items.Cast<ListItem>().Where(checkbox => checkbox.Selected).Aggregate(orderDetail, (current, checkbox) => current + (checkbox.Value + ","));
+            if (orderDetail[orderDetail.Length - 1] == ',')
                  orderDetail = orderDetail.Remove(orderDetail.Length - 1);
              orderDetail += "\nDate of Event: " + dateEventTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
 

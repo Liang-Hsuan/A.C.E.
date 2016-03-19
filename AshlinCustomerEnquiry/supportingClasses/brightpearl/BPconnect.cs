@@ -221,9 +221,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         /* a method that substring the given string */
         private static string substringMethod(string original, string startingString, int additionIndex)
         {
-            string copy = original.Substring(original.IndexOf(startingString) + additionIndex);
-
-            return copy;
+            return original.Substring(original.IndexOf(startingString) + additionIndex);
         }
 
         /* a method that get the next target token */
@@ -231,9 +229,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         {
             int i = 0;
             while (text[i] != '"' && text[i] != ',' && text[i] != '}')
-            {
                 i++;
-            }
 
             return text.Substring(0, i);
         }
@@ -314,9 +310,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // read all the text from JSON response
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     textJSON = streamReader.ReadToEnd();
-                }
 
                 // get the number of result
                 textJSON = substringMethod(textJSON, "resultsAvailable", 18);
@@ -385,9 +379,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // read all the text from JSON response
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     textJSON = streamReader.ReadToEnd();
-                }
                 textJSON = substringMethod(textJSON, "resultsAvailable", 18);
                 int number = Convert.ToInt32(getTarget(textJSON));
 
@@ -449,9 +441,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // read all the text from JSON response
                 string textJSON;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     textJSON = streamReader.ReadToEnd();
-                }
 
                 // looping through each customer's postal code to see if the cutomer exist in these IDs
                 for (int i = 0; i < number; i++)
@@ -460,11 +450,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     textJSON = substringMethod(textJSON, "\"contactId\":", 11);
 
                     // get the text only for the current contact id
-                    string copy;
-                    if (textJSON.Contains("contactId"))
-                        copy = textJSON.Remove(textJSON.IndexOf("contactId"));
-                    else
-                        copy = textJSON;
+                    string copy = textJSON.Contains("contactId") ? textJSON.Remove(textJSON.IndexOf("contactId")) : textJSON;
 
                     // postal code get
                     if (copy.Contains("postalCode"))
@@ -521,9 +507,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     // read all the text from JSON response
                     string textJSON;
                     using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                    {
                         textJSON = streamReader.ReadToEnd();
-                    }
+
                     #endregion
 
                     // putting data to BPvalue for each id
@@ -654,25 +639,16 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // read all the text from JSON response
                 string textJSON = "";
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     textJSON = streamReader.ReadToEnd();
-                }
 
                 // the case there is no product exists
-                if (textJSON[textJSON.IndexOf("resultsReturned") + 17] - '0' < 1)
-                {
+                textJSON = substringMethod(textJSON, "resultsReturned", 17);
+                if (Convert.ToInt32(getTarget(textJSON)) < 1)
                     return null;
-                }
 
                 // starting getting product id
-                int index = textJSON.LastIndexOf("results") + 11;
-                int length = index;
-                while (Char.IsNumber(textJSON[length]))
-                {
-                    length++;
-                }
-
-                return textJSON.Substring(index, length - index);
+                textJSON = substringMethod(textJSON, "results", 11);
+                return getTarget(textJSON);
             }
         }
 
@@ -687,11 +663,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             private HttpWebResponse response;
 
             // fields for credentials
-            private string appRef;
-            private string appToken;
+            private readonly string appRef;
+            private readonly string appToken;
             
             // field for price calculation
-            Price price = new Price();
+            private readonly Price price = new Price();
 
             /* constructor to initialize the web request of app reference and app token */
             public PostRequest(string appRef, string appToken)
@@ -712,11 +688,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // get country ISO code
-                string country;
-                if (address.Country.Contains("US"))
-                    country = "USA";
-                else
-                    country = "CAN";
+                string country = address.Country.Contains("US") ? "USA" : "CAN";
 
                 // generate the JSON file for address post
                 string textJSON = "{\"addressLine1\":\"" + address.Address1 + "\",\"addressLine2\":\"" + address.Address2 + "\",\"addressLine3\":\"" + address.City + "\",\"addressLine4\":\"" + address.Province + "\",\"postalCode\":\"" + address.PostalCode + "\",\"countryIsoCode\":\"" + country + "\"}";
@@ -726,17 +698,13 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
-                {
                     requestStream.Write(postBytes, 0, postBytes.Length);
-                }
 
                 // get the response from the server
                 response = (HttpWebResponse)request.GetResponse();
                 string result;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     result = streamReader.ReadToEnd();
-                }
 
                 result = substringMethod(result, ":", 1);
                 return getTarget(result);  //return the addresss ID
@@ -762,17 +730,13 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
-                {
                     requestStream.Write(postBytes, 0, postBytes.Length);
-                }
 
                 // get the response from the server
                 response = (HttpWebResponse)request.GetResponse();
                 string result;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     result = streamReader.ReadToEnd();
-                }
 
                 result = substringMethod(result, ":", 1);
                 return getTarget(result);  //return the contact ID
@@ -815,9 +779,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
-                {
                     requestStream.Write(postBytes, 0, postBytes.Length);
-                }
 
                 // get the response from the server
                 try      // might have server internal error, so do it in try and catch
@@ -831,9 +793,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             
                 string result;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     result = streamReader.ReadToEnd();
-                }
 
                 result = substringMethod(result, ":", 1);
                 return getTarget(result);  //return the order ID
@@ -945,9 +905,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
-                {
                     requestStream.Write(postBytes, 0, postBytes.Length);
-                }
 
                 // get the response from server
                 try
@@ -960,9 +918,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
                 string result;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                {
                     result = streamReader.ReadToEnd();
-                }
 
                 result = substringMethod(result, ":", 1);
                 return getTarget(result);   //return the order row ID
@@ -994,9 +950,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
-                {
                     requestStream.Write(postBytes, 0, postBytes.Length);
-                }
 
                 // get response from the server to see if there has error or not
                 try
@@ -1037,19 +991,17 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
-                {
                     requestStream.Write(postBytes, 0, postBytes.Length);
-                }
 
                 // get the response from the server
-               // try      // might have server internal error, so do it in try and catch
-               // {
+                try      // might have server internal error, so do it in try and catch
+                {
                     response = (HttpWebResponse)request.GetResponse();
-               // }
-                //catch    // HTTP response 500 or 503
-               // {
-                //    return "Error";    // cannot post comment, return error instead
-                //}
+                }
+                catch    // HTTP response 500 or 503
+                {
+                    return "Error";    // cannot post comment, return error instead
+                }
 
                 return "";
             }
@@ -1078,10 +1030,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
             for (int i = 0; i <= 9; i++)
-            {
                 list[i] = reader.GetDouble(i);
-            }
             reader.Close();
+
             // [10] multiplier
             command = new SqlCommand("SELECT [MSRP Multiplier] FROM ref_msrp_multiplier;", connection);
             reader = command.ExecuteReader();
