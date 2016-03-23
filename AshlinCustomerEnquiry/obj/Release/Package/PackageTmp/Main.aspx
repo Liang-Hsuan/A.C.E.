@@ -12,17 +12,6 @@
         .auto-style35 {
             width: 122px;
         }
-        .auto-style71 {
-            width: 100%;
-            height: 37px;
-        }
-        .auto-style72 {
-            width: 231px;
-            height: 35px;
-        }
-        .auto-style92 {
-            width: 100%;
-        }
         .auto-style81 {
             width: 148px;
         }
@@ -442,7 +431,7 @@
     
     </div>
         <asp:Panel ID="customerPanel" runat="server" BackImageUrl="image/wallpaper.jpg">
-            <table class="auto-style92">
+            <table style="width: 100%">
                 <tr>
                     <td class="auto-style81">&nbsp;</td>
                     <td class="auto-style81">&nbsp;</td>
@@ -650,10 +639,10 @@
             
         </asp:Panel>
         <div class="auto-style99">
-            <table class="auto-style71">
+            <table style="width: 100%; height: 37px;">
                 <tr>
                     <td class="auto-style99"></td>
-                    <td class="auto-style72">
+                    <td style="width: 231px;height: 35px;">
                         <asp:RadioButton ID="disableRadioButton" runat="server" AutoPostBack="True" Checked="True" Font-Overline="False" Font-Size="Small" 
                             OnCheckedChanged="disableRadioButton_CheckedChanged" GroupName="enableDisableRadioButtonGroup" TabIndex="48" Text="Disable Editing" />
 &nbsp;

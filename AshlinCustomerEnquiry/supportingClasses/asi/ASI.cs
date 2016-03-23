@@ -58,9 +58,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
 
             // send request
             using (Stream requestStream = request.GetRequestStream())
-            {
                 requestStream.Write(postBytes, 0, postBytes.Length);
-            }
 
             // get the response from the server
             response = (HttpWebResponse)request.GetResponse();
