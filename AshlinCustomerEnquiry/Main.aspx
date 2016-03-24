@@ -89,15 +89,6 @@
             text-align: right;
             height: 24px;
         }
-        .auto-style68 {
-            width: 122px;
-            height: 24px;
-        }
-        .auto-style69 {
-            width: 151px;
-            overflow: auto;
-            height: 24px;
-        }
         .auto-style96 {
             height: 23px;
             text-align: center;
@@ -798,11 +789,11 @@
                         </td>
                         <td class="auto-style66"></td>
                         <td class="auto-style67">&nbsp;</td>
-                        <td class="auto-style68">
+                        <td style="width: 122px;height: 24px">
                             &nbsp;</td>
                         <td class="auto-style66"></td>
                         <td class="auto-style67">&nbsp;</td>
-                        <td class="auto-style69">
+                        <td style="width: 151px;overflow: auto;height: 24px">
                             &nbsp;</td>
                     </tr>
                     <tr>

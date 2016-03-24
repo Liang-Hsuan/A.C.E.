@@ -23,7 +23,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         {
             // initialize API authentication
             SqlConnection authenticationConnection = new SqlConnection(Properties.Settings.Default.ASCMcs);
-            SqlCommand getAuthetication = new SqlCommand("SELECT Field3_Value, Field1_Value FROM ASCM_Credentials WHERE Source = \'Brightpearl\';", authenticationConnection);
+            SqlCommand getAuthetication = new SqlCommand("SELECT Field3_Value, Field1_Value FROM ASCM_Credentials WHERE Source = 'Brightpearl';", authenticationConnection);
             authenticationConnection.Open();
             SqlDataReader reader = getAuthetication.ExecuteReader();
             reader.Read();
@@ -983,8 +983,13 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-app-ref", appRef);
                 request.Headers.Add("brightpearl-account-token", appToken);
 
+                // format comment
+                comment = comment.Replace("\n", " ");
+                comment = comment.Replace("\r", " ");
+                comment = comment.Replace("\t", " ");
+
                 // generate JSON field
-                string textJSON = "[{\"op\":\"add\",\"path\":\"/PCF_ORDERCOM\",\"value\":\"" + comment + "\"}]";
+                string textJSON = "[{\"op\":\"add\",\"path\":\"/PCF_ORDERCOM\",\"value\":\"" + comment.Trim() + "\"}]";
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);

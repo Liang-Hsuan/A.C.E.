@@ -595,15 +595,13 @@ namespace AshlinCustomerEnquiry
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
             {
                 SqlCommand command =
-                    new SqlCommand("SELECT SKU_Ashlin, Short_Description FROM master_SKU_Attributes sku " +
+                    new SqlCommand("SELECT SKU_Ashlin, Short_Description, GiftBox FROM master_SKU_Attributes sku " +
                                    "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
                                    "WHERE sku.Active = \'True\';", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
-                {
-                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1)));
-                }
+                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1) + " - GiftBox: " + reader.GetBoolean(2)));
             }
 
             skuDropdownlist1.DataSource = skuList;

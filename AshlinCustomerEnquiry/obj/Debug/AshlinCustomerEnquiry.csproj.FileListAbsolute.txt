@@ -168,3 +168,37 @@ C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\ACE testi
 C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\ACE testing new version\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.csprojResolveAssemblyReference.cache
 C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\ACE testing new version\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.dll
 C:\Users\Intern1001\Desktop\F15_Intern\Visual Studio project\workplace\ACE testing new version\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.pdb
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\ApplicationInsights.config
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\csc.exe
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CodeAnalysis.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CSharp.Core.targets
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.VisualBasic.Core.targets
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\System.Collections.Immutable.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\System.Reflection.Metadata.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\vbc.exe
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\VBCSCompiler.exe
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\VBCSCompiler.exe.config
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AshlinCustomerEnquiry.dll.config
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AshlinCustomerEnquiry.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AshlinCustomerEnquiry.pdb
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AjaxControlToolkit.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.Agent.Intercept.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.DependencyCollector.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.PerfCounterCollector.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.ServerTelemetryChannel.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.Web.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.WindowsServer.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.ApplicationInsights.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.DependencyCollector.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.ServerTelemetryChannel.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.Web.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.WindowsServer.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.ApplicationInsights.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.csprojResolveAssemblyReference.cache
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.dll
+Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.pdb
