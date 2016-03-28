@@ -98,37 +98,33 @@ namespace AshlinCustomerEnquiry
         /* the event for auto and manual radio button clicks */
         protected void disableRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (disableRadioButton.Checked)
-            {
-                firstNameTextbox.Enabled = false;
-                lastNameTextbox.Enabled = false;
-                phoneTextbox.Enabled = false;
-                emailTextbox.Enabled = false;
-                companyTextbox.Enabled = false;
-                address1Textbox.Enabled = false;
-                address2Textbox.Enabled = false;
-                cityTextbox.Enabled = false;
-                provinceTextbox.Enabled = false;
-                postalCodeTextbox.Enabled = false;
-                countryTextbox.Enabled = false;
-            }
+            if (!disableRadioButton.Checked) return;
+            firstNameTextbox.Enabled = false;
+            lastNameTextbox.Enabled = false;
+            phoneTextbox.Enabled = false;
+            emailTextbox.Enabled = false;
+            companyTextbox.Enabled = false;
+            address1Textbox.Enabled = false;
+            address2Textbox.Enabled = false;
+            cityTextbox.Enabled = false;
+            provinceTextbox.Enabled = false;
+            postalCodeTextbox.Enabled = false;
+            countryTextbox.Enabled = false;
         }
         protected void enableRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (enableRadioButton.Checked)
-            {
-                firstNameTextbox.Enabled = true;
-                lastNameTextbox.Enabled = true;
-                phoneTextbox.Enabled = true;
-                emailTextbox.Enabled = true;
-                companyTextbox.Enabled = true;
-                address1Textbox.Enabled = true;
-                address2Textbox.Enabled = true;
-                cityTextbox.Enabled = true;
-                provinceTextbox.Enabled = true;
-                postalCodeTextbox.Enabled = true;
-                countryTextbox.Enabled = true;
-            }
+            if (!enableRadioButton.Checked) return;
+            firstNameTextbox.Enabled = true;
+            lastNameTextbox.Enabled = true;
+            phoneTextbox.Enabled = true;
+            emailTextbox.Enabled = true;
+            companyTextbox.Enabled = true;
+            address1Textbox.Enabled = true;
+            address2Textbox.Enabled = true;
+            cityTextbox.Enabled = true;
+            provinceTextbox.Enabled = true;
+            postalCodeTextbox.Enabled = true;
+            countryTextbox.Enabled = true;
         }
         #endregion
 
@@ -177,8 +173,8 @@ namespace AshlinCustomerEnquiry
                 if (value == null)
                 {
                     // inform user there is not existing cusomter on the database from the company
-                    string script = "<script>alert(\"There is no customer exist from this company. Please enter information manually\");</script>";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+                    const string script = "<script>alert(\"There is no customer exist from this company. Please enter information manually\");</script>";
+                    Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
 
                     // show company info on the form
                     phoneTextbox.Text = asiValue.Phone;
@@ -255,7 +251,7 @@ namespace AshlinCustomerEnquiry
             // the case if user haven't provide any thing about customer
             if (firstName.Equals("") && lastName.Equals("") && company.Equals("") && email.Equals(""))
             {
-                string script = "<script>alert(\"Please provide some information about the customer\");</script>";
+                const string script = "<script>alert(\"Please provide some information about the customer\");</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
                 searchPopup.Show();
 
@@ -292,12 +288,7 @@ namespace AshlinCustomerEnquiry
 
             // allocating data
             if (list[0] != null & list[1] != null)
-            {
-                if (list[0].Length < list[1].Length)
-                    value = list[0];
-                else
-                    value = list[1];
-            }
+                value = list[0].Length < list[1].Length ? list[0] : list[1];
             else if (list[0] == null)
                 value = list[1];
             else if (list[1] == null)
@@ -307,13 +298,13 @@ namespace AshlinCustomerEnquiry
             // the case if there is no result or there are too many result
             if (value == null)
             {
-                string script = "<script>alert(\"There is no result of this customer. Please enter information manually\");</script>";
+                const string script = "<script>alert(\"There is no result of this customer. Please enter information manually\");</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
                 searchPopup.Show();
 
                 return;
             }
-            else if (value[0].FirstName == "-1")
+            if (value[0].FirstName == "-1")
             {
                 tooManyResultLabel.Visible = true;
                 searchPopup.Show();
@@ -488,7 +479,7 @@ namespace AshlinCustomerEnquiry
             if (firstNameTextbox.Text == "" || lastNameTextbox.Text == "" || address1Textbox.Text == "" || cityTextbox.Text == "" || 
                 provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || skuDropdownlist1.SelectedIndex < 1 || quantityList.Count < 1)
             {
-                string script = "<script>alert(\"Please provide information on all the necessary fields (*)\");</script>";
+                const string script = "<script>alert(\"Please provide information on all the necessary fields (*)\");</script>";
                 Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
                 return;
             }
@@ -539,8 +530,10 @@ namespace AshlinCustomerEnquiry
 
             #region Brightpearl
             // adding sku list
-            Dictionary<string, string> skuList = new Dictionary<string, string>();
-            skuList.Add(skuDropdownlist1.SelectedItem.ToString(), skuDropdownlist1.SelectedValue);
+            Dictionary<string, string> skuList = new Dictionary<string, string>
+            {
+                {skuDropdownlist1.SelectedItem.ToString(), skuDropdownlist1.SelectedValue}
+            };
             if (skuDropdownlist2.SelectedIndex > 0)
                 skuList.Add(skuDropdownlist2.SelectedItem.ToString(), skuDropdownlist2.SelectedValue);
             if (skuDropdownlist3.SelectedIndex > 0)

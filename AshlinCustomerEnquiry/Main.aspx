@@ -99,22 +99,8 @@
         .wizard:hover {
             background-color: lightblue;
         }
-        .auto-style101 {
-            font-size: medium;
-            height: 23px;
-            text-align: right;
-        }
         .auto-style103 {
             height: 23px;
-        }
-        .auto-style104 {
-            font-size: small;
-            height: 23px;
-            width: 121px;
-        }
-        .auto-style105 {
-            height: 23px;
-            text-align: right;
         }
         .quote:hover {
             background-color: lightblue;
@@ -320,14 +306,6 @@
             width: 125px;
             text-align: right;
             height: 23px;
-        }
-        .auto-style237 {
-            width: 121px;
-            height: 40px;
-        }
-        .auto-style238 {
-            width: 15px;
-            height: 40px;
         }
         .auto-style240 {
             width: 122px;
@@ -679,8 +657,8 @@
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
-                        <td class="auto-style101"><span style="color: #ffffff">Rush Order :</span></td>
-                        <td class="auto-style104">
+                        <td style="font-size: medium;height: 23px;text-align: right"><span style="color: #ffffff">Rush Order :</span></td>
+                        <td style="font-size: small;height: 23px;width: 121px">
                             <asp:CheckBoxList ID="rushCheckboxList" runat="server" Height="20px" Width="151px" CellPadding="0" CellSpacing="0" Font-Size="Small" RepeatDirection="Horizontal" TabIndex="50" ForeColor="White">
                                 <asp:ListItem Value="true">Yes</asp:ListItem>
                                 <asp:ListItem Value="false">No</asp:ListItem>
@@ -691,7 +669,7 @@
                         <td class="auto-style103"></td>
                         <td class="auto-style103"></td>
                         <td class="auto-style41"></td>
-                        <td class="auto-style105">
+                        <td style="height: 23px;text-align: right">
                             <span style="color: #ffffff">With Logo :</span></td>
                         <td class="auto-style103">
                             <asp:CheckBoxList ID="logoCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="20px" RepeatDirection="Horizontal" Width="151px" TabIndex="51" ForeColor="White">
@@ -865,7 +843,7 @@
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style64" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" ForeColor="White" TabIndex="63" Text="New Quote Created !" Visible="False"></asp:Label>
+                        <td class="auto-style64" colspan="2"><asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" ForeColor="White" TabIndex="63" Text="New Quote Created !" Visible="False"></asp:Label>
                         </td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>

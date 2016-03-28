@@ -15,8 +15,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
     public class BPconnect
     {
         // fields for brightpearl integration
-        private GetRequest get;
-        private PostRequest post;
+        private readonly GetRequest get;
+        private readonly PostRequest post;
 
         /* constructor that initialize authentication for request classes */
         public BPconnect()
@@ -92,13 +92,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 #region Customer Exist Case
                 // post order
                 string orderId = post.postOrderRequest(contactId, value);
-                if (orderId == "Error")
+                while (orderId == "Error")
                 {
-                    do
-                    {
-                        Thread.Sleep(5000);
-                        orderId = post.postOrderRequest(contactId, value);
-                    } while (orderId == "Error");
+                    Thread.Sleep(5000);
+                    orderId = post.postOrderRequest(contactId, value);
                 }
 
                 // post order row and reserve the item
@@ -108,14 +105,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     {
                         // post order row
                         string orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        if (orderRowId == "Error")
+                        if (orderRowId != "Error") continue;
+                        do
                         {
-                            do
-                            {
-                                Thread.Sleep(5000);
-                                orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                            } while (orderRowId == "Error");
-                        }
+                            Thread.Sleep(5000);
+                            orderRowId = post.postOrderRowRequest(orderId, value, i, j);
+                        } while (orderRowId == "Error");
 
                         // post reservation (not doing it right now)
                         /* string reservation = post.postReservationRequest(orderId, orderRowId, value, i , j);
@@ -130,16 +125,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     }
                 }
 
-                //post comment
+                // post comment
                 string comment = post.patchComment(orderId, value.Comment);
-                if (comment == "Error")
+                while (comment == "Error")
                 {
-                    do
-                    {
-                        Thread.Sleep(5000);
-                        comment = post.patchComment(orderId, value.Comment);
-                    } while (comment == "Error");
+                    Thread.Sleep(5000);
+                    comment = post.patchComment(orderId, value.Comment);
                 }
+
                 #endregion
             }
             else
@@ -151,13 +144,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // post order
                 string orderId = post.postOrderRequest(contactId, value);
-                if (orderId == "Error")
+                while (orderId == "Error")
                 {
-                    do
-                    {
-                        Thread.Sleep(5000);
-                        orderId = post.postOrderRequest(contactId, value);
-                    } while (orderId == "Error");
+                    Thread.Sleep(5000);
+                    orderId = post.postOrderRequest(contactId, value);
                 }
 
                 // post order row and reserve the item
@@ -167,14 +157,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     {
                         // post order row
                         string orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        if (orderRowId == "Error")
+                        if (orderRowId != "Error") continue;
+                        do
                         {
-                            do
-                            {
-                                Thread.Sleep(5000);
-                                orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                            } while (orderRowId == "Error");
-                        }
+                            Thread.Sleep(5000);
+                            orderRowId = post.postOrderRowRequest(orderId, value, i, j);
+                        } while (orderRowId == "Error");
 
                         // post reservation (not doing it right now)
                         /* string reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
@@ -191,14 +179,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 //post comment
                 string comment = post.patchComment(orderId, value.Comment);
-                if (comment == "Error")
+                while (comment == "Error")
                 {
-                    do
-                    {
-                        Thread.Sleep(5000);
-                        comment = post.patchComment(orderId, value.Comment);
-                    } while (comment == "Error");
-                }
+                    Thread.Sleep(5000);
+                    comment = post.patchComment(orderId, value.Comment);
+                };
+
                 #endregion
             }
         }
@@ -233,27 +219,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             return text.Substring(0, i);
         }
-
-        /* a method that replace the space with %20 from the given string */
-        private static string replaceSpace(string englishString)
-        {
-            List<char> englishList = new List<char>();
-
-            // replace space with %20
-            foreach (char ch in englishString)
-            {
-                if (ch == ' ')
-                {
-                    englishList.Add('%');
-                    englishList.Add('2');
-                    englishList.Add('0');
-                }
-                else
-                    englishList.Add(ch);
-            }
-
-            return englishString;
-        }
         #endregion
 
         /* 
@@ -267,8 +232,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             private HttpWebResponse response;
 
             // fields for credentials
-            private string appRef;
-            private string appToken;
+            private readonly string appRef;
+            private readonly string appToken;
 
             /* constructor to initialize the web request of app reference and app token */
             public GetRequest(string appRef, string appToken)
@@ -356,12 +321,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                         uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?primaryEmail=" + email;
                         break;
                     case 2:
-                        company = replaceSpace(company);
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?companyName=" + company;
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?companyName=" + company.Replace(" ", "%20");
                         break;
                     case 3:
-                        company = replaceSpace(company);
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?primaryEmail=" + email + "&companyName=" + company;
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?primaryEmail=" + email + "&companyName=" + company.Replace(" ", "%20");
                         break;
                     default:
                         return null;
@@ -508,7 +471,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     string textJSON;
                     using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
                         textJSON = streamReader.ReadToEnd();
-
                     #endregion
 
                     // putting data to BPvalue for each id
@@ -529,11 +491,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                         value.LastName = getTarget(textJSON);
 
                         // get the text only for the current contact id
-                        string copy;
-                        if (textJSON.Contains("contactId"))
-                            copy = textJSON.Remove(textJSON.IndexOf("contactId"));
-                        else
-                            copy = textJSON;
+                        string copy = textJSON.Contains("contactId") ? textJSON.Remove(textJSON.IndexOf("contactId")) : textJSON;
 
                         // address 1 get
                         if (copy.Contains("addressLine1"))
@@ -679,7 +637,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             /* post new address to API */
             public string postAddressRequest(BPvalues address)
             {
-                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/postal-address";
+                const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/postal-address";
 
                 request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = "POST";
@@ -745,7 +703,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             /* post new order to API */
             public string postOrderRequest(string contactID, BPvalues value)
             {
-                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order";
+                const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order";
 
                 request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = "POST";
