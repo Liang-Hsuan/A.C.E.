@@ -202,3 +202,37 @@ Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microso
 Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.csprojResolveAssemblyReference.cache
 Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.dll
 Z:\Online\IT DEVELOPMENT\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.pdb
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\ApplicationInsights.config
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\csc.exe
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\vbc.exe
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\VBCSCompiler.exe
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AshlinCustomerEnquiry.dll.config
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AshlinCustomerEnquiry.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AshlinCustomerEnquiry.pdb
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\AjaxControlToolkit.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.Web.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.Web.xml
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.csprojResolveAssemblyReference.cache
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.dll
+C:\Users\Intern1001\Desktop\W16_Intern\Visual Studio project\workplace\AshlinCustomerEnquiry\AshlinCustomerEnquiry\obj\Debug\AshlinCustomerEnquiry.pdb

@@ -534,10 +534,18 @@ namespace AshlinCustomerEnquiry
             {
                 {skuDropdownlist1.SelectedItem.ToString(), skuDropdownlist1.SelectedValue}
             };
-            if (skuDropdownlist2.SelectedIndex > 0)
-                skuList.Add(skuDropdownlist2.SelectedItem.ToString(), skuDropdownlist2.SelectedValue);
-            if (skuDropdownlist3.SelectedIndex > 0)
-                skuList.Add(skuDropdownlist3.SelectedItem.ToString(), skuDropdownlist3.SelectedValue);
+            try
+            {
+                if (skuDropdownlist2.SelectedIndex > 0)
+                    skuList.Add(skuDropdownlist2.SelectedItem.ToString(), skuDropdownlist2.SelectedValue);
+            }
+            catch { }
+            try
+            {
+                if (skuDropdownlist3.SelectedIndex > 0)
+                    skuList.Add(skuDropdownlist3.SelectedItem.ToString(), skuDropdownlist3.SelectedValue);
+            }
+            catch { }
 
             // asssign boolean values
             bool rush; bool logo;

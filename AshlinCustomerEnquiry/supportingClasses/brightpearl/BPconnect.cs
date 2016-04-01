@@ -987,7 +987,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             // [0] 1 net standard, [1] 6 net standard, [2] 24 net standard, [3] 50 net standard, [4] 100 net standard, [5] 250 net standard, [6] 500 net standard, [7] 1000 net standard, [8] 2500 net standard, [9] rush net
             SqlCommand command = new SqlCommand("SELECT [1_Net_Standard Delivery], [6_Net_Standard Delivery], [24_Net_Standard Delivery], [50_Net_Standard Delivery], [100_Net_Standard Delivery], [250_Net_Standard Delivery], [500_Net_Standard Delivery], [1000_Net_Standard Delivery], [2500_Net_Standard Delivery], [RUSH_Net_25_wks] "
-                                              + "FROM ref_discount_matrix;", connection);
+                                              + "FROM ref_discount_matrix", connection);
 
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
@@ -997,7 +997,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             reader.Close();
 
             // [10] multiplier
-            command = new SqlCommand("SELECT [MSRP Multiplier] FROM ref_msrp_multiplier;", connection);
+            command.CommandText = "SELECT [MSRP Multiplier] FROM ref_msrp_multiplier";
             reader = command.ExecuteReader();
             reader.Read();
             list[10] = reader.GetDouble(0);
