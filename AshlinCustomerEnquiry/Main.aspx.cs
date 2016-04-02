@@ -299,7 +299,7 @@ namespace AshlinCustomerEnquiry
             if (value == null)
             {
                 const string script = "<script>alert(\"There is no result of this customer. Please enter information manually\");</script>";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+                Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
                 searchPopup.Show();
 
                 return;

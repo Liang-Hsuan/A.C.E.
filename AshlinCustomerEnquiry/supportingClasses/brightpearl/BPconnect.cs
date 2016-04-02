@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Web.Script.Serialization;
 
 namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 {
@@ -50,8 +51,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             if (idSet[0] == "-1")
             {
                 BPvalues[] invalid = new BPvalues[1];
-                invalid[0] = new BPvalues();
-                invalid[0].FirstName = "-1";
+                invalid[0] = new BPvalues {FirstName = "-1"};
                 return invalid;
             }
 
@@ -71,8 +71,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             if (idSet[0] == "-1")
             {
                 BPvalues[] invalid = new BPvalues[1];
-                invalid[0] = new BPvalues();
-                invalid[0].FirstName = "-1";
+                invalid[0] = new BPvalues {FirstName = "-1"};
                 return invalid;
             }
 
@@ -92,7 +91,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 #region Customer Exist Case
                 // post order
                 string orderId = post.postOrderRequest(contactId, value);
-                while (orderId == "Error")
+                while (post.HasError)
                 {
                     Thread.Sleep(5000);
                     orderId = post.postOrderRequest(contactId, value);
@@ -105,34 +104,22 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     {
                         // post order row
                         string orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        if (orderRowId != "Error") continue;
+                        if (!post.HasError) continue;
                         do
                         {
                             Thread.Sleep(5000);
                             orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        } while (orderRowId == "Error");
-
-                        // post reservation (not doing it right now)
-                        /* string reservation = post.postReservationRequest(orderId, orderRowId, value, i , j);
-                        if (reservation == "Error")
-                        {
-                            do
-                            {
-                                Thread.Sleep(5000);
-                                reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
-                            } while (reservation == "Error");
-                        } */
+                        } while (post.HasError);
                     }
                 }
 
                 // post comment
-                string comment = post.patchComment(orderId, value.Comment);
-                while (comment == "Error")
+                post.patchComment(orderId, value.Comment);
+                while (post.HasError)
                 {
                     Thread.Sleep(5000);
-                    comment = post.patchComment(orderId, value.Comment);
+                    post.patchComment(orderId, value.Comment);
                 }
-
                 #endregion
             }
             else
@@ -144,7 +131,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 // post order
                 string orderId = post.postOrderRequest(contactId, value);
-                while (orderId == "Error")
+                while (post.HasError)
                 {
                     Thread.Sleep(5000);
                     orderId = post.postOrderRequest(contactId, value);
@@ -157,34 +144,22 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     {
                         // post order row
                         string orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        if (orderRowId != "Error") continue;
+                        if (!post.HasError) continue;
                         do
                         {
                             Thread.Sleep(5000);
                             orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        } while (orderRowId == "Error");
-
-                        // post reservation (not doing it right now)
-                        /* string reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
-                        if (reservation == "Error")
-                        {
-                            do
-                            {
-                                Thread.Sleep(5000);
-                                reservation = post.postReservationRequest(orderId, orderRowId, value, i, j);
-                            } while (reservation == "Error");
-                        } */
+                        } while (post.HasError);
                     }
                 }
 
                 //post comment
-                string comment = post.patchComment(orderId, value.Comment);
-                while (comment == "Error")
+                post.patchComment(orderId, value.Comment);
+                while (post.HasError)
                 {
                     Thread.Sleep(5000);
-                    comment = post.patchComment(orderId, value.Comment);
-                };
-
+                    post.patchComment(orderId, value.Comment);
+                }
                 #endregion
             }
         }
@@ -270,16 +245,18 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Method = "GET";
 
                 // get the response from the server
-                string textJSON;
+                string textJson;
                 response = (HttpWebResponse)request.GetResponse();
 
                 // read all the text from JSON response
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                    textJSON = streamReader.ReadToEnd();
+                    textJson = streamReader.ReadToEnd();
+
+                // deserialize json to key value
+                var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
 
                 // get the number of result
-                textJSON = substringMethod(textJSON, "resultsAvailable", 18);
-                int number = Convert.ToInt32(getTarget(textJSON));
+                int number = info["response"]["metaData"]["resultsAvailable"];
 
                 // the case there is no customer exists or the result is too many
                 if (number < 1)
@@ -289,23 +266,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     string[] invalid = { "-1" };
                     return invalid;
                 }
-                    
 
-                // start getting customer id
-                // this is for the first id
+                // start getting id
                 string[] list = new string[number];
-                textJSON = substringMethod(textJSON, "results\":", 11);
-                list[0] = getTarget(textJSON);
-                textJSON = substringMethod(textJSON, "],[", 3);
-
-                // proceed to next token and get the id (if have more than 1)
-                for (int i = 1; i < number; i++)
-                {
-                    list[i] = getTarget(textJSON);
-
-                    // proceed to next token
-                    textJSON = substringMethod(textJSON, "],[", 3);
-                }
+                for (int i = 0; i < number; i++)
+                    list[i] = info["response"]["results"][i][0].ToString();
 
                 return list;
             }
@@ -337,16 +302,20 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Method = "GET";
 
                 // get the response from the server
-                string textJSON;
+                string textJson;
                 response = (HttpWebResponse)request.GetResponse();
 
                 // read all the text from JSON response
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                    textJSON = streamReader.ReadToEnd();
-                textJSON = substringMethod(textJSON, "resultsAvailable", 18);
-                int number = Convert.ToInt32(getTarget(textJSON));
+                    textJson = streamReader.ReadToEnd();
 
-                // the case there is no customer exists or there are too many results
+                // deserialize json to key value
+                var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
+
+                // get the number of result
+                int number = info["response"]["metaData"]["resultsAvailable"];
+
+                // the case there is no customer exists or the result is too many
                 if (number < 1)
                     return null;
                 if (number > 500)
@@ -355,21 +324,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     return invalid;
                 }
 
-                // start getting customer id
-                // this is for the first id
+                // start getting id
                 string[] list = new string[number];
-                textJSON = substringMethod(textJSON, "results\":", 11);
-                list[0] = getTarget(textJSON);
-                textJSON = substringMethod(textJSON, "],[", 3);
-
-                // proceed to next token and get the id (if have more than 1)
-                for (int i = 1; i < number; i++)
-                {
-                    list[i] = getTarget(textJSON);
-
-                    // proceed to next token
-                    textJSON = substringMethod(textJSON, "],[", 3);
-                }
+                for (int i = 0; i < number; i++)
+                    list[i] = info["response"]["results"][i][0].ToString();
 
                 return list;
             }
@@ -402,29 +360,23 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 response = (HttpWebResponse)request.GetResponse();
 
                 // read all the text from JSON response
-                string textJSON;
+                string textJson;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                    textJSON = streamReader.ReadToEnd();
+                    textJson = streamReader.ReadToEnd();
+
+                // deserialize json to key value
+                var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
 
                 // looping through each customer's postal code to see if the cutomer exist in these IDs
                 for (int i = 0; i < number; i++)
                 {
-                    // cut the string to the cloest id 
-                    textJSON = substringMethod(textJSON, "\"contactId\":", 11);
+                    // get address id to get postal code
+                    string address = info["response"][i]["postAddressIds"]["DEF"].ToString();
 
-                    // get the text only for the current contact id
-                    string copy = textJSON.Contains("contactId") ? textJSON.Remove(textJSON.IndexOf("contactId")) : textJSON;
+                    // get postal code
+                    address = info["response"][0]["postalAddresses"][address]["postalCode"];
 
-                    // postal code get
-                    if (copy.Contains("postalCode"))
-                    {
-                        copy = substringMethod(copy, "postalCode", 13);
-                        copy = getTarget(copy);
-                    }
-                    else
-                        copy = "";
-
-                    if (postalCode.Replace(" ", string.Empty) == copy.Replace(" ", string.Empty))
+                    if (string.Equals(postalCode.Replace(" ", string.Empty), address.Replace(" ", string.Empty), StringComparison.CurrentCultureIgnoreCase))
                         return list[i];
                 }
 
@@ -433,7 +385,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             /* a method that get the detail info about the customer */
             public BPvalues[] getCustomerDetail(string[] customerId)
-            { 
+            {
+                // input error check
+                if (customerId == null) throw new ArgumentNullException(nameof(customerId));
+
                 // local fields for storing data
                 List<BPvalues> valueList = new List<BPvalues>();
                 int already = 0;
@@ -468,110 +423,39 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     response = (HttpWebResponse)request.GetResponse();
 
                     // read all the text from JSON response
-                    string textJSON;
+                    string textJson;
                     using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                        textJSON = streamReader.ReadToEnd();
+                        textJson = streamReader.ReadToEnd();
                     #endregion
+
+                    // deserialize json to key value
+                    var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
 
                     // putting data to BPvalue for each id
                     for (int j = 0; j < current - 1; j++)
                     {
-                        BPvalues value = new BPvalues();
+                        BPvalues value = new BPvalues
+                        {
+                            FirstName = info["response"][j]["firstName"],
+                            LastName = info["response"][j]["lastName"]
+                        };
 
                         #region Data Retrieve
-                        // starting putting data to the BPvalues object, initialize a BPvalues object first
-                        int index;
+                        // get address id to get postal code
+                        string addressId = info["response"][j]["postAddressIds"]["DEF"].ToString();
 
-                        // first name get
-                        textJSON = substringMethod(textJSON, "firstName", 12);
-                        value.FirstName = getTarget(textJSON);
-
-                        // last name get
-                        textJSON = substringMethod(textJSON, "lastName", 11);
-                        value.LastName = getTarget(textJSON);
-
-                        // get the text only for the current contact id
-                        string copy = textJSON.Contains("contactId") ? textJSON.Remove(textJSON.IndexOf("contactId")) : textJSON;
-
-                        // address 1 get
-                        if (copy.Contains("addressLine1"))
-                        {
-                            copy = substringMethod(copy, "addressLine1", 15);
-                            value.Address1 = getTarget(copy);
-                        }
-
-                        // address 2 get
-                        if (copy.Contains("addressLine2"))
-                        {
-                            copy = substringMethod(copy, "addressLine2", 15);
-                            value.Address2 = getTarget(copy);
-                        }
-
-                        // city get
-                        if (copy.Contains("addressLine3"))
-                        {
-                            copy = substringMethod(copy, "addressLine3", 15);
-                            value.City = getTarget(copy);
-                        }
-
-                        // province get
-                        if (copy.Contains("addressLine4"))
-                        {
-                            copy = substringMethod(copy, "addressLine4", 15);
-                            value.Province = getTarget(copy);
-                        }
-
-                        // postal code get
-                        if (copy.Contains("postalCode"))
-                        {
-                            copy = substringMethod(copy, "postalCode", 13);
-                            value.PostalCode = getTarget(copy);
-                        }
-
-                        // country get
-                        if (copy.Contains("countryIsoCode"))
-                        {
-                            copy = substringMethod(copy, "countryIsoCode", 17);
-                            value.Country = getTarget(copy);
-                        }
-
-                        // email get
-                        int length;
-                        if (copy[copy.IndexOf("emails") + 9] != '}')
-                        {
-                            copy = substringMethod(copy, "emails", 7);
-                            index = copy.IndexOf("email") + 8;
-                            length = index;
-                            while (copy[length] != '"')
-                                length++;
-                            value.Email = copy.Substring(index, length - index);
-                        }
-
-                        // phone get
-                        if (copy[copy.IndexOf("telephones") + 13] != '}')
-                        {
-                            copy = substringMethod(copy, "telephones", 11);
-                            index = copy.IndexOf("PRI") + 6;
-                            length = index;
-                            while (copy[length] != '"')
-                                length++;
-                            value.Phone = copy.Substring(index, length - index);
-                        }
-
-                        // company get
-                        copy = substringMethod(copy, "organisation", 13);
-                        if (copy.Contains("name"))
-                        {
-                            index = copy.IndexOf("name") + 7;
-                            length = index;
-                            while (copy[length] != '"')
-                                length++;
-                            value.Company = copy.Substring(index, length - index);
-                        }
+                        // get postal code
+                        try { value.Address1 = info["response"][j]["postalAddresses"][addressId]["addressLine1"]; } catch { }
+                        try { value.Address2 = info["response"][j]["postalAddresses"][addressId]["addressLine2"]; } catch { }
+                        try { value.City = info["response"][j]["postalAddresses"][addressId]["addressLine3"]; } catch { }
+                        try { value.Province = info["response"][j]["postalAddresses"][addressId]["addressLine4"]; } catch { }
+                        try { value.PostalCode = info["response"][j]["postalAddresses"][addressId]["postalCode"]; } catch { }
+                        try { value.Country = info["response"][j]["postalAddresses"][addressId]["countryIsoCode"]; } catch { }
+                        try { value.Email = info["response"][j]["communication"]["emails"]["PRI"]["email"]; } catch {  }
+                        try { value.Phone = info["response"][j]["communication"]["telephones"]["PRI"]; } catch { }
+                        try { value.Company = info["response"][j]["organisation"]["name"]; } catch { }
                         #endregion
 
-                        // final correction and adding
-                        textJSON = substringMethod(textJSON, "contactId", 10);
                         valueList.Add(value);
                     }
                 }
@@ -595,18 +479,15 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 response = (HttpWebResponse)request.GetResponse();
 
                 // read all the text from JSON response
-                string textJSON = "";
+                string textJson;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                    textJSON = streamReader.ReadToEnd();
+                    textJson = streamReader.ReadToEnd();
+
+                // deserialize json to key value
+                var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
 
                 // the case there is no product exists
-                textJSON = substringMethod(textJSON, "resultsReturned", 17);
-                if (Convert.ToInt32(getTarget(textJSON)) < 1)
-                    return null;
-
-                // starting getting product id
-                textJSON = substringMethod(textJSON, "results", 11);
-                return getTarget(textJSON);
+                return info["response"]["metaData"]["resultsAvailable"] < 1 ? null : info["response"]["results"][0][0].ToString();
             }
         }
 
@@ -616,6 +497,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         [Serializable()]
         private class PostRequest
         {
+            #region Fields Declaration
             // fields for web request
             private HttpWebRequest request;
             private HttpWebResponse response;
@@ -626,6 +508,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             // field for getting price information
             private readonly Price price = new Price();
+
+            // field for error indication
+            public bool HasError { get; set; }
+            #endregion
 
             /* constructor to initialize the web request of app reference and app token */
             public PostRequest(string appRef, string appToken)
@@ -703,6 +589,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             /* post new order to API */
             public string postOrderRequest(string contactID, BPvalues value)
             {
+                // set has error to false
+                HasError = false;
+
                 const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order";
 
                 request = (HttpWebRequest)WebRequest.Create(uri);
@@ -746,7 +635,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
                 catch    // HTTP response 500 or 503
                 {
-                    return "Error";    // cannot post order, return error instead
+                    HasError = true; // cannot post order, set has error to true
+                    return null;
                 }
             
                 string result;
@@ -760,6 +650,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             /* post new order row to API */
             public string postOrderRowRequest(string orderID, BPvalues value, int skuIndex, int quantityIndex)
             {
+                // set has error to false
+                HasError = false;
+
                 // get product id
                 GetRequest get = new GetRequest(appRef, appToken);
                 string productId = get.getProductId(value.SKU[skuIndex]);
@@ -872,7 +765,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
                 catch
                 {
-                    return "Error";        // 500 server internal error or 503 Server Unavailable
+                    HasError = true;
+                    return null;        // 500 server internal error or 503 Server Unavailable
                 }
                 string result;
                 using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
@@ -883,8 +777,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post reservation request to API and return the message*/
-            public string postReservationRequest(string orderID, string orderRowID, BPvalues value, int skuIndex, int quantityIndex)
+            public void postReservationRequest(string orderID, string orderRowID, BPvalues value, int skuIndex, int quantityIndex)
             {
+                // set has error to false
+                HasError = false;
+
                 // get product id
                 GetRequest get = new GetRequest(appRef, appToken);
                 string productId = get.getProductId(value.SKU[skuIndex]);
@@ -901,7 +798,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 if (productId != null)
                     textJSON = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowID + "\",\"quantity\":\"" + value.Quantity[quantityIndex] + "\"}]}";
                 else
-                    return null;
+                    return;
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
@@ -920,19 +817,18 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                     if (e.Status == WebExceptionStatus.ProtocolError)
                     {
                         response = e.Response as HttpWebResponse;
-                        if ((int)response.StatusCode == 503)
-                        {
-                            return "Error";    // web server 503 server unavailable
-                        }
+                        if ((int) response.StatusCode == 503)
+                            HasError = true; // web server 503 server unavailable
                     }
                 }
-
-                return null;
             }
 
             /* patch comment custom field request */
-            public string patchComment(string orderId, string comment)
+            public void patchComment(string orderId, string comment)
             {
+                // set has error to false
+                HasError = false;
+
                 string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order/" + orderId + "/custom-field";
 
                 request = (HttpWebRequest)WebRequest.Create(uri);
@@ -963,10 +859,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
                 catch    // HTTP response 500 or 503
                 {
-                    return "Error";    // cannot post comment, return error instead
+                    HasError = true; // cannot post comment, set has error to true
                 }
-
-                return "";
             }
         }
     }

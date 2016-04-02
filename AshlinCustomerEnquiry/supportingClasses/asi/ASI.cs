@@ -1,9 +1,11 @@
 ﻿using AshlinCustomerEnquiry.supportingClasses.brightpearl;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace AshlinCustomerEnquiry.supportingClasses.asi
 {
@@ -67,8 +69,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
                 result = streamReader.ReadToEnd();
 
             // set token value
-            result = substringMethod(result, "\"", 1);
-            token = getTarget(result);
+            token = result.Substring(1, result.Length - 2);
         }
 
         /* a method that return company info from the given asi number */
@@ -94,74 +95,27 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             }
 
             // read all the text from JSON response
-            string textJSON;
+            string textJson;
             using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                textJSON = streamReader.ReadToEnd();
+                textJson = streamReader.ReadToEnd();
+
+            // deserialize json to key value
+            var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
 
             #region Data Retrieve
             // start getting data
-            // company
-            textJSON = substringMethod(textJSON, "\"Name\"", 8);
-            string company = getTarget(textJSON);
-
-            // email
-            textJSON = substringMethod(textJSON, "\"Address\"", 11);
-            string email = getTarget(textJSON);
-
-            // phone
-            textJSON = substringMethod(textJSON, "\"PhoneNumber\"", 15);
-            string phone = getTarget(textJSON);
-            if (phone == "null" || phone == "ull")
-                phone = "";
-
-            // address1
-            textJSON = substringMethod(textJSON, "\"AddressLine1\"", 16);
-            string address1 = getTarget(textJSON);
-
-            // address 2
-            textJSON = substringMethod(textJSON, "\"AddressLine2\"", 16);
-            string address2 = getTarget(textJSON);
-            if (address2 == "null" || address2 == "ull")
-                address2 = "";
-
-            // city
-            textJSON = substringMethod(textJSON, "\"City\"", 8);
-            string city = getTarget(textJSON);
-
-            // province
-            textJSON = substringMethod(textJSON, "\"State\"", 9);
-            string province = getTarget(textJSON);
-
-            // postal code 
-            textJSON = substringMethod(textJSON, "\"ZipCode\"", 11);
-            string postalCode = getTarget(textJSON);
-
-            // country
-            textJSON = substringMethod(textJSON, "\"CountryCode\"", 15);
-            string country = getTarget(textJSON);
-            if (country == "null" || country == "ull")
-                country = "";
+            string name = info["CompanyDetails"]["Name"];
+            string phone = info["CompanyDetails"]["Phones"][0]["PhoneNumber"];
+            string email = info["CompanyDetails"]["Emails"][0]["Address"];
+            string address1 = info["CompanyDetails"]["Addresses"][0]["AddressLine1"];
+            string address2 = info["CompanyDetails"]["Addresses"][0]["AddressLine2"];
+            string city = info["CompanyDetails"]["Addresses"][0]["City"];
+            string province = info["CompanyDetails"]["Addresses"][0]["State"];
+            string postalCode = info["CompanyDetails"]["Addresses"][0]["ZipCode"];
+            string country = info["CompanyDetails"]["Addresses"][0]["CountryCode"];
             #endregion
 
-            return new BPvalues("", "", company, phone, email, address1, address2, city, province, postalCode, country, new string[0], new string[0], new int[0], true, false, null);
+            return new BPvalues("", "", name, phone, email, address1, address2, city, province, postalCode, country, new string[0], new string[0], new int[0], true, false, null);
         }
-
-        #region Supporting Methods
-        /* a method that substring the given string */
-        private static string substringMethod(string original, string startingString, int additionIndex)
-        {
-            return original.Substring(original.IndexOf(startingString) + additionIndex);
-        }
-
-        /* a method that get the next target token */
-        private static string getTarget(string text)
-        {
-            int i = 0;
-            while (text[i] != '"' && text[i] != ',' && text[i] != '}')
-                i++;
-
-            return text.Substring(0, i);
-        }
-        #endregion
     }
 }
