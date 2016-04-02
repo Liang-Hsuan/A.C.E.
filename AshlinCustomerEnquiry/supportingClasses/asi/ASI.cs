@@ -10,7 +10,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
     /*
      * A class that connect to ASI and retrieve company informaiton
      */
-    [Serializable()]
+    [Serializable]
     public class ASI
     {
         // fields for web request
@@ -43,7 +43,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             }
 
             // create login uri
-            string loginUri = "http://asiservice.asicentral.com/credit/v1/login";
+            const string loginUri = "http://asiservice.asicentral.com/credit/v1/login";
 
             // posting request to get token
             request = (HttpWebRequest)WebRequest.Create(loginUri);

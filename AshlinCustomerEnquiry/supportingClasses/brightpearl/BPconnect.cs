@@ -11,7 +11,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
     /*
      * A class that do API integration with Brightpearl
      */
-    [Serializable()]
+    [Serializable]
     public class BPconnect
     {
         // fields for brightpearl integration
@@ -623,8 +623,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             // fields for credentials
             private readonly string appRef;
             private readonly string appToken;
-            
-            // field for price calculation
+
+            // field for getting price information
             private readonly Price price = new Price();
 
             /* constructor to initialize the web request of app reference and app token */
@@ -671,7 +671,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             /* post new customer to API */
             public string postContactRequest(string addressID, BPvalues value)
             {
-                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/contact";
+                const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/contact";
 
                 request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = "POST";
@@ -974,11 +974,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
     /*
      * A class that calculate the price 
      */
-    [Serializable()]
+    [Serializable]
     public class Price
     {
         // fields for storing discount matrix values
-        private double[] list = new double[11];
+        private readonly double[] list = new double[11];
 
         /* constructor that initialize discount matrix list field */
         public Price()
@@ -1118,7 +1118,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a supporting method that return the base price of the given sku */
-        private double getPrice(string sku)
+        private static double getPrice(string sku)
         {
             double basePrice;
 
