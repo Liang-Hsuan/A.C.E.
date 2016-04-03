@@ -48,14 +48,13 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             if (idSet == null)
                 return null;
 
-            if (idSet[0] == "-1")
-            {
-                BPvalues[] invalid = new BPvalues[1];
-                invalid[0] = new BPvalues {FirstName = "-1"};
-                return invalid;
-            }
+            // the case if it is a vaild result
+            if (idSet[0] != "-1") return get.getCustomerDetail(idSet);
 
-            return get.getCustomerDetail(idSet);
+            // the case if there are too many result found
+            BPvalues[] invalid = new BPvalues[1];
+            invalid[0] = new BPvalues {FirstName = "-1"};
+            return invalid;
         }
 
         /* a method that accept email / company parameters to return the customer detail -> [1] email only, [2] company only, [3] both */
@@ -68,14 +67,13 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             if (idSet == null)
                 return null;
 
-            if (idSet[0] == "-1")
-            {
-                BPvalues[] invalid = new BPvalues[1];
-                invalid[0] = new BPvalues {FirstName = "-1"};
-                return invalid;
-            }
+            // the case if it is valid result
+            if (idSet[0] != "-1") return get.getCustomerDetail(idSet);
 
-            return get.getCustomerDetail(idSet);
+            // the case if there are too many result found
+            BPvalues[] invalid = new BPvalues[1];
+            invalid[0] = new BPvalues {FirstName = "-1"};
+            return invalid;
         }
         #endregion
 
@@ -445,15 +443,15 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                         string addressId = info["response"][j]["postAddressIds"]["DEF"].ToString();
 
                         // get postal code
-                        try { value.Address1 = info["response"][j]["postalAddresses"][addressId]["addressLine1"]; } catch { }
-                        try { value.Address2 = info["response"][j]["postalAddresses"][addressId]["addressLine2"]; } catch { }
-                        try { value.City = info["response"][j]["postalAddresses"][addressId]["addressLine3"]; } catch { }
-                        try { value.Province = info["response"][j]["postalAddresses"][addressId]["addressLine4"]; } catch { }
-                        try { value.PostalCode = info["response"][j]["postalAddresses"][addressId]["postalCode"]; } catch { }
-                        try { value.Country = info["response"][j]["postalAddresses"][addressId]["countryIsoCode"]; } catch { }
-                        try { value.Email = info["response"][j]["communication"]["emails"]["PRI"]["email"]; } catch {  }
-                        try { value.Phone = info["response"][j]["communication"]["telephones"]["PRI"]; } catch { }
-                        try { value.Company = info["response"][j]["organisation"]["name"]; } catch { }
+                        try { value.Address1 = info["response"][j]["postalAddresses"][addressId]["addressLine1"]; } catch { /* ignore */ }
+                        try { value.Address2 = info["response"][j]["postalAddresses"][addressId]["addressLine2"]; } catch { /* ignore */ }
+                        try { value.City = info["response"][j]["postalAddresses"][addressId]["addressLine3"]; } catch { /* ignore */ }
+                        try { value.Province = info["response"][j]["postalAddresses"][addressId]["addressLine4"]; } catch { /* ignore */ }
+                        try { value.PostalCode = info["response"][j]["postalAddresses"][addressId]["postalCode"]; } catch { /* ignore */ }
+                        try { value.Country = info["response"][j]["postalAddresses"][addressId]["countryIsoCode"]; } catch { /* ignore */ }
+                        try { value.Email = info["response"][j]["communication"]["emails"]["PRI"]["email"]; } catch { /* ignore */ }
+                        try { value.Phone = info["response"][j]["communication"]["telephones"]["PRI"]; } catch { /* ignore */ }
+                        try { value.Company = info["response"][j]["organisation"]["name"]; } catch { /* ignore */ }
                         #endregion
 
                         valueList.Add(value);
@@ -510,7 +508,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             private readonly Price price = new Price();
 
             // field for error indication
-            public bool HasError { get; set; }
+            public bool HasError { get; private set; }
             #endregion
 
             /* constructor to initialize the web request of app reference and app token */
@@ -838,9 +836,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // format comment
-                comment = comment.Replace("\n", " ");
-                comment = comment.Replace("\r", " ");
-                comment = comment.Replace("\t", " ");
+                comment = comment.Replace('\n', ' ');
+                comment = comment.Replace('\r', ' ');
+                comment = comment.Replace('\t', ' ');
 
                 // generate JSON field
                 string textJSON = "[{\"op\":\"add\",\"path\":\"/PCF_ORDERCOM\",\"value\":\"" + comment.Trim() + "\"}]";

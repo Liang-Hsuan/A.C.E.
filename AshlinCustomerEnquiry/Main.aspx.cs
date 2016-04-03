@@ -539,13 +539,13 @@ namespace AshlinCustomerEnquiry
                 if (skuDropdownlist2.SelectedIndex > 0)
                     skuList.Add(skuDropdownlist2.SelectedItem.ToString(), skuDropdownlist2.SelectedValue);
             }
-            catch { }
+            catch { /* ignore */ }
             try
             {
                 if (skuDropdownlist3.SelectedIndex > 0)
                     skuList.Add(skuDropdownlist3.SelectedItem.ToString(), skuDropdownlist3.SelectedValue);
             }
-            catch { }
+            catch { /* ignore */ }
 
             // asssign boolean values
             bool rush; bool logo;
@@ -589,16 +589,15 @@ namespace AshlinCustomerEnquiry
         {
             #region Drop Down List
             // local field for storing data
-            List<ListItem> skuList = new List<ListItem>();
+            List<ListItem> skuList = new List<ListItem> {new ListItem("")};
 
             // adding SKUs to the dropdown list
-            skuList.Add(new ListItem(""));
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
             {
                 SqlCommand command =
                     new SqlCommand("SELECT SKU_Ashlin, Short_Description, GiftBox FROM master_SKU_Attributes sku " +
                                    "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
-                                   "WHERE sku.Active = \'True\';", connection);
+                                   "WHERE sku.Active = 'True'", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
