@@ -31,12 +31,12 @@ namespace AshlinCustomerEnquiry
                 logoCheckboxList.Attributes.Add("onclick", "return HandleOnCheckLogo()");
 
                 // initialize ASI object and store it
-                asi = new ASI();
-                Session["ASI"] = asi;
+                if (Session["ASI"] == null)
+                    Session["ASI"] = new ASI();
 
                 // initialize BPconnect object and store it
-                bp = new BPconnect();
-                Session["BPconnect"] = bp;
+                if (Session["BPconnect"] == null)
+                    Session["BPconnect"] = new BPconnect(); ;
 
                 welcomePopup.Show();
             }
