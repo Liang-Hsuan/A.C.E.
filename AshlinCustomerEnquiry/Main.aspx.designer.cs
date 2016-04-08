@@ -220,6 +220,15 @@ namespace AshlinCustomerEnquiry {
         protected global::System.Web.UI.WebControls.Panel orderPanel;
         
         /// <summary>
+        /// skuDropdownlist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList skuDropdownlist;
+        
+        /// <summary>
         /// rushCheckboxList control.
         /// </summary>
         /// <remarks>
@@ -238,58 +247,13 @@ namespace AshlinCustomerEnquiry {
         protected global::System.Web.UI.WebControls.CheckBoxList logoCheckboxList;
         
         /// <summary>
-        /// skuDropdownlist1 control.
+        /// addButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList skuDropdownlist1;
-        
-        /// <summary>
-        /// skuDropdownlist2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList skuDropdownlist2;
-        
-        /// <summary>
-        /// skuDropdownlist3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList skuDropdownlist3;
-        
-        /// <summary>
-        /// shortDescriptionTextbox1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox shortDescriptionTextbox1;
-        
-        /// <summary>
-        /// shortDescriptionTextbox2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox shortDescriptionTextbox2;
-        
-        /// <summary>
-        /// shortDescriptionTextbox3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox shortDescriptionTextbox3;
+        protected global::System.Web.UI.WebControls.Button addButton;
         
         /// <summary>
         /// quantityCheckboxList control.
@@ -301,22 +265,13 @@ namespace AshlinCustomerEnquiry {
         protected global::System.Web.UI.WebControls.CheckBoxList quantityCheckboxList;
         
         /// <summary>
-        /// dateEventTextbox control.
+        /// gridview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dateEventTextbox;
-        
-        /// <summary>
-        /// dateEventButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button dateEventButton;
+        protected global::System.Web.UI.WebControls.GridView gridview;
         
         /// <summary>
         /// calendar control.
@@ -335,6 +290,24 @@ namespace AshlinCustomerEnquiry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox additionalInfoTextbox;
+        
+        /// <summary>
+        /// dateDeliveryTextbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox dateDeliveryTextbox;
+        
+        /// <summary>
+        /// dateDeliveryButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button dateDeliveryButton;
         
         /// <summary>
         /// newQuoteLabel control.

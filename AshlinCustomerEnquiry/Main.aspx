@@ -331,42 +331,58 @@
             height: 51px;
             text-align: center;
         }
+        .auto-style246 {
+            font-size: medium;
+            color: #FFFFFF;
+        }
+        .auto-style247 {
+            height: 23px;
+            text-align: right;
+        }
+        .auto-style248 {
+            overflow: auto;
+        }
+        .auto-style249 {
+            width: 121px;
+            text-align: left;
+            height: 23px;
+        }
     </style>
 </head>
-<body style="height: 1012px; background-color:tan">
+<body style="height: 1056px; background-color:tan">
     <form id="form1" runat="server">
     <asp:ScriptManager runat="server" ID="ScriptManager"/>
     <div>  
         <table style="width: 100%">
             <tr>
-                <td class="auto-style34">&nbsp;</td>
-                <td class="auto-style34">&nbsp;</td>
-                <td class="auto-style34">&nbsp;</td>
-                <td class="auto-style34">&nbsp;</td>
+                <td class="auto-style34"></td>
+                <td class="auto-style34"></td>
+                <td class="auto-style34"></td>
+                <td class="auto-style34"></td>
                 <td class="auto-style34" rowspan="3">
                     <asp:HyperLink ID="logoLink" runat="server" ImageUrl="~/image/AshlinIcon.png" ImageWidth="140px" NavigateUrl="http://www.ashlinbpg.com/retail/" ToolTip="go to Ashlin website" TabIndex="31">go to Ashlin website</asp:HyperLink>
                 </td>
-                <td class="auto-style34" rowspan="3">&nbsp;</td>
-                <td class="auto-style34" rowspan="3">&nbsp;</td>
+                <td class="auto-style34" rowspan="3"></td>
+                <td class="auto-style34" rowspan="3"></td>
                 <td class="auto-style34">
                     <h1 style="text-align: center; font-size: 40px; width: 480px">Ashlin BPG Marketing Inc</h1>
                 </td>
-                <td class="auto-style35">&nbsp;</td>
-                <td class="auto-style35">&nbsp;</td>
+                <td class="auto-style35"></td>
+                <td class="auto-style35"></td>
                 <td class="auto-style35">
                     <br />
                 </td>
-                <td class="auto-style35">&nbsp;</td>
-                <td class="auto-style35">&nbsp;</td>
-                <td class="auto-style35">&nbsp;</td>
-                <td class="auto-style35">&nbsp;</td>
-                <td class="auto-style35">&nbsp;</td>
+                <td class="auto-style35"></td>
+                <td class="auto-style35"></td>
+                <td class="auto-style35"></td>
+                <td class="auto-style35"></td>
+                <td class="auto-style35"></td>
             </tr>
             <tr>
-                <td class="auto-style34">&nbsp;</td>
-                <td class="auto-style34">&nbsp;</td>
-                <td class="auto-style34">&nbsp;</td>
-                <td class="auto-style34">&nbsp;</td>
+                <td class="auto-style34"></td>
+                <td class="auto-style34"></td>
+                <td class="auto-style34"></td>
+                <td class="auto-style34"></td>
                 <td class="auto-style34">
                     <h2 style="text-align: center; width: 481px;">Customer Enquiry Form</h2>
                 </td>
@@ -413,25 +429,22 @@
                     <td class="auto-style91" rowspan="2">
                         <asp:ImageButton ID="wizardButton" runat="server" CssClass="wizard" Height="40px" ImageUrl="~/image/wizard.png" ToolTip="use Wizard" Width="33px" TabIndex="36" />
                     </td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
                     <td colspan="2">
                         <h4><span style="color: #FFFFFF;">Customer Information Result :</span></h4>
                     </td>
-                    <td class="auto-style38">
-                        &nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">
-                        &nbsp;</td>
-                    <td class="auto-style18">
-                        &nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style38"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
                     <td class="auto-style81">&nbsp;</td>
@@ -657,22 +670,24 @@
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
-                        <td style="font-size: medium;height: 23px;text-align: right"><span style="color: #ffffff">Rush Order :</span></td>
+                        <td style="height: 23px;text-align: right" class="auto-style246">Item # :</td>
                         <td style="font-size: small;height: 23px;width: 121px">
-                            <asp:CheckBoxList ID="rushCheckboxList" runat="server" Height="20px" Width="151px" CellPadding="0" CellSpacing="0" Font-Size="Small" RepeatDirection="Horizontal" TabIndex="50" ForeColor="White">
+                            <asp:DropDownList ID="skuDropdownlist" runat="server" AutoPostBack="True" TabIndex="50" Width="151px">
+                            </asp:DropDownList>
+                        </td>
+                        <td class="auto-style41"></td>
+                        <td class="auto-style247"><span style="color: #ffffff">Rush Order :</span></td>
+                        <td class="auto-style103">
+                            <asp:CheckBoxList ID="rushCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" ForeColor="White" Height="20px" RepeatDirection="Horizontal" TabIndex="51" Width="151px">
                                 <asp:ListItem Value="true">Yes</asp:ListItem>
                                 <asp:ListItem Value="false">No</asp:ListItem>
                             </asp:CheckBoxList>
                         </td>
-                        <td class="auto-style41">
-                        </td>
-                        <td class="auto-style103"></td>
-                        <td class="auto-style103"></td>
                         <td class="auto-style41"></td>
                         <td style="height: 23px;text-align: right">
                             <span style="color: #ffffff">With Logo :</span></td>
                         <td class="auto-style103">
-                            <asp:CheckBoxList ID="logoCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="20px" RepeatDirection="Horizontal" Width="151px" TabIndex="51" ForeColor="White">
+                            <asp:CheckBoxList ID="logoCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="20px" RepeatDirection="Horizontal" Width="151px" TabIndex="52" ForeColor="White">
                                 <asp:ListItem Value="true">Yes</asp:ListItem>
                                 <asp:ListItem Value="false">No</asp:ListItem>
                             </asp:CheckBoxList>
@@ -683,52 +698,14 @@
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
-                        <td class="auto-style45"><span style="color: #ffffff">Item # :</span></td>
+                        <td class="auto-style45"></td>
                         <td class="auto-style40">
-                            <asp:DropDownList ID="skuDropdownlist1" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist1_SelectedIndexChanged" AutoPostBack="True" TabIndex="52">
-                            </asp:DropDownList>
-                        </td>
-                        <td class="auto-style41"><span style="color: #FFFFFF;">*</span></td>
-                        <td class="auto-style48"><span style="color: #ffffff">Second Item # :</span></td>
-                        <td class="auto-style42">
-                            <asp:DropDownList ID="skuDropdownlist2" runat="server" Width="151px" OnSelectedIndexChanged="skuDropdownlist2_SelectedIndexChanged" AutoPostBack="True" TabIndex="53">
-                            </asp:DropDownList>
+                            <asp:Button ID="addButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" TabIndex="53" Text="Add" Width="75px" OnClick="addButton_Click" />
                         </td>
                         <td class="auto-style41"></td>
-                        <td class="auto-style48"><span style="color: #ffffff">Third Item # :</span></td>
-                        <td class="auto-style43">
-                            <asp:DropDownList ID="skuDropdownlist3" runat="server" AutoPostBack="True" TabIndex="54" Width="151px" OnSelectedIndexChanged="skuDropdownlist3_SelectedIndexChanged">
-                            </asp:DropDownList>
-                        </td>
-                        <td class="auto-style63">&nbsp;</td>
-                        <td class="auto-style63"></td>
-                    </tr>
-                    <tr>
-                        <td class="auto-style40"></td>
-                        <td class="auto-style40"></td>
-                        <td class="auto-style45">&nbsp;</td>
-                        <td class="auto-style40">
-                            <asp:TextBox ID="shortDescriptionTextbox1" runat="server" Enabled="False" Height="20px" style="overflow: auto" TabIndex="55" TextMode="MultiLine" Width="151px"></asp:TextBox>
-                        </td>
-                        <td class="auto-style41"></td>
-                        <td class="auto-style48"></td>
-                        <td class="auto-style42">
-                            <asp:TextBox ID="shortDescriptionTextbox2" runat="server" Enabled="False" Height="20px" style="overflow: auto" TabIndex="56" TextMode="MultiLine" Width="151px"></asp:TextBox>
-                        </td>
-                        <td class="auto-style41"></td>
-                        <td class="auto-style48">&nbsp;</td>
-                        <td class="auto-style43">
-                            <asp:TextBox ID="shortDescriptionTextbox3" runat="server" TabIndex="57" Width="151px" Enabled="False" Height="20px" style="overflow: auto" TextMode="MultiLine"></asp:TextBox>
-                        </td>
-                        <td colspan="2">
-                            &nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td class="auto-style40">&nbsp;</td>
-                        <td class="auto-style40">&nbsp;</td>
-                        <td class="auto-style45"><span style="color: #ffffff">Quantity :</span></td>
+                        <td class="auto-style48"><span style="color: #ffffff">Quantity :</span></td>
                         <td class="auto-style103" colspan="4">
-                            <asp:CheckBoxList ID="quantityCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" Height="19px" RepeatDirection="Horizontal" RepeatLayout="Flow" Width="350px" TabIndex="58" ForeColor="White">
+                            <asp:CheckBoxList ID="quantityCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" ForeColor="White" Height="19px" RepeatDirection="Horizontal" RepeatLayout="Flow" TabIndex="54" Width="350px">
                                 <asp:ListItem Selected="True">1</asp:ListItem>
                                 <asp:ListItem>6</asp:ListItem>
                                 <asp:ListItem>24</asp:ListItem>
@@ -739,15 +716,72 @@
                                 <asp:ListItem>1000</asp:ListItem>
                                 <asp:ListItem>2500</asp:ListItem>
                             </asp:CheckBoxList>
-                            <span style="color: #FFFFFF;">*</span></td>
-                        <td class="auto-style41">&nbsp;</td>
-                        <td class="auto-style48"><span style="color: #ffffff">Date for Event :</span></td>
-                        <td class="auto-style43">
-                            <asp:TextBox ID="dateEventTextbox" runat="server" TabIndex="59" Width="106px"></asp:TextBox>
-                            <asp:Button ID="dateEventButton" runat="server" OnClick="dateEventButton_Click" Text="..." Width="37px" TabIndex="60" />
+                            </td>
+                        <td class="auto-style63"></td>
+                        <td class="auto-style63"></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style40"></td>
+                        <td class="auto-style40"></td>
+                        <td class="auto-style249"><span style="color: #ffffff">*</span></td>
+                        <td class="auto-style40"></td>
+                        <td class="auto-style41"></td>
+                        <td class="auto-style48"></td>
+                        <td class="auto-style103" colspan="4">
+                            &nbsp;</td>
+                        <td class="auto-style63">&nbsp;</td>
+                        <td class="auto-style63">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style40"></td>
+                        <td class="auto-style40"></td>
+                        <td class="auto-style64" colspan="8">
+                            <asp:GridView ID="gridview" runat="server" BackColor="LightGoldenrodYellow" ForeColor="Black" BorderWidth="1px" CellPadding="2" BorderColor="Tan" GridLines="None" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" TabIndex="55" OnRowEditing="gridview_RowEditing" OnRowCancelingEdit="gridview_RowCancelingEdit" OnRowDeleting="gridview_RowDeleting" OnRowUpdating="gridview_RowUpdating">
+                                <AlternatingRowStyle BackColor="PaleGoldenrod" />
+                                <Columns>
+                                    <asp:TemplateField ShowHeader="False">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="editLinkButton" runat="server" CausesValidation="false" CommandName="Edit" Text="Edit" />
+                                        </ItemTemplate>
+                                        <EditItemTemplate>
+                                            <asp:LinkButton ID="updateLinkButton" runat="server" CommandName="Update" Text="Update"  />
+                                            <asp:LinkButton ID="cancelLinkButton" runat="server" CommandName="Cancel" Text="Cancel"  />
+                                         </EditItemTemplate>
+                                        <ControlStyle ForeColor="Green" />
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="SKU" HeaderText="SKU" ReadOnly="True" ItemStyle-Width="200px" />
+                                    <asp:BoundField DataField="Short Description" HeaderText="Short Description" ReadOnly="True" />
+                                    <asp:CheckBoxField DataField="Gift Box" HeaderText="Gift Box" ReadOnly="True" ItemStyle-Width="100px" />
+                                    <asp:BoundField DataField="Quantity" HeaderText="Quantity" ItemStyle-Width="100px" />
+                                    <asp:BoundField DataField="Base Price" HeaderText="Base Price" ReadOnly="True" ItemStyle-Width="100px" />
+                                    <asp:ButtonField Text="Remove" CommandName="Delete" ControlStyle-ForeColor="Red" >
+                                    <ControlStyle ForeColor="Red" />
+                                    </asp:ButtonField>
+                                </Columns>
+                                <FooterStyle BackColor="Tan" />
+                                <HeaderStyle BackColor="Tan" Font-Bold="True" />
+                                <PagerStyle ForeColor="DarkSlateBlue" HorizontalAlign="Center" BackColor="PaleGoldenrod" />
+                                <SelectedRowStyle BackColor="DarkSlateBlue" ForeColor="GhostWhite" />
+                                <SortedAscendingCellStyle BackColor="#FAFAE7" />
+                                <SortedAscendingHeaderStyle BackColor="#DAC09E" />
+                                <SortedDescendingCellStyle BackColor="#E1DB9C" />
+                                <SortedDescendingHeaderStyle BackColor="#C2A47B" />
+                            </asp:GridView>
                         </td>
-                        <td colspan="2" rowspan="7">
-                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" OnDayRender="calendar_DayRender" OnSelectionChanged="calendar_SelectionChanged" TabIndex="61" Visible="False" Width="200px">
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style40"></td>
+                        <td class="auto-style40"></td>
+                        <td class="auto-style64"></td>
+                        <td class="auto-style64"></td>
+                        <td class="auto-style64"></td>
+                        <td class="auto-style64"></td>
+                        <td class="auto-style64"></td>
+                        <td class="auto-style64"></td>
+                        <td class="auto-style64"></td>
+                        <td class="auto-style64" colspan="3" rowspan="7">
+                            <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" OnDayRender="calendar_DayRender" OnSelectionChanged="calendar_SelectionChanged" TabIndex="59" Visible="False" Width="200px">
                                 <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
                                 <NextPrevStyle VerticalAlign="Bottom" />
                                 <OtherMonthDayStyle ForeColor="#808080" />
@@ -762,45 +796,39 @@
                     <tr>
                         <td class="auto-style65"></td>
                         <td class="auto-style65"></td>
-                        <td class="auto-style65">&nbsp;</td>
+                        <td class="auto-style65"></td>
                         <td class="auto-style65">
                         </td>
                         <td class="auto-style66"></td>
-                        <td class="auto-style67">&nbsp;</td>
-                        <td style="width: 122px;height: 24px">
-                            &nbsp;</td>
+                        <td class="auto-style67"></td>
+                        <td style="width: 122px;height: 24px"></td>
                         <td class="auto-style66"></td>
-                        <td class="auto-style67">&nbsp;</td>
-                        <td style="width: 151px;overflow: auto;height: 24px">
-                            &nbsp;</td>
+                        <td class="auto-style67"></td>
                     </tr>
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
                         <td class="auto-style45"><span style="color: #ffffff">Additional Info :</span></td>
                         <td colspan="4" rowspan="3">
-                            <asp:TextBox ID="additionalInfoTextbox" runat="server" Height="66px" style="overflow: auto" TextMode="MultiLine" Width="400px" TabIndex="62"></asp:TextBox>
+                            <asp:TextBox ID="additionalInfoTextbox" runat="server" Height="66px" TextMode="MultiLine" Width="445px" TabIndex="56" CssClass="auto-style248"></asp:TextBox>
                         </td>
-                        <td class="auto-style41"></td>
-                        <td class="auto-style48">&nbsp;</td>
-                        <td class="auto-style43">
-                            &nbsp;</td>
+                        <td class="auto-style103" colspan="2"><span style="color: #ffffff">Date of&nbsp; Delivery :</span></td>
                     </tr>
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
-                        <td class="auto-style45">&nbsp;</td>
-                        <td class="auto-style41"></td>
-                        <td class="auto-style48">&nbsp;</td>
-                        <td class="auto-style43">&nbsp;</td>
+                        <td class="auto-style45"></td>
+                        <td class="auto-style103" colspan="2">
+                            <asp:TextBox ID="dateDeliveryTextbox" runat="server" TabIndex="57" Width="106px"></asp:TextBox>
+                            <asp:Button ID="dateDeliveryButton" runat="server" OnClick="dateEventButton_Click" TabIndex="58" Text="..." Width="37px" />
+                            <span style="color: #ffffff">&nbsp;*</span></td>
                     </tr>
                     <tr>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style35">&nbsp;</td>
-                        <td class="auto-style39">&nbsp;</td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style35"></td>
                     </tr>
                     <tr>
                         <td class="auto-style40"></td>
@@ -812,7 +840,6 @@
                         <td class="auto-style96">&nbsp;</td>
                         <td class="auto-style41"></td>
                         <td class="auto-style42"></td>
-                        <td class="auto-style43"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34">&nbsp;</td>
@@ -823,7 +850,6 @@
                         <td class="auto-style64" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
-                        <td class="auto-style39">&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style243"></td>
@@ -843,7 +869,7 @@
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style64" colspan="2"><asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" ForeColor="White" TabIndex="63" Text="New Quote Created !" Visible="False"></asp:Label>
+                        <td class="auto-style64" colspan="2"><asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" ForeColor="White" TabIndex="60" Text="New Quote Created !" Visible="False"></asp:Label>
                         </td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
@@ -857,7 +883,7 @@
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style64" colspan="2" rowspan="3">&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" OnClick="quoteButton_Click" TabIndex="65" Width="50px" />
+                            <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" TabIndex="62" Width="50px" OnClick="quoteButton_Click" />
                             <em><span style="color: #ffffff"><strong>Quote</strong></span></em></td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style35">&nbsp;</td>
@@ -870,7 +896,7 @@
                         </td>
                         <td class="auto-style34">&nbsp;</td>
                         <td class="auto-style218" colspan="2">
-                            <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" OnClick="updateLinkButton_Click" TabIndex="64" ForeColor="White">update Username and Password</asp:LinkButton>
+                            <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" OnClick="updateLinkButton_Click" TabIndex="61" ForeColor="White">update Username and Password</asp:LinkButton>
                         </td>
                         <td class="auto-style38">&nbsp;</td>
                         <td class="auto-style38">&nbsp;</td>

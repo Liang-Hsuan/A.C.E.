@@ -2,6 +2,7 @@
 using AshlinCustomerEnquiry.supportingClasses.brightpearl;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace AshlinCustomerEnquiry
         // field for storing customer data
         private BPvalues[] value;
 
-        // field for ASI and Brightpearl
+        // fields for ASI and Brightpearl
         private ASI asi;
         private BPconnect bp;
 
@@ -26,17 +27,13 @@ namespace AshlinCustomerEnquiry
             {
                 initialization();
 
-                // add function to checkbox list -> only allow one selection
-                rushCheckboxList.Attributes.Add("onclick", "return HandleOnCheckRush()");
-                logoCheckboxList.Attributes.Add("onclick", "return HandleOnCheckLogo()");
-
                 // initialize ASI object and store it
                 if (Session["ASI"] == null)
                     Session["ASI"] = new ASI();
 
                 // initialize BPconnect object and store it
                 if (Session["BPconnect"] == null)
-                    Session["BPconnect"] = new BPconnect(); ;
+                    Session["BPconnect"] = new BPconnect();     
 
                 welcomePopup.Show();
             }
@@ -53,22 +50,6 @@ namespace AshlinCustomerEnquiry
             }
         }
 
-        #region Comboboxes Event
-        /* selection change that show the corresponding value on the textboxes */
-        protected void skuDropdownlist1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            shortDescriptionTextbox1.Text = skuDropdownlist1.SelectedValue;
-        }
-        protected void skuDropdownlist2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            shortDescriptionTextbox2.Text = skuDropdownlist2.SelectedValue;
-        }
-        protected void skuDropdownlist3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            shortDescriptionTextbox3.Text = skuDropdownlist3.SelectedValue;
-        }
-        #endregion
-
         #region Calendar Event
         /* the event for date event button click that change the visibility of the calendar */
         protected void dateEventButton_Click(object sender, EventArgs e)
@@ -79,18 +60,16 @@ namespace AshlinCustomerEnquiry
         /* the event for calendar date selection that show the date time on the textbox */
         protected void calendar_SelectionChanged(object sender, EventArgs e)
         {
-            dateEventTextbox.Text = calendar.SelectedDate.ToString("yyyy-MM-dd");
+            dateDeliveryTextbox.Text = calendar.SelectedDate.ToString("yyyy-MM-dd");
         }
 
         /* set the canlender can only select the day after today */
         protected void calendar_DayRender(object sender, DayRenderEventArgs e)
         {
             DateTime date = DateTime.Today;
-            if (e.Day.Date <= date)
-            {
-                e.Day.IsSelectable = false;
-                e.Cell.ForeColor = Color.Gray;
-            }
+            if (e.Day.Date > date) return;
+            e.Day.IsSelectable = false;
+            e.Cell.ForeColor = Color.Gray;
         }
         #endregion
 
@@ -316,7 +295,7 @@ namespace AshlinCustomerEnquiry
             listbox.Items.Clear();
             foreach (BPvalues result in value)
             {
-                ListItem item = new ListItem(result.FirstName + " " + result.LastName);
+                ListItem item = new ListItem(result.FirstName + ' ' + result.LastName);
                 listbox.Items.Add(item);
             }
             showResult(value[0]);
@@ -404,7 +383,7 @@ namespace AshlinCustomerEnquiry
         protected void updateButton_Click(object sender, EventArgs e)
         {
             // get user input
-            string username = newUsernameTextbox.Text;
+            string username = newUsernameTextbox.Text.Trim();
             string[] password = { newPasswordTextbox.Text, enterAgainTextbox.Text };
 
             #region Error Check
@@ -445,6 +424,12 @@ namespace AshlinCustomerEnquiry
             }
             #endregion
 
+            // save cookies
+            Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(7);
+            Response.Cookies["Password"].Expires = DateTime.Now.AddDays(7);
+            Response.Cookies["UserName"].Value = username;
+            Response.Cookies["Password"].Value = password[0];
+
             // start updating username and password
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
             {
@@ -454,6 +439,110 @@ namespace AshlinCustomerEnquiry
             }
         }
         #endregion
+
+        /* add button clicks that add new item to the grid view */
+        protected void addButton_Click(object sender, EventArgs e)
+        {
+            // get table first
+            DataTable table = (DataTable)Session["DataTable"];
+
+            // get the list of quantity
+            List<int> quantityList = (from ListItem item in quantityCheckboxList.Items where item.Selected select Convert.ToInt32(item.Value)).ToList();
+
+            // error check
+            if (skuDropdownlist.SelectedIndex < 1 || quantityList.Count < 1)
+            {
+                const string script = "<script>alert(\"Please select both SKU and the quantity in order to add the item\");</script>";
+                Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
+                return;
+            }
+
+            // adding each quantity to the table for the sku
+            foreach (int quantity in quantityList)
+            {
+                DataRow row = table.NewRow();
+                row[0] = skuDropdownlist.SelectedItem.ToString();                       // sku
+
+                // get other values
+                string skuValue = skuDropdownlist.SelectedValue.ToString();
+
+                row[1] = skuValue.Substring(0, skuValue.IndexOf(';'));                  // short description
+                skuValue = skuValue.Substring(skuValue.IndexOf(';') + 1);
+                row[2] = bool.Parse(skuValue.Substring(0, skuValue.IndexOf(';')));      // gift box
+                row[3] = quantity;
+                row[4] = double.Parse(skuValue.Substring(skuValue.IndexOf(';') + 1));   // base price
+
+                table.Rows.Add(row);
+            }
+
+            // bind the data source
+            gridview.DataSource = table;
+            gridview.DataBind();
+            Session["DataTable"] = table;
+        }
+
+        #region Grid View
+        /* event for row editing in grid view control */
+        protected void gridview_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            gridview.EditIndex = e.NewEditIndex;
+            gridview.DataSource = (DataTable)Session["DataTable"];
+            gridview.DataBind();
+        }
+
+        /* evnet for row canceling in grid view control */
+        protected void gridview_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            gridview.EditIndex = -1;
+            gridview.DataSource = (DataTable)Session["DataTable"];
+            gridview.DataBind();
+        }
+
+        /* delete a row in grid view control */
+        protected void gridview_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // remove the row from the table
+            DataTable table = (DataTable)Session["DataTable"];
+            table.Rows.Remove(table.Rows[e.RowIndex]);
+
+            // bind the data source
+            gridview.DataSource = table;
+            gridview.DataBind();
+            Session["DataTable"] = table;
+        }
+
+        /* update quantity in a row */
+        protected void gridview_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            // get the new quantity of the item
+            int qty = int.Parse(((TextBox)gridview.Rows[e.RowIndex].Cells[4].Controls[0]).Text);
+
+            // update the quantity to the table
+            DataTable table = (DataTable)Session["DataTable"];
+            table.Rows[e.RowIndex][3] = qty;
+
+            // bind the data source
+            gridview.EditIndex = -1;
+            gridview.DataSource = table;
+            gridview.DataBind();
+            Session["DataTable"] = table;
+        }
+        #endregion
+
+        /* the event for login button in the login board */
+        protected void loginButton_Click(object sender, EventArgs e)
+        {
+             // check if the user put the right username and password
+            if (usernameTextbox.Text.Trim().Equals((string)Application["USERNAME"]) && passwordTextbox.Text.Equals((string)Application["PASSWORD"]))
+                Session["HasLogged"] = true;
+            else
+            {
+                // if the user put the wrong credentials show the login borad again and signal them wrong
+                loginPopup.Show();
+                usernameTextbox.BackColor = Color.Red;
+                passwordTextbox.BackColor = Color.Red;
+            }
+        }
 
         /* the event for quote button clicks that will call login panel if the user has not logged in and create quote */
         protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
@@ -473,17 +562,23 @@ namespace AshlinCustomerEnquiry
             }
 
             #region Error Checking
-            // adding quantity list
-            List<int> quantityList = (from ListItem item in quantityCheckboxList.Items where item.Selected select Convert.ToInt32(item.Value)).ToList();
+            // get table
+            DataTable table = (DataTable)Session["DataTable"];
 
-            if (firstNameTextbox.Text == "" || lastNameTextbox.Text == "" || address1Textbox.Text == "" || cityTextbox.Text == "" || 
-                provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || skuDropdownlist1.SelectedIndex < 1 || quantityList.Count < 1)
+            if (firstNameTextbox.Text == "" || lastNameTextbox.Text == "" || address1Textbox.Text == "" || cityTextbox.Text == "" || dateDeliveryTextbox.Text == "" ||
+                provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || table.Rows.Count < 1)
             {
                 const string script = "<script>alert(\"Please provide information on all the necessary fields (*)\");</script>";
                 Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
                 return;
             }
             #endregion
+
+            // local fields for BPvalue generation
+            List<string> skuList = new List<string>();
+            List<string> descriptionList = new List<string>();
+            List<int> qtyList = new List<int>();
+            List<double> basePriceList = new List<double>();
 
             #region Email 
             // get the order detail
@@ -493,60 +588,43 @@ namespace AshlinCustomerEnquiry
                                   "\nPostal Code: " + postalCodeTextbox.Text + "\nCountry: " + countryTextbox.Text + "\n\n\r" +
                                   "Order Detail:\n\r" +
                                   "Rush Order: ";
-             if (rushCheckboxList.SelectedIndex == 0)
-                 orderDetail += "Yes\n";
-             else
-                 orderDetail += "No\n";
-             orderDetail += "With Logo: ";
-             if (logoCheckboxList.SelectedIndex == 0)
-                 orderDetail += "Yes\n";
-             else
-                 orderDetail += "No\n";
-             orderDetail += "SKU 1: " + skuDropdownlist1.SelectedItem + "    " + skuDropdownlist1.SelectedValue;
-             if (skuDropdownlist2.SelectedIndex != 0)
-                 orderDetail += "\nSKU 2: " + skuDropdownlist2.SelectedItem + "    " + skuDropdownlist2.SelectedValue;
-             if (skuDropdownlist3.SelectedIndex != 0)
-                 orderDetail += "\nSKU 3: " + skuDropdownlist3.SelectedItem + "    " + skuDropdownlist3.SelectedValue;
-             orderDetail += "\nInteresting Quantities: ";
-            orderDetail = quantityCheckboxList.Items.Cast<ListItem>().Where(checkbox => checkbox.Selected).Aggregate(orderDetail, (current, checkbox) => current + (checkbox.Value + ","));
-            if (orderDetail[orderDetail.Length - 1] == ',')
-                 orderDetail = orderDetail.Remove(orderDetail.Length - 1);
-             orderDetail += "\nDate of Event: " + dateEventTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
+            if (rushCheckboxList.SelectedIndex == 0)
+                orderDetail += "Yes\n";
+            else
+                orderDetail += "No\n";
+            orderDetail += "With Logo: ";
+            if (logoCheckboxList.SelectedIndex == 0)
+                orderDetail += "Yes";
+            else
+                orderDetail += "No";
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                orderDetail += "\n\nItem " + (i + 1) + ": " + table.Rows[i][0] + "\nShort Description: " + table.Rows[i][1] + "\nGift Box: " + table.Rows[i][2] + "\nQuantity: " + table.Rows[i][3];
 
-             // send message
-             MailMessage mail = new MailMessage();
-             SmtpClient client = new SmtpClient("smtp.gmail.com");
+                // adding item to the lists
+                skuList.Add(table.Rows[i][0].ToString());
+                descriptionList.Add(table.Rows[i][1].ToString());
+                qtyList.Add(Convert.ToInt32(table.Rows[i][3]));
+                basePriceList.Add(Convert.ToDouble(table.Rows[i][4]));
+            }
+            orderDetail += "\n\nDelivery Date: " + dateDeliveryTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
 
-             mail.From = new MailAddress("intern1002@ashlinbpg.com");
-             mail.To.Add("juanne.kochhar@ashlinbpg.com");
-             mail.Subject = "NEW ORDER QUOTE";
-             mail.Body = orderDetail;
+            // send message
+            MailMessage mail = new MailMessage();
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
 
-             client.Port = 587;
-             client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
-             client.EnableSsl = true;
-             client.Send(mail);
+            mail.From = new MailAddress("intern1002@ashlinbpg.com");
+            mail.To.Add("intern1002@ashlinbpg.com");
+            mail.Subject = "NEW ORDER QUOTE";
+            mail.Body = orderDetail;
+
+            client.Port = 587;
+            client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
+            client.EnableSsl = true;
+            client.Send(mail);
             #endregion
 
             #region Brightpearl
-            // adding sku list
-            Dictionary<string, string> skuList = new Dictionary<string, string>
-            {
-                {skuDropdownlist1.SelectedItem.ToString(), skuDropdownlist1.SelectedValue}
-            };
-            try
-            {
-                if (skuDropdownlist2.SelectedIndex > 0)
-                    skuList.Add(skuDropdownlist2.SelectedItem.ToString(), skuDropdownlist2.SelectedValue);
-            }
-            catch { /* ignore */ }
-            try
-            {
-                if (skuDropdownlist3.SelectedIndex > 0)
-                    skuList.Add(skuDropdownlist3.SelectedItem.ToString(), skuDropdownlist3.SelectedValue);
-            }
-            catch { /* ignore */ }
-
             // asssign boolean values
             bool rush; bool logo;
             if (rushCheckboxList.SelectedIndex != 0 && rushCheckboxList.SelectedIndex != 1)
@@ -558,9 +636,12 @@ namespace AshlinCustomerEnquiry
             else
                 logo = Convert.ToBoolean(logoCheckboxList.SelectedValue);
 
+            // declare BPvalues object
             BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
-                                            postalCodeTextbox.Text, countryTextbox.Text, new List<string>(skuList.Keys).ToArray(), new List<string>(skuList.Values).ToArray(), quantityList.ToArray(), logo, rush, additionalInfoTextbox.Text);
+                                            postalCodeTextbox.Text, countryTextbox.Text, skuList.ToArray(), descriptionList.ToArray(), qtyList.ToArray(), basePriceList.ToArray(), logo, rush, additionalInfoTextbox.Text, 
+                                            DateTime.ParseExact(dateDeliveryTextbox.Text, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
 
+            // post order
             bp.postOrder(bpValue);
             #endregion
 
@@ -568,25 +649,21 @@ namespace AshlinCustomerEnquiry
             newQuoteLabel.Visible = true;
         }
 
-        /* the event for login button in the login board */
-        protected void loginButton_Click(object sender, EventArgs e)
-        {
-             // check if the user put the right username and password
-            if (usernameTextbox.Text.Trim().Equals((string)Application["USERNAME"]) && passwordTextbox.Text.Equals((string)Application["PASSWORD"]))
-                Session["HasLogged"] = true;
-            else
-            {
-                // if the user put the wrong credentials show the login borad again and signal them wrong
-                loginPopup.Show();
-                usernameTextbox.BackColor = Color.Red;
-                passwordTextbox.BackColor = Color.Red;
-            }
-        }
-
         #region Supporting Methods
         /* a method that add text and value to the drop down list */
         private void initialization()
         {
+            // initialize grid view
+            DataTable table = new DataTable();
+            table.Columns.Add("SKU", typeof(string));
+            table.Columns.Add("Short Description", typeof(string));
+            table.Columns.Add("Gift Box", typeof(bool));
+            table.Columns.Add("Quantity", typeof(int));
+            table.Columns.Add("Base Price", typeof(double));
+            gridview.DataSource = table;
+            gridview.DataBind();
+            Session["DataTable"] = table;
+
             #region Drop Down List
             // local field for storing data
             List<ListItem> skuList = new List<ListItem> {new ListItem("")};
@@ -594,43 +671,42 @@ namespace AshlinCustomerEnquiry
             // adding SKUs to the dropdown list
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
             {
-                SqlCommand command =
-                    new SqlCommand("SELECT SKU_Ashlin, Short_Description, GiftBox FROM master_SKU_Attributes sku " +
-                                   "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
-                                   "WHERE sku.Active = 'True'", connection);
+                SqlCommand command = new SqlCommand("SELECT SKU_Ashlin, Short_Description, GiftBox, Base_Price FROM master_SKU_Attributes sku " +
+                                                    "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
+                                                    "WHERE sku.Active = 'True'", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
-                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1) + " - GiftBox: " + reader.GetBoolean(2)));
+                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1) + ';' + reader.GetBoolean(2) + ';' + reader.GetValue(3)));
             }
 
-            skuDropdownlist1.DataSource = skuList;
-            skuDropdownlist1.DataTextField = "Text";
-            skuDropdownlist1.DataValueField = "Value";
-            skuDropdownlist1.DataBind();
-
-            skuDropdownlist2.DataSource = skuList;
-            skuDropdownlist2.DataTextField = "Text";
-            skuDropdownlist2.DataValueField = "Value";
-            skuDropdownlist2.DataBind();
-
-            skuDropdownlist3.DataSource = skuList;
-            skuDropdownlist3.DataTextField = "Text";
-            skuDropdownlist3.DataValueField = "Value";
-            skuDropdownlist3.DataBind();
+            skuDropdownlist.DataSource = skuList;
+            skuDropdownlist.DataTextField = "Text";
+            skuDropdownlist.DataValueField = "Value";
+            skuDropdownlist.DataBind();
             #endregion
 
-            // retrieve username and password
-            using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
+            // check if the user has cookies login
+            if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+                Session["HasLogged"] = true;
+            else
             {
-                SqlCommand command = new SqlCommand("SELECT [Username], [Password] FROM ASCM_Credentials WHERE Source = 'Ashlin Customer Enquiry'", connection);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
+                // the case has no cookies login -> retrieve username and password
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
+                {
+                    SqlCommand command = new SqlCommand("SELECT [Username], [Password] FROM ASCM_Credentials WHERE Source = 'Ashlin Customer Enquiry'", connection);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
 
-                Application["USERNAME"] = reader.GetString(0);
-                Application["PASSWORD"] = reader.GetString(1);
+                    Application["USERNAME"] = reader.GetString(0);
+                    Application["PASSWORD"] = reader.GetString(1);
+                }
             }
+
+            // add function to checkbox list -> only allow one selection
+            rushCheckboxList.Attributes.Add("onclick", "return HandleOnCheckRush()");
+            logoCheckboxList.Attributes.Add("onclick", "return HandleOnCheckLogo()");
         }
 
         /* a supporting method that take a BPvalues object and display the value on the controls */

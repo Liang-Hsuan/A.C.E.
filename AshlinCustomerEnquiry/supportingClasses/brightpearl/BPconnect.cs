@@ -98,17 +98,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // post order row and reserve the item
                 for (int i = 0; i < value.SKU.Length; i++)
                 {
-                    for (int j = 0; j < value.Quantity.Length; j++)
+                    // post order row
+                    string orderRowId = post.postOrderRowRequest(orderId, value, i);
+                    if (!post.HasError) continue;
+                    do
                     {
-                        // post order row
-                        string orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        if (!post.HasError) continue;
-                        do
-                        {
-                            Thread.Sleep(5000);
-                            orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        } while (post.HasError);
-                    }
+                        Thread.Sleep(5000);
+                        orderRowId = post.postOrderRowRequest(orderId, value, i);
+                    } while (post.HasError);
                 }
 
                 // post comment
@@ -138,17 +135,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // post order row and reserve the item
                 for (int i = 0; i < value.SKU.Length; i++)
                 {
-                    for (int j = 0; j < value.Quantity.Length; j++)
+                    // post order row
+                    string orderRowId = post.postOrderRowRequest(orderId, value, i);
+                    if (!post.HasError) continue;
+                    do
                     {
-                        // post order row
-                        string orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        if (!post.HasError) continue;
-                        do
-                        {
-                            Thread.Sleep(5000);
-                            orderRowId = post.postOrderRowRequest(orderId, value, i, j);
-                        } while (post.HasError);
-                    }
+                        Thread.Sleep(5000);
+                        orderRowId = post.postOrderRowRequest(orderId, value, i);
+                    } while (post.HasError);
                 }
 
                 //post comment
@@ -615,8 +609,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 #endregion
 
                 // generate JSON file for order post
-                string textJSON = "{\"orderTypeCode\":\"SO\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3}," +
-                                  "\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
+                string textJSON = "{\"orderTypeCode\":\"SO\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3},\"delivery\":{\"deliveryDate\":\"" + value.DeliveryDate.ToString("yyyy-MM-dd") + "T00:00:00+00:00\"}" +
+                                  ",\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
 
 
                 // turn request string into a byte stream
@@ -646,14 +640,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new order row to API */
-            public string postOrderRowRequest(string orderID, BPvalues value, int skuIndex, int quantityIndex)
+            public string postOrderRowRequest(string orderID, BPvalues value, int index)
             {
                 // set has error to false
                 HasError = false;
 
                 // get product id
                 GetRequest get = new GetRequest(appRef, appToken);
-                string productId = get.getProductId(value.SKU[skuIndex]);
+                string productId = get.getProductId(value.SKU[index]);
 
                 // fields for web request
                 string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order/" + orderID + "/row";
@@ -664,11 +658,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // flags creation
-                string sku = value.SKU[skuIndex];
-                int quantity = value.Quantity[quantityIndex];
+                string sku = value.SKU[index];
+                int quantity = value.Quantity[index];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
-                double netPrice = price.getPrice(sku, quantity, imprint, rush) * quantity;
+                double netPrice = price.getPrice(value.BasePrice[index], quantity, imprint, rush) * quantity;
 
                 string taxCode;
                 double taxRate;
@@ -747,7 +741,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 if (productId != null)
                     textJSON = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
                 else
-                    textJSON = "{\"productName\":\"" + value.Description[skuIndex] + " " + sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
+                    textJSON = "{\"productName\":\"" + value.Description[index] + " " + sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
@@ -774,15 +768,15 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 return getTarget(result);   //return the order row ID
             }
 
-            /* post reservation request to API and return the message*/
-            public void postReservationRequest(string orderID, string orderRowID, BPvalues value, int skuIndex, int quantityIndex)
+            /* post reservation request to API (deprecated) */
+            public void postReservationRequest(string orderID, string orderRowID, BPvalues value, int index)
             {
                 // set has error to false
                 HasError = false;
 
                 // get product id
                 GetRequest get = new GetRequest(appRef, appToken);
-                string productId = get.getProductId(value.SKU[skuIndex]);
+                string productId = get.getProductId(value.SKU[index]);
 
                 string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/warehouse-service/order/" + orderID + "/reservation/warehouse/2";
                 request = (HttpWebRequest)WebRequest.Create(uri);
@@ -794,7 +788,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // generate JSON file for order row post
                 string textJSON;
                 if (productId != null)
-                    textJSON = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowID + "\",\"quantity\":\"" + value.Quantity[quantityIndex] + "\"}]}";
+                    textJSON = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowID + "\",\"quantity\":\"" + value.Quantity[index] + "\"}]}";
                 else
                     return;
 
@@ -897,10 +891,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a method that return the price from the given information of the product */
-        public double getPrice(string sku, int quantity, bool imprint, bool rush)
+        public double getPrice(double basePrice, int quantity, bool imprint, bool rush)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
-            double msrp = list[10] * getPrice(sku);
+            double msrp = list[10] * basePrice;
 
             if (imprint)
             {
@@ -979,7 +973,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                         msrp *= list[6] * list[9];
                     else if (quantity >= 1000 && quantity < 2500)
                         msrp *= list[7] * list[9];
-                    else 
+                    else
                         msrp *= list[8] * list[9];
                 }
                 else
