@@ -13,7 +13,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
      * A class that connect to ASI and retrieve company informaiton
      */
     [Serializable]
-    public class ASI
+    public class Asi
     {
         // fields for web request
         private WebRequest request;
@@ -23,7 +23,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
         private readonly string token;
 
         /* constructor that retrieve the auth token in order to do the request after */
-        public ASI()
+        public Asi()
         {
             // field for login credentials
             string asi;

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace AshlinCustomerEnquiry
@@ -18,18 +19,18 @@ namespace AshlinCustomerEnquiry
         private BPvalues[] value;
 
         // fields for ASI and Brightpearl
-        private ASI asi;
+        private Asi asi;
         private BPconnect bp;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                initialization();
+                Initialization();
 
                 // initialize ASI object and store it
                 if (Session["ASI"] == null)
-                    Session["ASI"] = new ASI();
+                    Session["ASI"] = new Asi();
 
                 // initialize BPconnect object and store it
                 if (Session["BPconnect"] == null)
@@ -45,7 +46,7 @@ namespace AshlinCustomerEnquiry
                 // restore value
                 if (ViewState["Value"] != null)
                     value = (BPvalues[]) ViewState["Value"];
-                asi = (ASI) Session["ASI"];
+                asi = (Asi) Session["ASI"];
                 bp = (BPconnect) Session["BPconnect"];
             }
         }
@@ -145,7 +146,7 @@ namespace AshlinCustomerEnquiry
                 }
 
                 // search result by company name
-                BPvalues[] value = bp.getCustomerWithInfo(null, asiValue.Company, 2);
+                BPvalues[] value = bp.GetCustomerWithInfo(null, asiValue.Company, 2);
 
                 #region Error Check
                 // the case if there is no result or there are too many result
@@ -188,7 +189,7 @@ namespace AshlinCustomerEnquiry
                     ListItem item = new ListItem(result.FirstName + " " + result.LastName);
                     listbox.Items.Add(item);
                 }
-                showResult(value[0]);
+                ShowResult(value[0]);
 
                 // show result panel
                 asiPopup.Hide();
@@ -247,21 +248,21 @@ namespace AshlinCustomerEnquiry
 
             // search with name
             if (firstName != "" && lastName != "")      // the case both firstname and lastname are supplied
-                list[0] = search.getCustomerWithName(firstName, lastName, 3);
+                list[0] = search.GetCustomerWithName(firstName, lastName, 3);
             else if (firstName != "" && lastName == "") // the case only firstname is supplied
-                list[0] = search.getCustomerWithName(firstName, null, 1);
+                list[0] = search.GetCustomerWithName(firstName, null, 1);
             else if (firstName == "" && lastName != "") // the case only lastname is supplied
-                list[0] = search.getCustomerWithName(null, lastName, 2);
+                list[0] = search.GetCustomerWithName(null, lastName, 2);
             else
                 list[0] = null;
 
             // search with contact info
             if (company != "" && email != "")           // the case both company and email are supplied
-                list[1] = search.getCustomerWithInfo(email, company, 3);
+                list[1] = search.GetCustomerWithInfo(email, company, 3);
             else if (company != "" && email == "")      // the case only company is supplied
-                list[1] = search.getCustomerWithInfo(null, company, 2);
+                list[1] = search.GetCustomerWithInfo(null, company, 2);
             else if (company == "" && email != "")      // the case only email is supplied
-                list[1] = search.getCustomerWithInfo(email, null, 1);
+                list[1] = search.GetCustomerWithInfo(email, null, 1);
             else
                 list[1] = null;
 
@@ -298,7 +299,7 @@ namespace AshlinCustomerEnquiry
                 ListItem item = new ListItem(result.FirstName + ' ' + result.LastName);
                 listbox.Items.Add(item);
             }
-            showResult(value[0]);
+            ShowResult(value[0]);
 
             // show result panel
             searchPopup.Hide();
@@ -320,7 +321,7 @@ namespace AshlinCustomerEnquiry
         /* when selected index is changed show the corresponding info of the selected name */
         protected void listbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            showResult(value[listbox.SelectedIndex]);
+            ShowResult(value[listbox.SelectedIndex]);
             resultPopup.Show();
         }
 
@@ -424,11 +425,8 @@ namespace AshlinCustomerEnquiry
             }
             #endregion
 
-            // save cookies
-            Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(7);
-            Response.Cookies["Password"].Expires = DateTime.Now.AddDays(7);
-            Response.Cookies["UserName"].Value = username;
-            Response.Cookies["Password"].Value = password[0];
+            // remove login cookies
+            Response.Cookies["Login"].Expires = DateTime.Now.AddDays(-1);
 
             // start updating username and password
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
@@ -444,7 +442,7 @@ namespace AshlinCustomerEnquiry
         protected void addButton_Click(object sender, EventArgs e)
         {
             // get table first
-            DataTable table = (DataTable)Session["DataTable"];
+            DataTable table = (DataTable)ViewState["DataTable"];
 
             // get the list of quantity
             List<int> quantityList = (from ListItem item in quantityCheckboxList.Items where item.Selected select Convert.ToInt32(item.Value)).ToList();
@@ -464,7 +462,7 @@ namespace AshlinCustomerEnquiry
                 row[0] = skuDropdownlist.SelectedItem.ToString();                       // sku
 
                 // get other values
-                string skuValue = skuDropdownlist.SelectedValue.ToString();
+                string skuValue = skuDropdownlist.SelectedValue;
 
                 row[1] = skuValue.Substring(0, skuValue.IndexOf(';'));                  // short description
                 skuValue = skuValue.Substring(skuValue.IndexOf(';') + 1);
@@ -478,7 +476,7 @@ namespace AshlinCustomerEnquiry
             // bind the data source
             gridview.DataSource = table;
             gridview.DataBind();
-            Session["DataTable"] = table;
+            ViewState["DataTable"] = table;
         }
 
         #region Grid View
@@ -486,7 +484,7 @@ namespace AshlinCustomerEnquiry
         protected void gridview_RowEditing(object sender, GridViewEditEventArgs e)
         {
             gridview.EditIndex = e.NewEditIndex;
-            gridview.DataSource = (DataTable)Session["DataTable"];
+            gridview.DataSource = (DataTable)ViewState["DataTable"];
             gridview.DataBind();
         }
 
@@ -494,7 +492,7 @@ namespace AshlinCustomerEnquiry
         protected void gridview_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             gridview.EditIndex = -1;
-            gridview.DataSource = (DataTable)Session["DataTable"];
+            gridview.DataSource = (DataTable)ViewState["DataTable"];
             gridview.DataBind();
         }
 
@@ -502,13 +500,14 @@ namespace AshlinCustomerEnquiry
         protected void gridview_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             // remove the row from the table
-            DataTable table = (DataTable)Session["DataTable"];
+            DataTable table = (DataTable)ViewState["DataTable"];
             table.Rows.Remove(table.Rows[e.RowIndex]);
 
             // bind the data source
+            gridview.EditIndex = -1;
             gridview.DataSource = table;
             gridview.DataBind();
-            Session["DataTable"] = table;
+            ViewState["DataTable"] = table;
         }
 
         /* update quantity in a row */
@@ -518,14 +517,14 @@ namespace AshlinCustomerEnquiry
             int qty = int.Parse(((TextBox)gridview.Rows[e.RowIndex].Cells[4].Controls[0]).Text);
 
             // update the quantity to the table
-            DataTable table = (DataTable)Session["DataTable"];
+            DataTable table = (DataTable)ViewState["DataTable"];
             table.Rows[e.RowIndex][3] = qty;
 
             // bind the data source
             gridview.EditIndex = -1;
             gridview.DataSource = table;
             gridview.DataBind();
-            Session["DataTable"] = table;
+            ViewState["DataTable"] = table;
         }
         #endregion
 
@@ -534,10 +533,19 @@ namespace AshlinCustomerEnquiry
         {
              // check if the user put the right username and password
             if (usernameTextbox.Text.Trim().Equals((string)Application["USERNAME"]) && passwordTextbox.Text.Equals((string)Application["PASSWORD"]))
+            {
+                // correct credential case -> set HasLogged to true and login cookie
                 Session["HasLogged"] = true;
+                HttpCookie cookie = new HttpCookie("Login")
+                {
+                    Value = "Success",
+                    Expires = DateTime.Now.AddDays(7)
+                };
+                Response.Cookies.Add(cookie);
+            }
             else
             {
-                // if the user put the wrong credentials show the login borad again and signal them wrong
+                // wrong credential case -> show the login borad again and signal them wrong
                 loginPopup.Show();
                 usernameTextbox.BackColor = Color.Red;
                 passwordTextbox.BackColor = Color.Red;
@@ -563,7 +571,7 @@ namespace AshlinCustomerEnquiry
 
             #region Error Checking
             // get table
-            DataTable table = (DataTable)Session["DataTable"];
+            DataTable table = (DataTable)ViewState["DataTable"];
 
             if (firstNameTextbox.Text == "" || lastNameTextbox.Text == "" || address1Textbox.Text == "" || cityTextbox.Text == "" || dateDeliveryTextbox.Text == "" ||
                 provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || table.Rows.Count < 1)
@@ -642,7 +650,7 @@ namespace AshlinCustomerEnquiry
                                             DateTime.ParseExact(dateDeliveryTextbox.Text, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
 
             // post order
-            bp.postOrder(bpValue);
+            bp.PostOrder(bpValue);
             #endregion
 
             // set label to visible to inidcate success
@@ -651,7 +659,7 @@ namespace AshlinCustomerEnquiry
 
         #region Supporting Methods
         /* a method that add text and value to the drop down list */
-        private void initialization()
+        private void Initialization()
         {
             // initialize grid view
             DataTable table = new DataTable();
@@ -662,7 +670,7 @@ namespace AshlinCustomerEnquiry
             table.Columns.Add("Base Price", typeof(double));
             gridview.DataSource = table;
             gridview.DataBind();
-            Session["DataTable"] = table;
+            ViewState["DataTable"] = table;
 
             #region Drop Down List
             // local field for storing data
@@ -687,7 +695,7 @@ namespace AshlinCustomerEnquiry
             #endregion
 
             // check if the user has cookies login
-            if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+            if (Request.Cookies["Login"] != null)
                 Session["HasLogged"] = true;
             else
             {
@@ -710,7 +718,7 @@ namespace AshlinCustomerEnquiry
         }
 
         /* a supporting method that take a BPvalues object and display the value on the controls */
-        private void showResult(BPvalues display)
+        private void ShowResult(BPvalues display)
         {
             resultPhoneTextbox.Text = display.Phone;
             resultEmailTextbox.Text = display.Email;

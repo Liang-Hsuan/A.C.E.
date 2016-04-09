@@ -63,15 +63,6 @@
             text-align: right;
             height: 23px;
         }
-        .auto-style42 {
-            width: 122px;
-            height: 23px;
-        }
-        .auto-style43 {
-            width: 151px;
-            overflow: auto;
-            height: 23px;
-        }
         .auto-style63 {
             width: 101px;
             height: 23px;
@@ -592,30 +583,30 @@
                     <td class="auto-style18">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
             </table>
             
@@ -836,10 +827,10 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
                         <td class="auto-style41"></td>
-                        <td class="auto-style96">&nbsp;</td>
-                        <td class="auto-style96">&nbsp;</td>
+                        <td class="auto-style96"></td>
+                        <td class="auto-style96"></td>
                         <td class="auto-style41"></td>
-                        <td class="auto-style42"></td>
+                        <td style="width: 122px;height: 23px"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34">&nbsp;</td>

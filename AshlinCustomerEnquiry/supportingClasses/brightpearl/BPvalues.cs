@@ -22,7 +22,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         public string Country { get; set; }
 
         // field for order information
-        public string[] SKU { get; set; }
+        public string[] Sku { get; set; }
         public string[] Description { get; set; }
         public int[] Quantity { get; set; }
         public double[] BasePrice { get; set; }
@@ -48,7 +48,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Country = "";
 
             // order field
-            SKU = new string[0];
+            Sku = new string[0];
             Description = new string[0];
             Quantity = new int[0];
             BasePrice = new double[0];
@@ -76,7 +76,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Country = country;
 
             // order information
-            SKU = sku;
+            Sku = sku;
             Description = description;
             Quantity = quantity;
             BasePrice = basePrice;

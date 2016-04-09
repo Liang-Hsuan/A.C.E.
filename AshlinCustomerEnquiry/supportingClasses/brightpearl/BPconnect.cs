@@ -39,17 +39,17 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
         #region Get
         /* a method that accept name as parameters to return the customer detail */
-        public BPvalues[] getCustomerWithName(string firstName, string lastName, int choice)
+        public BPvalues[] GetCustomerWithName(string firstName, string lastName, int choice)
         {
             // get all the id that correspond to the name given
-            string[] idSet = get.getCustomerIdWithName(firstName, lastName, choice);
+            string[] idSet = get.GetCustomerIdWithName(firstName, lastName, choice);
 
             // the case if there is no result or there are too many result
             if (idSet == null)
                 return null;
 
             // the case if it is a vaild result
-            if (idSet[0] != "-1") return get.getCustomerDetail(idSet);
+            if (idSet[0] != "-1") return get.GetCustomerDetail(idSet);
 
             // the case if there are too many result found
             BPvalues[] invalid = new BPvalues[1];
@@ -58,17 +58,17 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a method that accept email / company parameters to return the customer detail -> [1] email only, [2] company only, [3] both */
-        public BPvalues[] getCustomerWithInfo(string email, string company, int choice)
+        public BPvalues[] GetCustomerWithInfo(string email, string company, int choice)
         {
             // get all the id that correspond to the informaiton given
-            string[] idSet = get.getCustomerIdWithInfo(email, company, choice);
+            string[] idSet = get.GetCustomerIdWithInfo(email, company, choice);
 
             // the case if no result or there are too many result
             if (idSet == null)
                 return null;
 
             // the case if it is valid result
-            if (idSet[0] != "-1") return get.getCustomerDetail(idSet);
+            if (idSet[0] != "-1") return get.GetCustomerDetail(idSet);
 
             // the case if there are too many result found
             BPvalues[] invalid = new BPvalues[1];
@@ -78,42 +78,42 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         #endregion
 
         /* a method that post new order / quote to brightpearl */
-        public void postOrder(BPvalues value)
+        public void PostOrder(BPvalues value)
         {
             // get the contact id first
-            string contactId = get.getCustomerId(value.FirstName, value.LastName, value.PostalCode);
+            string contactId = get.GetCustomerId(value.FirstName, value.LastName, value.PostalCode);
 
             // if customer exists, add the current order under this customer
             if (contactId != null)
             {
                 #region Customer Exist Case
                 // post order
-                string orderId = post.postOrderRequest(contactId, value);
+                string orderId = post.PostOrderRequest(contactId, value);
                 while (post.HasError)
                 {
                     Thread.Sleep(5000);
-                    orderId = post.postOrderRequest(contactId, value);
+                    orderId = post.PostOrderRequest(contactId, value);
                 }
 
                 // post order row and reserve the item
-                for (int i = 0; i < value.SKU.Length; i++)
+                for (int i = 0; i < value.Sku.Length; i++)
                 {
                     // post order row
-                    string orderRowId = post.postOrderRowRequest(orderId, value, i);
+                    string orderRowId = post.PostOrderRowRequest(orderId, value, i);
                     if (!post.HasError) continue;
                     do
                     {
                         Thread.Sleep(5000);
-                        orderRowId = post.postOrderRowRequest(orderId, value, i);
+                        orderRowId = post.PostOrderRowRequest(orderId, value, i);
                     } while (post.HasError);
                 }
 
                 // post comment
-                post.patchComment(orderId, value.Comment);
+                post.PatchComment(orderId, value.Comment);
                 while (post.HasError)
                 {
                     Thread.Sleep(5000);
-                    post.patchComment(orderId, value.Comment);
+                    post.PatchComment(orderId, value.Comment);
                 }
                 #endregion
             }
@@ -121,36 +121,36 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             {
                 #region Cusomter Not Exist Case
                 // post address with new customer
-                string addressId = post.postAddressRequest(value);
-                contactId = post.postContactRequest(addressId, value);
+                string addressId = post.PostAddressRequest(value);
+                contactId = post.PostContactRequest(addressId, value);
 
                 // post order
-                string orderId = post.postOrderRequest(contactId, value);
+                string orderId = post.PostOrderRequest(contactId, value);
                 while (post.HasError)
                 {
                     Thread.Sleep(5000);
-                    orderId = post.postOrderRequest(contactId, value);
+                    orderId = post.PostOrderRequest(contactId, value);
                 }
 
                 // post order row and reserve the item
-                for (int i = 0; i < value.SKU.Length; i++)
+                for (int i = 0; i < value.Sku.Length; i++)
                 {
                     // post order row
-                    string orderRowId = post.postOrderRowRequest(orderId, value, i);
+                    string orderRowId = post.PostOrderRowRequest(orderId, value, i);
                     if (!post.HasError) continue;
                     do
                     {
                         Thread.Sleep(5000);
-                        orderRowId = post.postOrderRowRequest(orderId, value, i);
+                        orderRowId = post.PostOrderRowRequest(orderId, value, i);
                     } while (post.HasError);
                 }
 
                 //post comment
-                post.patchComment(orderId, value.Comment);
+                post.PatchComment(orderId, value.Comment);
                 while (post.HasError)
                 {
                     Thread.Sleep(5000);
-                    post.patchComment(orderId, value.Comment);
+                    post.PatchComment(orderId, value.Comment);
                 }
                 #endregion
             }
@@ -158,15 +158,15 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
         #region ID Return
         /* return the list of customer id */
-        public string[] getContactId(string firstName, string lastName)
+        public string[] GetContactId(string firstName, string lastName)
         {
-            return get.getCustomerIdWithName(firstName, lastName, 3);
+            return get.GetCustomerIdWithName(firstName, lastName, 3);
         }
 
         /* return the product id of the given sku */
-        public string getProductId(string sku)
+        public string GetProductId(string sku)
         {
-            return get.getProductId(sku);
+            return get.GetProductId(sku);
         }
         #endregion
 
@@ -211,7 +211,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             #region Customer Search
             /* get the customer id from the given first name and last name -> [1] first name only, [2] last name only, [3] both */
-            public string[] getCustomerIdWithName(string firstName, string lastName, int choice)
+            public string[] GetCustomerIdWithName(string firstName, string lastName, int choice)
             {
                 // generate uri from user's choice
                 string uri;
@@ -268,7 +268,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* get the customer id from the given email address and company name -> [1] email only, [2] company only, [3] both */
-            public string[] getCustomerIdWithInfo(string email, string company, int choice)
+            public string[] GetCustomerIdWithInfo(string email, string company, int choice)
             {
                 // generate uri from user's choice
                 string uri;
@@ -325,10 +325,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* a method that return the only corresponding customer */
-            public string getCustomerId(string firstName, string lastName, string postalCode)
+            public string GetCustomerId(string firstName, string lastName, string postalCode)
             {
                 // get all the customer id that exist with the given first name and last name
-                string[] list = getCustomerIdWithName(firstName, lastName, 3);
+                string[] list = GetCustomerIdWithName(firstName, lastName, 3);
 
                 // the case if there is no cusomter exist -> return nothing
                 if (list == null)
@@ -376,7 +376,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* a method that get the detail info about the customer */
-            public BPvalues[] getCustomerDetail(string[] customerId)
+            public BPvalues[] GetCustomerDetail(string[] customerId)
             {
                 // input error check
                 if (customerId == null) throw new ArgumentNullException(nameof(customerId));
@@ -457,7 +457,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             #endregion
 
             /* get the product id from the given sku */
-            public string getProductId(string sku)
+            public string GetProductId(string sku)
             {
                 string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/product-service/product-search?SKU=" + sku;
 
@@ -513,7 +513,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new address to API */
-            public string postAddressRequest(BPvalues address)
+            public string PostAddressRequest(BPvalues address)
             {
                 const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/postal-address";
 
@@ -547,7 +547,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new customer to API */
-            public string postContactRequest(string addressID, BPvalues value)
+            public string PostContactRequest(string addressID, BPvalues value)
             {
                 const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/contact";
 
@@ -579,7 +579,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new order to API */
-            public string postOrderRequest(string contactID, BPvalues value)
+            public string PostOrderRequest(string contactID, BPvalues value)
             {
                 // set has error to false
                 HasError = false;
@@ -640,14 +640,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new order row to API */
-            public string postOrderRowRequest(string orderID, BPvalues value, int index)
+            public string PostOrderRowRequest(string orderID, BPvalues value, int index)
             {
                 // set has error to false
                 HasError = false;
 
                 // get product id
                 GetRequest get = new GetRequest(appRef, appToken);
-                string productId = get.getProductId(value.SKU[index]);
+                string productId = get.GetProductId(value.Sku[index]);
 
                 // fields for web request
                 string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order/" + orderID + "/row";
@@ -658,7 +658,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // flags creation
-                string sku = value.SKU[index];
+                string sku = value.Sku[index];
                 int quantity = value.Quantity[index];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
@@ -769,14 +769,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post reservation request to API (deprecated) */
-            public void postReservationRequest(string orderID, string orderRowID, BPvalues value, int index)
+            public void PostReservationRequest(string orderID, string orderRowID, BPvalues value, int index)
             {
                 // set has error to false
                 HasError = false;
 
                 // get product id
                 GetRequest get = new GetRequest(appRef, appToken);
-                string productId = get.getProductId(value.SKU[index]);
+                string productId = get.GetProductId(value.Sku[index]);
 
                 string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/warehouse-service/order/" + orderID + "/reservation/warehouse/2";
                 request = (HttpWebRequest)WebRequest.Create(uri);
@@ -816,7 +816,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* patch comment custom field request */
-            public void patchComment(string orderId, string comment)
+            public void PatchComment(string orderId, string comment)
             {
                 // set has error to false
                 HasError = false;
