@@ -99,12 +99,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 for (int i = 0; i < value.Sku.Length; i++)
                 {
                     // post order row
-                    string orderRowId = post.PostOrderRowRequest(orderId, value, i);
+                    post.PostOrderRowRequest(orderId, value, i);
                     if (!post.HasError) continue;
                     do
                     {
                         Thread.Sleep(5000);
-                        orderRowId = post.PostOrderRowRequest(orderId, value, i);
+                        post.PostOrderRowRequest(orderId, value, i);
                     } while (post.HasError);
                 }
 
@@ -136,12 +136,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 for (int i = 0; i < value.Sku.Length; i++)
                 {
                     // post order row
-                    string orderRowId = post.PostOrderRowRequest(orderId, value, i);
+                    post.PostOrderRowRequest(orderId, value, i);
                     if (!post.HasError) continue;
                     do
                     {
                         Thread.Sleep(5000);
-                        orderRowId = post.PostOrderRowRequest(orderId, value, i);
+                        post.PostOrderRowRequest(orderId, value, i);
                     } while (post.HasError);
                 }
 
@@ -527,10 +527,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 string country = address.Country.Contains("US") ? "USA" : "CAN";
 
                 // generate the JSON file for address post
-                string textJSON = "{\"addressLine1\":\"" + address.Address1 + "\",\"addressLine2\":\"" + address.Address2 + "\",\"addressLine3\":\"" + address.City + "\",\"addressLine4\":\"" + address.Province + "\",\"postalCode\":\"" + address.PostalCode + "\",\"countryIsoCode\":\"" + country + "\"}";
+                string textJson = "{\"addressLine1\":\"" + address.Address1 + "\",\"addressLine2\":\"" + address.Address2 + "\",\"addressLine3\":\"" + address.City + "\",\"addressLine4\":\"" + address.Province + "\",\"postalCode\":\"" + address.PostalCode + "\",\"countryIsoCode\":\"" + country + "\"}";
 
                 // turn request string into a byte stream
-                byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+                byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
@@ -547,7 +547,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new customer to API */
-            public string PostContactRequest(string addressID, BPvalues value)
+            public string PostContactRequest(string addressId, BPvalues value)
             {
                 const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/contact";
 
@@ -558,11 +558,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // generate JSON file for contact post
-                string textJSON = "{\"firstName\":\"" + value.FirstName + "\",\"lastName\":\"" + value.LastName + "\",\"postAddressIds\":{\"DEF\":" + addressID + ",\"BIL\":" + addressID + ",\"DEL\":" + addressID + "},\"organisation\":{\"name\":\"" + value.Company + "\"}," +
+                string textJson = "{\"firstName\":\"" + value.FirstName + "\",\"lastName\":\"" + value.LastName + "\",\"postAddressIds\":{\"DEF\":" + addressId + ",\"BIL\":" + addressId + ",\"DEL\":" + addressId + "},\"organisation\":{\"name\":\"" + value.Company + "\"}," +
                                   "\"communication\":{\"emails\":{\"PRI\":{\"email\":\"" + value.Email + "\"}},\"telephones\":{\"PRI\":\"" + value.Phone + "\"}},\"contactStatus\":{\"current\":{\"contactStatusId\":9}},\"relationshipToAccount\":{\"isSupplier\": false,\"isStaff\":false,\"isCustomer\":true},\"financialDetails\":{\"priceListId\": 5}}";
 
                 // turn request string into a byte stream
-                byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+                byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
@@ -579,7 +579,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new order to API */
-            public string PostOrderRequest(string contactID, BPvalues value)
+            public string PostOrderRequest(string contactId, BPvalues value)
             {
                 // set has error to false
                 HasError = false;
@@ -609,12 +609,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 #endregion
 
                 // generate JSON file for order post
-                string textJSON = "{\"orderTypeCode\":\"SO\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3},\"delivery\":{\"deliveryDate\":\"" + value.DeliveryDate.ToString("yyyy-MM-dd") + "T00:00:00+00:00\"}" +
-                                  ",\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactID + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
+                string textJson = "{\"orderTypeCode\":\"SO\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3},\"delivery\":{\"deliveryDate\":\"" + value.DeliveryDate.ToString("yyyy-MM-dd") + "T00:00:00+00:00\"}" +
+                                  ",\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactId + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
 
 
                 // turn request string into a byte stream
-                byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+                byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
@@ -640,7 +640,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post new order row to API */
-            public string PostOrderRowRequest(string orderID, BPvalues value, int index)
+            public string PostOrderRowRequest(string orderId, BPvalues value, int index)
             {
                 // set has error to false
                 HasError = false;
@@ -650,7 +650,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 string productId = get.GetProductId(value.Sku[index]);
 
                 // fields for web request
-                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order/" + orderID + "/row";
+                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/order-service/order/" + orderId + "/row";
                 request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = "POST";
                 request.ContentType = "application/json";
@@ -662,7 +662,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 int quantity = value.Quantity[index];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
-                double netPrice = price.getPrice(value.BasePrice[index], quantity, imprint, rush) * quantity;
+                double netPrice = price.GetPrice(value.BasePrice[index], quantity, imprint, rush) * quantity;
 
                 string taxCode;
                 double taxRate;
@@ -769,7 +769,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
 
             /* post reservation request to API (deprecated) */
-            public void PostReservationRequest(string orderID, string orderRowID, BPvalues value, int index)
+            public void PostReservationRequest(string orderId, string orderRowId, BPvalues value, int index)
             {
                 // set has error to false
                 HasError = false;
@@ -778,7 +778,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 GetRequest get = new GetRequest(appRef, appToken);
                 string productId = get.GetProductId(value.Sku[index]);
 
-                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/warehouse-service/order/" + orderID + "/reservation/warehouse/2";
+                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/warehouse-service/order/" + orderId + "/reservation/warehouse/2";
                 request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = "POST";
                 request.ContentType = "application/json";
@@ -786,14 +786,14 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // generate JSON file for order row post
-                string textJSON;
+                string textJson;
                 if (productId != null)
-                    textJSON = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowID + "\",\"quantity\":\"" + value.Quantity[index] + "\"}]}";
+                    textJson = "{\"products\": [{\"productId\": \"" + productId + "\",\"salesOrderRowId\": \"" + orderRowId + "\",\"quantity\":\"" + value.Quantity[index] + "\"}]}";
                 else
                     return;
 
                 // turn request string into a byte stream
-                byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+                byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
@@ -835,10 +835,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 comment = comment.Replace('\t', ' ');
 
                 // generate JSON field
-                string textJSON = "[{\"op\":\"add\",\"path\":\"/PCF_ORDERCOM\",\"value\":\"" + comment.Trim() + "\"}]";
+                string textJson = "[{\"op\":\"add\",\"path\":\"/PCF_ORDERCOM\",\"value\":\"" + comment.Trim() + "\"}]";
 
                 // turn request string into a byte stream
-                byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+                byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
 
                 // send request
                 using (Stream requestStream = request.GetRequestStream())
@@ -891,7 +891,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a method that return the price from the given information of the product */
-        public double getPrice(double basePrice, int quantity, bool imprint, bool rush)
+        public double GetPrice(double basePrice, int quantity, bool imprint, bool rush)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
             double msrp = list[10] * basePrice;
@@ -1004,7 +1004,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a supporting method that return the base price of the given sku */
-        private static double getPrice(string sku)
+        private static double GetPrice(string sku)
         {
             double basePrice;
 

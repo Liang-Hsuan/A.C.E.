@@ -134,7 +134,7 @@ namespace AshlinCustomerEnquiry
             if (asiTextbox.Text != "")
             {
                 // get company information from the asi number that user entered
-                BPvalues asiValue = asi.getCompanyInfo(asiTextbox.Text);
+                BPvalues asiValue = asi.GetCompanyInfo(asiTextbox.Text);
 
                 // the case if the asi number does not exist -> return
                 if (asiValue == null)

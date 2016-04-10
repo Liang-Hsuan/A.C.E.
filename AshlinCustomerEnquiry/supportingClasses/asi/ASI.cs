@@ -53,10 +53,10 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             request.ContentType = "application/json";
 
             // generate JSON file 
-            string textJSON = "{\"asi\":\"" + asi + "\",\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+            string textJson = "{\"asi\":\"" + asi + "\",\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
 
             // turn request string into a byte stream
-            byte[] postBytes = Encoding.UTF8.GetBytes(textJSON);
+            byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
 
             // send request
             using (Stream requestStream = request.GetRequestStream())
@@ -73,7 +73,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
         }
 
         /* a method that return company info from the given asi number */
-        public BPvalues getCompanyInfo(string asi)
+        public BPvalues GetCompanyInfo(string asi)
         {
             // uri for getting company information
             string uri = "http://asiservice.asicentral.com/credit/v1/creditsummary/?asiNumber=" + asi;
