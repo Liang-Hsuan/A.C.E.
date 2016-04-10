@@ -5,8 +5,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
     /* 
     * A supporting class for BPsearch that store all necessary data 
     */
-    [Serializable()]
-    public class BPvalues
+    [Serializable]
+    public class BPvalues : IComparable<BPvalues>
     {
         // fields for customer information
         public string FirstName { get; set; }
@@ -84,6 +84,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Rush = rush;
             Comment = comment;
             DeliveryDate = deliveryDate;
+        }
+
+        /* compare method */
+        public int CompareTo(BPvalues other)
+        {
+            return string.Compare(FirstName, other.FirstName);
         }
     }
 }

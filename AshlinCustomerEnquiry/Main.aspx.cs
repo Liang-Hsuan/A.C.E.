@@ -146,7 +146,7 @@ namespace AshlinCustomerEnquiry
                 }
 
                 // search result by company name
-                BPvalues[] value = bp.GetCustomerWithInfo(null, asiValue.Company, 2);
+                value = bp.GetCustomerWithInfo(null, asiValue.Company, 2);
 
                 #region Error Check
                 // the case if there is no result or there are too many result
@@ -181,6 +181,9 @@ namespace AshlinCustomerEnquiry
                     return;
                 }
                 #endregion
+
+                // sort array by first name
+                value = value.OrderBy(s => s.FirstName).ToArray();
 
                 // show all the result 
                 listbox.Items.Clear();
@@ -291,6 +294,9 @@ namespace AshlinCustomerEnquiry
 
                 return;
             }
+
+            // sort array by first name
+            value = value.OrderBy(s => s.FirstName).ToArray();
 
             // show all the result 
             listbox.Items.Clear();

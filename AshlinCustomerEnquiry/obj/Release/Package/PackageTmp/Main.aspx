@@ -63,15 +63,6 @@
             text-align: right;
             height: 23px;
         }
-        .auto-style42 {
-            width: 122px;
-            height: 23px;
-        }
-        .auto-style43 {
-            width: 151px;
-            overflow: auto;
-            height: 23px;
-        }
         .auto-style63 {
             width: 101px;
             height: 23px;
@@ -335,18 +326,6 @@
             font-size: medium;
             color: #FFFFFF;
         }
-        .auto-style247 {
-            height: 23px;
-            text-align: right;
-        }
-        .auto-style248 {
-            overflow: auto;
-        }
-        .auto-style249 {
-            width: 121px;
-            text-align: left;
-            height: 23px;
-        }
     </style>
 </head>
 <body style="height: 1056px; background-color:tan">
@@ -592,30 +571,30 @@
                     <td class="auto-style18">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
             </table>
             
@@ -653,19 +632,19 @@
                         <td class="auto-style50">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
                         <td class="auto-style74" colspan="2">
                             <h4><span style="color: #ffffff"><strong>Order Information:</strong></span></h4>
                         </td>
-                        <td class="auto-style38">&nbsp;</td>
+                        <td class="auto-style38"></td>
                         <td></td>
                         <td></td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td class="auto-style50">&nbsp;</td>
-                        <td class="auto-style50">&nbsp;</td>
+                        <td class="auto-style38"></td>
+                        <td></td>
+                        <td></td>
+                        <td class="auto-style50"></td>
+                        <td class="auto-style50"></td>
                     </tr>
                     <tr>
                         <td class="auto-style40"></td>
@@ -676,7 +655,7 @@
                             </asp:DropDownList>
                         </td>
                         <td class="auto-style41"></td>
-                        <td class="auto-style247"><span style="color: #ffffff">Rush Order :</span></td>
+                        <td style="height: 23px;text-align: right"><span style="color: #ffffff">Rush Order :</span></td>
                         <td class="auto-style103">
                             <asp:CheckBoxList ID="rushCheckboxList" runat="server" CellPadding="0" CellSpacing="0" Font-Size="Small" ForeColor="White" Height="20px" RepeatDirection="Horizontal" TabIndex="51" Width="151px">
                                 <asp:ListItem Value="true">Yes</asp:ListItem>
@@ -723,7 +702,7 @@
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
-                        <td class="auto-style249"><span style="color: #ffffff">*</span></td>
+                        <td style=" width: 121px;text-align: left;height: 23px"><span style="color: #ffffff">*</span></td>
                         <td class="auto-style40"></td>
                         <td class="auto-style41"></td>
                         <td class="auto-style48"></td>
@@ -810,7 +789,7 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style45"><span style="color: #ffffff">Additional Info :</span></td>
                         <td colspan="4" rowspan="3">
-                            <asp:TextBox ID="additionalInfoTextbox" runat="server" Height="66px" TextMode="MultiLine" Width="445px" TabIndex="56" CssClass="auto-style248"></asp:TextBox>
+                            <asp:TextBox ID="additionalInfoTextbox" runat="server" Height="66px" TextMode="MultiLine" Width="445px" TabIndex="56" style="overflow: auto"></asp:TextBox>
                         </td>
                         <td class="auto-style103" colspan="2"><span style="color: #ffffff">Date of&nbsp; Delivery :</span></td>
                     </tr>
@@ -836,10 +815,10 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
                         <td class="auto-style41"></td>
-                        <td class="auto-style96">&nbsp;</td>
-                        <td class="auto-style96">&nbsp;</td>
+                        <td class="auto-style96"></td>
+                        <td class="auto-style96"></td>
                         <td class="auto-style41"></td>
-                        <td class="auto-style42"></td>
+                        <td style="width: 122px;height: 23px"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34">&nbsp;</td>
