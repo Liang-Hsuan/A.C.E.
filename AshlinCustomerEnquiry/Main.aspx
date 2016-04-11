@@ -242,35 +242,6 @@
             width: 274px;
             height: 22px;
         }
-        .auto-style205 {
-            width: 174px;
-            height: 23px;
-        }
-        .auto-style208 {
-            width: 350px;
-            height: 170px;
-            border-style: solid; 
-            border-width: 3px;
-        }
-        .auto-style211 {
-            width: 174px;
-        }
-        .auto-style213 {
-            width: 103px;
-            text-align: right;
-        }
-        .auto-style214 {
-            width: 103px;
-            text-align: right;
-            height: 23px;
-        }
-        .auto-style215 {
-            height: 43px;
-            text-align: center;
-        }
-        .auto-style216 {
-            height: 20px;
-        }
         .auto-style218 {
             text-align: right;
         }
@@ -424,135 +395,128 @@
                         <asp:TextBox ID="address1Textbox" runat="server" Enabled="False" Height="40px" style="overflow: auto" TabIndex="48" TextMode="MultiLine" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
                     <td class="auto-style82"><span style="color: #FFFFFF;">Last Name:</span></td>
                     <td class="auto-style81">
                         <asp:TextBox ID="lastNameTextbox" runat="server" Enabled="False" TabIndex="44" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style38"><span style="color: #FFFFFF;">*</span></td>
-                    <td class="auto-style91">&nbsp;</td>
-                    <td class="auto-style18">
-                        &nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style91"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style82">&nbsp;</td>
-                    <td class="auto-style81">
-                        &nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style82"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
                     <td class="auto-style91"><span style="color: #FFFFFF;">Address 2 :</span></td>
                     <td class="auto-style18" rowspan="2">
                         <asp:TextBox ID="address2Textbox" runat="server" Enabled="False" Height="40px" style="overflow: auto" TabIndex="49" TextMode="MultiLine" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
                     <td class="auto-style82"><span style="color: #FFFFFF;">Phone Number :</span></td>
                     <td class="auto-style81">
                         <asp:TextBox ID="phoneTextbox" runat="server" Enabled="False" TabIndex="45" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style38">&nbsp;</td>
-                    <td class="auto-style91">&nbsp;</td>
-                    <td class="auto-style18">
-                        &nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style38"></td>
+                    <td class="auto-style91"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
                     <td class="auto-style82"><span style="color: #FFFFFF;">Email Address :</span></td>
                     <td class="auto-style81">
                         <asp:TextBox ID="emailTextbox" runat="server" Enabled="False" TabIndex="46" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style38">&nbsp;</td>
+                    <td class="auto-style38"></td>
                     <td class="auto-style91"><span style="color: #FFFFFF;">City :</span></td>
                     <td class="auto-style18">
                         <asp:TextBox ID="cityTextbox" runat="server" Enabled="False" TabIndex="50" Width="151px"></asp:TextBox>
                     </td>
                     <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">
-                        &nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
                     <td class="auto-style91"><span style="color: #FFFFFF;">Province / State :</span></td>
                     <td class="auto-style18">
                         <asp:TextBox ID="provinceTextbox" runat="server" Enabled="False" Width="151px" TabIndex="51"></asp:TextBox>
                     </td>
                     <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style82">&nbsp;</td>
-                    <td class="auto-style81">
-                        &nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style82"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
                     <td class="auto-style91"><span style="color: #FFFFFF;">Postal Code :</span></td>
                     <td class="auto-style18">
                         <asp:TextBox ID="postalCodeTextbox" runat="server" Enabled="False" Width="151px" TabIndex="52"></asp:TextBox>
                     </td>
                     <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
                     <td class="auto-style82"><span style="color: #FFFFFF;">Company Name :</span></td>
                     <td class="auto-style81">
                         <asp:TextBox ID="companyTextbox" runat="server" Enabled="False" TabIndex="47" Width="151px"></asp:TextBox>
                     </td>
-                    <td class="auto-style38">&nbsp;</td>
+                    <td class="auto-style38"></td>
                     <td class="auto-style91"><span style="color: #FFFFFF;">Country :</span></td>
                     <td class="auto-style18">
                         <asp:TextBox ID="countryTextbox" runat="server" Enabled="False" Width="151px" TabIndex="53"></asp:TextBox>
                     </td>
                     <td class="auto-style18"><span style="color: #FFFFFF;">*</span></td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style81">&nbsp;</td>
-                    <td class="auto-style82">&nbsp;</td>
-                    <td class="auto-style81">
-                        &nbsp;</td>
-                    <td class="auto-style38">&nbsp;</td>
-                    <td class="auto-style91">&nbsp;</td>
-                    <td class="auto-style18">
-                        &nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
-                    <td class="auto-style18">&nbsp;</td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style82"></td>
+                    <td class="auto-style81"></td>
+                    <td class="auto-style38"></td>
+                    <td class="auto-style91"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
+                    <td class="auto-style18"></td>
                 </tr>
                 <tr>
                     <td class="auto-style81"></td>
@@ -1050,27 +1014,27 @@
                 </table>
             </asp:Panel>
             <asp:Panel ID="loginPanel" runat="server" DefaultButton="loginButton" Height="170px" Width="350px" BackColor="White" TabIndex="26">
-                <table class="auto-style208">
+                <table style="width: 350px;height: 170px;border-style: solid;border-width: 3px">
                     <tr>
                         <td colspan="2" style="background-color: tan"><strong>Please Login To Continue</strong></td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="auto-style216"></td>
+                        <td colspan="2" style="height: 20px"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style214">Username :</td>
-                        <td class="auto-style205">
+                        <td style="width: 103px;text-align: right;height: 23px">Username :</td>
+                        <td style="width: 174px;height: 23px">
                             <asp:TextBox ID="usernameTextbox" runat="server" Width="170px" TabIndex="27"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style213">Password :</td>
-                        <td class="auto-style211">
+                        <td style=" width: 103px;text-align: right">Password :</td>
+                        <td style="width: 174px">
                             <asp:TextBox ID="passwordTextbox" TextMode="Password" runat="server" Width="170px" TabIndex="28"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style215" colspan="2">
+                        <td style="height: 43px;text-align: center" colspan="2">
                             <asp:Button ID="loginCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" TabIndex="29" />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <asp:Button ID="loginButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Login" Width="60px" OnClick="loginButton_Click" TabIndex="30" />
