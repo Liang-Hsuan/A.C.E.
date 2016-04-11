@@ -474,7 +474,9 @@ namespace AshlinCustomerEnquiry
                 skuValue = skuValue.Substring(skuValue.IndexOf(';') + 1);
                 row[2] = bool.Parse(skuValue.Substring(0, skuValue.IndexOf(';')));      // gift box
                 row[3] = quantity;
-                row[4] = double.Parse(skuValue.Substring(skuValue.IndexOf(';') + 1));   // base price
+                skuValue = skuValue.Substring(skuValue.IndexOf(';') + 1);
+                row[4] = double.Parse(skuValue.Substring(0, skuValue.IndexOf(';')));    // base price
+                row[5] = int.Parse(skuValue.Substring(skuValue.IndexOf(';') + 1));      // pricing tier
 
                 table.Rows.Add(row);
             }
@@ -593,6 +595,7 @@ namespace AshlinCustomerEnquiry
             List<string> descriptionList = new List<string>();
             List<int> qtyList = new List<int>();
             List<double> basePriceList = new List<double>();
+            List<int> pricingTierList = new List<int>();
 
             #region Email 
             // get the order detail
@@ -620,6 +623,7 @@ namespace AshlinCustomerEnquiry
                 descriptionList.Add(table.Rows[i][1].ToString());
                 qtyList.Add(Convert.ToInt32(table.Rows[i][3]));
                 basePriceList.Add(Convert.ToDouble(table.Rows[i][4]));
+                pricingTierList.Add(Convert.ToInt32(table.Rows[i][5]));
             }
             orderDetail += "\n\nDelivery Date: " + dateDeliveryTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
 
@@ -652,7 +656,7 @@ namespace AshlinCustomerEnquiry
 
             // declare BPvalues object
             BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
-                                            postalCodeTextbox.Text, countryTextbox.Text, skuList.ToArray(), descriptionList.ToArray(), qtyList.ToArray(), basePriceList.ToArray(), logo, rush, additionalInfoTextbox.Text, 
+                                            postalCodeTextbox.Text, countryTextbox.Text, skuList.ToArray(), descriptionList.ToArray(), qtyList.ToArray(), basePriceList.ToArray(), pricingTierList.ToArray(), logo, rush, additionalInfoTextbox.Text, 
                                             DateTime.ParseExact(dateDeliveryTextbox.Text, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
 
             // post order
@@ -674,6 +678,7 @@ namespace AshlinCustomerEnquiry
             table.Columns.Add("Gift Box", typeof(bool));
             table.Columns.Add("Quantity", typeof(int));
             table.Columns.Add("Base Price", typeof(double));
+            table.Columns.Add("Pricing Tier", typeof(int));
             gridview.DataSource = table;
             gridview.DataBind();
             ViewState["DataTable"] = table;
@@ -685,13 +690,13 @@ namespace AshlinCustomerEnquiry
             // adding SKUs to the dropdown list
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
             {
-                SqlCommand command = new SqlCommand("SELECT SKU_Ashlin, Short_Description, GiftBox, Base_Price FROM master_SKU_Attributes sku " +
+                SqlCommand command = new SqlCommand("SELECT SKU_Ashlin, Short_Description, GiftBox, Base_Price, Pricing_Tier FROM master_SKU_Attributes sku " +
                                                     "INNER JOIN master_Design_Attributes design ON design.Design_Service_Code = sku.Design_Service_Code " +
-                                                    "WHERE sku.Active = 'True'", connection);
+                                                    "WHERE sku.Active = 'True' and Design_Service_Flag = 'Design'", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
-                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1) + ';' + reader.GetBoolean(2) + ';' + reader.GetValue(3)));
+                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1) + ';' + reader.GetBoolean(2) + ';' + reader.GetValue(3) + ';' + reader.GetInt32(4)));
             }
 
             skuDropdownlist.DataSource = skuList;

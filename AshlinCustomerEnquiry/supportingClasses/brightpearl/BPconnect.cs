@@ -109,6 +109,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
 
                 // post comment
+                if (value.Comment == "") return;
                 post.PatchComment(orderId, value.Comment);
                 while (post.HasError)
                 {
@@ -146,6 +147,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
 
                 //post comment
+                if (value.Comment == "") return;
                 post.PatchComment(orderId, value.Comment);
                 while (post.HasError)
                 {
@@ -662,7 +664,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 int quantity = value.Quantity[index];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
-                double netPrice = price.GetPrice(value.BasePrice[index], quantity, imprint, rush) * quantity;
+                double netPrice = price.GetPrice(value.BasePrice[index], value.PricingTier[index], quantity, imprint, rush) * quantity;
 
                 string taxCode;
                 double taxRate;
@@ -864,7 +866,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
     public class Price
     {
         // fields for storing discount matrix values
-        private readonly double[] list = new double[11];
+        private readonly double[][] list = new double[6][];
 
         /* constructor that initialize discount matrix list field */
         public Price()
@@ -873,28 +875,63 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             // [0] 1 net standard, [1] 6 net standard, [2] 24 net standard, [3] 50 net standard, [4] 100 net standard, [5] 250 net standard, [6] 500 net standard, [7] 1000 net standard, [8] 2500 net standard, [9] rush net
             SqlCommand command = new SqlCommand("SELECT [1_Net_Standard Delivery], [6_Net_Standard Delivery], [24_Net_Standard Delivery], [50_Net_Standard Delivery], [100_Net_Standard Delivery], [250_Net_Standard Delivery], [500_Net_Standard Delivery], [1000_Net_Standard Delivery], [2500_Net_Standard Delivery], [RUSH_Net_25_wks] "
-                                              + "FROM ref_discount_matrix", connection);
+                                              + "FROM Discount_Matrix", connection);
 
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            for (int i = 0; i <= 9; i++)
-                list[i] = reader.GetDouble(i);
+            for (int i = 0; i <= 4; i++)
+            {
+                double[] itemList = new double[10];
+                reader.Read();
+                for (int j = 0; j <= 9; j++)
+                {
+                    try
+                    {
+                        itemList[j] = reader.GetDouble(j);
+                    }
+                    catch
+                    {
+                        itemList[j] = 0;
+                    }
+                }
+                list[i] = itemList;
+            }
             reader.Close();
 
-            // [10] multiplier
+            // [5] multiplier
             command.CommandText = "SELECT [MSRP Multiplier] FROM ref_msrp_multiplier";
             reader = command.ExecuteReader();
             reader.Read();
-            list[10] = reader.GetDouble(0);
+            list[5] = new double[] { reader.GetDouble(0) };
             connection.Close();
         }
 
         /* a method that return the price from the given information of the product */
-        public double GetPrice(double basePrice, int quantity, bool imprint, bool rush)
+        public double GetPrice(double basePrice, int pricingTier, int quantity, bool imprint, bool rush)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
-            double msrp = list[10] * basePrice;
+            double msrp = list[5][0] * basePrice;
+
+            // get the corresponding row number for the pricing tier
+            int row;
+            switch (pricingTier)
+            {
+                case 1:
+                    row = 1;
+                    break;
+                case 2:
+                    row = 2;
+                    break;
+                case 3:
+                    row = 3;
+                    break;
+                case 4:
+                    row = 4;
+                    break;
+                default:
+                    row = 0;
+                    break;
+            }
 
             if (imprint)
             {
@@ -910,45 +947,45 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 {
                     // the case if it is rush
                     if (quantity < 6)
-                        return (msrp + runcharge) * list[0] * list[9];
+                        return (msrp + runcharge) * list[row][0] * list[row][9];
                     if (quantity >= 6 && quantity < 24)
-                        return (msrp + runcharge) * list[1] * list[9];
+                        return (msrp + runcharge) * list[row][1] * list[row][9];
                     if (quantity >= 24 && quantity < 50)
-                        return (msrp + runcharge) * list[2] * list[9];
+                        return (msrp + runcharge) * list[row][2] * list[row][9];
                     if (quantity >= 50 && quantity < 100)
-                        return (msrp + runcharge) * list[3] * list[9];
+                        return (msrp + runcharge) * list[row][3] * list[row][9];
                     if (quantity >= 100 && quantity < 250)
-                        return (msrp + runcharge) * list[4] * list[9];
+                        return (msrp + runcharge) * list[row][4] * list[row][9];
                     if (quantity >= 250 && quantity < 500)
-                        return (msrp + runcharge) * list[5] * list[9];
+                        return (msrp + runcharge) * list[row][5] * list[row][9];
                     if (quantity >= 500 && quantity < 1000)
-                        return (msrp + runcharge) * list[6] * list[9];
+                        return (msrp + runcharge) * list[row][6] * list[row][9];
                     if (quantity >= 1000 && quantity < 2500)
-                        return (msrp + runcharge) * list[7] * list[9];
+                        return (msrp + runcharge) * list[row][7] * list[row][9];
                     if (quantity >= 2500)
-                        return (msrp + runcharge) * list[8] * list[9];
+                        return (msrp + runcharge) * list[row][8] * list[row][9];
                 }
                 else
                 {
                     // the case if it is not rush
                     if (quantity < 6)
-                        return (msrp + runcharge) * list[0];
+                        return (msrp + runcharge) * list[row][0];
                     if (quantity >= 6 && quantity < 24)
-                        return (msrp + runcharge) * list[1];
+                        return (msrp + runcharge) * list[row][1];
                     if (quantity >= 24 && quantity < 50)
-                        return (msrp + runcharge) * list[2];
+                        return (msrp + runcharge) * list[row][2];
                     if (quantity >= 50 && quantity < 100)
-                        return (msrp + runcharge) * list[3];
+                        return (msrp + runcharge) * list[row][3];
                     if (quantity >= 100 && quantity < 250)
-                        return (msrp + runcharge) * list[4];
+                        return (msrp + runcharge) * list[row][4];
                     if (quantity >= 250 && quantity < 500)
-                        return (msrp + runcharge) * list[5];
+                        return (msrp + runcharge) * list[row][5];
                     if (quantity >= 500 && quantity < 1000)
-                        return (msrp + runcharge) * list[6];
+                        return (msrp + runcharge) * list[row][6];
                     if (quantity >= 1000 && quantity < 2500)
-                        return (msrp + runcharge) * list[7];
+                        return (msrp + runcharge) * list[row][7];
                     if (quantity >= 2500)
-                        return (msrp + runcharge) * list[8];
+                        return (msrp + runcharge) * list[row][8];
                 }
             }
             else
@@ -958,45 +995,45 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 {
                     // the case if it is rush
                     if (quantity < 6)
-                        msrp *= list[0] * list[9];
+                        msrp *= list[row][0] * list[row][9];
                     else if (quantity >= 6 && quantity < 24)
-                        msrp *= list[1] * list[9];
+                        msrp *= list[row][1] * list[row][9];
                     else if (quantity >= 24 && quantity < 50)
-                        msrp *= list[2] * list[9];
+                        msrp *= list[row][2] * list[row][9];
                     else if (quantity >= 50 && quantity < 100)
-                        msrp *= list[3] * list[9];
+                        msrp *= list[row][3] * list[row][9];
                     else if (quantity >= 100 && quantity < 250)
-                        msrp *= list[4] * list[9];
+                        msrp *= list[row][4] * list[row][9];
                     else if (quantity >= 250 && quantity < 500)
-                        msrp *= list[5] * list[9];
+                        msrp *= list[row][5] * list[row][9];
                     else if (quantity >= 500 && quantity < 1000)
-                        msrp *= list[6] * list[9];
+                        msrp *= list[row][6] * list[row][9];
                     else if (quantity >= 1000 && quantity < 2500)
-                        msrp *= list[7] * list[9];
+                        msrp *= list[row][7] * list[row][9];
                     else
-                        msrp *= list[8] * list[9];
+                        msrp *= list[row][8] * list[row][9];
                 }
                 else
                 {
                     // the case if it is not rush
                     if (quantity < 6)
-                        msrp *= list[0];
+                        msrp *= list[row][0];
                     else if (quantity >= 6 && quantity < 24)
-                        msrp *= list[1];
+                        msrp *= list[row][1];
                     else if (quantity >= 24 && quantity < 50)
-                        msrp *= list[2];
+                        msrp *= list[row][2];
                     else if (quantity >= 50 && quantity < 100)
-                        msrp *= list[3];
+                        msrp *= list[row][3];
                     else if (quantity >= 100 && quantity < 250)
-                        msrp *= list[4];
+                        msrp *= list[row][4];
                     else if (quantity >= 250 && quantity < 500)
-                        msrp *= list[5];
+                        msrp *= list[row][5];
                     else if (quantity >= 500 && quantity < 1000)
-                        msrp *= list[6];
+                        msrp *= list[row][6];
                     else if (quantity >= 1000 && quantity < 2500)
-                        msrp *= list[7];
+                        msrp *= list[row][7];
                     else
-                        msrp *= list[8];
+                        msrp *= list[row][8];
                 }
             }
 

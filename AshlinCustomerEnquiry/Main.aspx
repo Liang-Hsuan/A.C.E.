@@ -676,11 +676,20 @@
                                          </EditItemTemplate>
                                         <ControlStyle ForeColor="Green" />
                                     </asp:TemplateField>
-                                    <asp:BoundField DataField="SKU" HeaderText="SKU" ReadOnly="True" ItemStyle-Width="200px" />
+                                    <asp:BoundField DataField="SKU" HeaderText="SKU" ReadOnly="True" ItemStyle-Width="200px" >
+                                    <ItemStyle Width="200px" />
+                                    </asp:BoundField>
                                     <asp:BoundField DataField="Short Description" HeaderText="Short Description" ReadOnly="True" />
-                                    <asp:CheckBoxField DataField="Gift Box" HeaderText="Gift Box" ReadOnly="True" ItemStyle-Width="100px" />
-                                    <asp:BoundField DataField="Quantity" HeaderText="Quantity" ItemStyle-Width="100px" />
-                                    <asp:BoundField DataField="Base Price" HeaderText="Base Price" ReadOnly="True" ItemStyle-Width="100px" />
+                                    <asp:CheckBoxField DataField="Gift Box" HeaderText="Gift Box" ReadOnly="True" ItemStyle-Width="100px" >
+                                    <ItemStyle Width="100px" />
+                                    </asp:CheckBoxField>
+                                    <asp:BoundField DataField="Quantity" HeaderText="Quantity" ItemStyle-Width="100px" >
+                                    <ItemStyle Width="100px" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Base Price" HeaderText="Base Price" ReadOnly="True" ItemStyle-Width="100px" >
+                                    <ItemStyle Width="100px" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Pricing Tier" HeaderText="Pricing Tier" ReadOnly="True" SortExpression="Pricing Tier" ItemStyle-Width="100px"/>
                                     <asp:ButtonField Text="Remove" CommandName="Delete" ControlStyle-ForeColor="Red" >
                                     <ControlStyle ForeColor="Red" />
                                     </asp:ButtonField>
@@ -769,14 +778,14 @@
                         <td style="width: 122px;height: 23px"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style64" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style35">&nbsp;</td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style64" colspan="2"></td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style35"></td>
                     </tr>
                     <tr>
                         <td class="auto-style243"></td>
@@ -791,31 +800,31 @@
                         <td class="auto-style242" colspan="2"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style38"></td>
                         <td class="auto-style64" colspan="2"><asp:Label ID="newQuoteLabel" runat="server" Font-Size="Small" ForeColor="White" TabIndex="67" Text="New Quote Created !" Visible="False"></asp:Label>
                         </td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style35">&nbsp;</td>
-                        <td class="auto-style39">&nbsp;</td>
-                        <td colspan="2">&nbsp;</td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style35"></td>
+                        <td class="auto-style39"></td>
+                        <td colspan="2"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style38"></td>
                         <td class="auto-style64" colspan="2" rowspan="3">&nbsp;&nbsp;&nbsp;&nbsp;
                             <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" TabIndex="68" Width="50px" OnClick="quoteButton_Click" />
                             <em><span style="color: #ffffff"><strong>Quote</strong></span></em></td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style35">&nbsp;</td>
-                        <td class="auto-style39">&nbsp;</td>
-                        <td colspan="2">&nbsp;</td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style35"></td>
+                        <td class="auto-style39"></td>
+                        <td colspan="2"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34">

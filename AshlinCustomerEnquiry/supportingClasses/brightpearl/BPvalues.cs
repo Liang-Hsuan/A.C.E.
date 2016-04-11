@@ -26,6 +26,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         public string[] Description { get; set; }
         public int[] Quantity { get; set; }
         public double[] BasePrice { get; set; }
+        public int[] PricingTier { get; set; }
         public bool Logo { get; set; }
         public bool Rush { get; set; }
         public string Comment { get; set; }
@@ -52,6 +53,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Description = new string[0];
             Quantity = new int[0];
             BasePrice = new double[0];
+            PricingTier = new int[0];
             Logo = true;
             Rush = false;
             Comment = "";
@@ -60,7 +62,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
         /* seconde constructor that accept all fields parameters */
         public BPvalues(string firstName, string lastName, string company, string phone, string email, string address1, string address2, string city, string province, string postalCode, string country,
-                        string[] sku, string[] description, int[] quantity, double[] basePrice, bool logo, bool rush, string comment, DateTime deliveryDate)
+                        string[] sku, string[] description, int[] quantity, double[] basePrice, int[] pricingTier, bool logo, bool rush, string comment, DateTime deliveryDate)
         {
             // customer information
             FirstName = firstName;
@@ -80,6 +82,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Description = description;
             Quantity = quantity;
             BasePrice = basePrice;
+            PricingTier = pricingTier;
             Logo = logo;
             Rush = rush;
             Comment = comment;
