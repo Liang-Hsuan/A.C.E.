@@ -105,10 +105,6 @@
             border-style: solid; 
             border-width: 3px;
         }
-        .auto-style125 {
-            width: 293px;
-            height: 23px;
-        }
         .auto-style126 {
             width: 293px;
             height: 23px;
@@ -284,7 +280,7 @@
         }
     </style>
 </head>
-<body style="height: 1056px; background-color:tan">
+<body style="height: 100%; background-color:tan">
     <form id="form1" runat="server">
     <asp:ScriptManager runat="server" ID="ScriptManager"/>
     <div>  
@@ -564,20 +560,17 @@
             <asp:Panel ID="orderPanel" runat="server" BackImageUrl="image/wallpaper.jpg" style="background-position: center bottom">
                 <table class="auto-style5">
                     <tr>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style74" colspan="2">
-                            &nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td>
-                            &nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td>
-                            &nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td class="auto-style50">&nbsp;</td>
-                        <td class="auto-style50">&nbsp;</td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style74" colspan="2"></td>
+                        <td class="auto-style38"></td>
+                        <td></td>
+                        <td></td>
+                        <td class="auto-style38"></td>
+                        <td></td>
+                        <td></td>
+                        <td class="auto-style50"></td>
+                        <td class="auto-style50"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34"></td>
@@ -654,10 +647,9 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style41"></td>
                         <td class="auto-style48"></td>
-                        <td class="auto-style103" colspan="4">
-                            &nbsp;</td>
-                        <td class="auto-style63">&nbsp;</td>
-                        <td class="auto-style63">&nbsp;</td>
+                        <td class="auto-style103" colspan="4"></td>
+                        <td class="auto-style63"></td>
+                        <td class="auto-style63"></td>
                     </tr>
                     <tr>
                         <td class="auto-style40"></td>
@@ -830,25 +822,25 @@
                         <td class="auto-style34">
                             <asp:Label ID="uselessLabel" runat="server" style="display: none"></asp:Label>
                         </td>
-                        <td class="auto-style34">&nbsp;</td>
+                        <td class="auto-style34"></td>
                         <td class="auto-style218" colspan="2">
                             <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" OnClick="updateLinkButton_Click" TabIndex="66" ForeColor="White">update Username and Password</asp:LinkButton>
                         </td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style35">&nbsp;</td>
-                        <td class="auto-style39">&nbsp;</td>
-                        <td colspan="2">&nbsp;</td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style35"></td>
+                        <td class="auto-style39"></td>
+                        <td colspan="2"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style34">&nbsp;</td>
-                        <td class="auto-style34">&nbsp;</td>
+                        <td class="auto-style34"></td>
+                        <td class="auto-style34"></td>
                         <td class="auto-style218" colspan="2">&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style38">&nbsp;</td>
-                        <td class="auto-style35">&nbsp;</td>
-                        <td class="auto-style39">&nbsp;</td>
-                        <td colspan="2">&nbsp;</td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style38"></td>
+                        <td class="auto-style35"></td>
+                        <td class="auto-style39"></td>
+                        <td colspan="2">&</td>
                     </tr>
                 </table>
                 
@@ -859,7 +851,7 @@
                         <td class="auto-style64" colspan="2" style="background-color: tan"><strong><span class="auto-style106">Welcome To</span><br class="auto-style106"/> <span class="auto-style106">Ashlin Customer Enquiry Form</span></strong></td>
                     </tr>
                     <tr>
-                        <td class="auto-style125"></td>
+                        <td style="width: 293px;height: 23px"></td>
                         <td class="auto-style127"></td>
                     </tr>
                     <tr>
@@ -888,8 +880,8 @@
                         <td colspan="2" class="auto-style132"><strong>Please Enter Your ASI Number</strong></td>
                     </tr>
                     <tr>
-                        <td class="auto-style148">&nbsp;</td>
-                        <td class="auto-style144">&nbsp;</td>
+                        <td class="auto-style148"></td>
+                        <td class="auto-style144"></td>
                     </tr>
                     <tr>
                         <td class="auto-style147"><strong>ASI # :</strong></td>
@@ -899,9 +891,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style148">&nbsp;</td>
-                        <td class="auto-style149">
-                            &nbsp;</td>
+                        <td class="auto-style148"></td>
+                        <td class="auto-style149"></td>
                     </tr>
                     <tr>
                         <td class="auto-style153"></td>
@@ -1050,12 +1041,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2"  style="background-color: tan">&nbsp;</td>
+                        <td colspan="2"  style="background-color: tan"></td>
                     </tr>
                 </table>
             </asp:Panel>
             <asp:Panel ID="updatePanel" runat="server" DefaultButton="updateButton" BackColor="White" Height="170px" Width="350px" TabIndex="31">
-                <table style="width: 350px;height: 170px;border-style: solid;border-width: 3px">
+                <table style="width: 350px;height: 100%;border-style: solid;border-width: 3px">
                     <tr>
                         <td colspan="2" style="background-color: tan"><strong>Enter New Credentials</strong></td>
                     </tr>
@@ -1085,7 +1076,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="background-color: tan">&nbsp;</td>
+                        <td colspan="2" style="background-color: tan"></td>
                     </tr>
                 </table>
             </asp:Panel>

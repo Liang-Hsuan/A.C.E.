@@ -92,7 +92,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         /* compare method */
         public int CompareTo(BPvalues other)
         {
-            return string.Compare(FirstName, other.FirstName);
+            return string.CompareOrdinal(FirstName, other.FirstName);
         }
     }
 }

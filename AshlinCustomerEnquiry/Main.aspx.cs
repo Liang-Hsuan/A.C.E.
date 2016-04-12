@@ -67,8 +67,7 @@ namespace AshlinCustomerEnquiry
         /* set the canlender can only select the day after today */
         protected void calendar_DayRender(object sender, DayRenderEventArgs e)
         {
-            DateTime date = DateTime.Today;
-            if (e.Day.Date > date) return;
+            if (e.Day.Date > DateTime.Today) return;
             e.Day.IsSelectable = false;
             e.Cell.ForeColor = Color.Gray;
         }
@@ -521,12 +520,9 @@ namespace AshlinCustomerEnquiry
         /* update quantity in a row */
         protected void gridview_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            // get the new quantity of the item
-            int qty = int.Parse(((TextBox)gridview.Rows[e.RowIndex].Cells[4].Controls[0]).Text);
-
             // update the quantity to the table
             DataTable table = (DataTable)ViewState["DataTable"];
-            table.Rows[e.RowIndex][3] = qty;
+            table.Rows[e.RowIndex][3] = int.Parse(((TextBox)gridview.Rows[e.RowIndex].Cells[4].Controls[0]).Text);
 
             // bind the data source
             gridview.EditIndex = -1;
@@ -632,7 +628,7 @@ namespace AshlinCustomerEnquiry
             SmtpClient client = new SmtpClient("smtp.gmail.com");
 
             mail.From = new MailAddress("intern1002@ashlinbpg.com");
-            mail.To.Add("intern1002@ashlinbpg.com");
+            mail.To.Add("juanne.kochhar@ashlinbpg.com");
             mail.Subject = "NEW ORDER QUOTE";
             mail.Body = orderDetail;
 
