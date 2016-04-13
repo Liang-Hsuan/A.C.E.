@@ -83,78 +83,52 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             // get the contact id first
             string contactId = get.GetCustomerId(value.FirstName, value.LastName, value.PostalCode);
 
-            // if customer exists, add the current order under this customer
-            if (contactId != null)
+            // if customer does not exist -> create new contact
+            if (contactId == null)
             {
-                #region Customer Exist Case
-                // post order
-                string orderId = post.PostOrderRequest(contactId, value);
-                while (post.HasError)
-                {
-                    Thread.Sleep(5000);
-                    orderId = post.PostOrderRequest(contactId, value);
-                }
-
-                // post order row and reserve the item
-                for (int i = 0; i < value.Sku.Length; i++)
-                {
-                    // post order row
-                    post.PostOrderRowRequest(orderId, value, i);
-                    if (!post.HasError) continue;
-                    do
-                    {
-                        Thread.Sleep(5000);
-                        post.PostOrderRowRequest(orderId, value, i);
-                    } while (post.HasError);
-                }
-
-                // post comment
-                if (value.Comment == "") return;
-                post.PatchComment(orderId, value.Comment);
-                while (post.HasError)
-                {
-                    Thread.Sleep(5000);
-                    post.PatchComment(orderId, value.Comment);
-                }
-                #endregion
-            }
-            else
-            {
-                #region Cusomter Not Exist Case
                 // post address with new customer
                 string addressId = post.PostAddressRequest(value);
                 contactId = post.PostContactRequest(addressId, value);
+            }
 
-                // post order
-                string orderId = post.PostOrderRequest(contactId, value);
-                while (post.HasError)
+            // post order
+            string orderId = post.PostOrderRequest(contactId, value);
+            while (post.HasError)
+            {
+                Thread.Sleep(5000);
+                orderId = post.PostOrderRequest(contactId, value);
+            }
+
+            // the case if the order has logo -> add service item
+            if (value.Logo)
+            {
+                value.Sku.Add("DIESETUP-SVC-SVC");
+                value.Description.Add("Imprint Fee");
+                value.Quantity.Add(1);
+                value.BasePrice.Add(new Price().GetPrice("DIESETUP-SVC-SVC"));
+                value.PricingTier.Add(0);
+            }
+
+            // post order row and reserve the item
+            for (int i = 0; i < value.Sku.Count; i++)
+            {
+                // post order row
+                post.PostOrderRowRequest(orderId, value, i);
+                if (!post.HasError) continue;
+                do
                 {
                     Thread.Sleep(5000);
-                    orderId = post.PostOrderRequest(contactId, value);
-                }
-
-                // post order row and reserve the item
-                for (int i = 0; i < value.Sku.Length; i++)
-                {
-                    // post order row
                     post.PostOrderRowRequest(orderId, value, i);
-                    if (!post.HasError) continue;
-                    do
-                    {
-                        Thread.Sleep(5000);
-                        post.PostOrderRowRequest(orderId, value, i);
-                    } while (post.HasError);
-                }
+                } while (post.HasError);
+            }
 
-                //post comment
-                if (value.Comment == "") return;
+            // post comment
+            if (value.Comment == "") return;
+            post.PatchComment(orderId, value.Comment);
+            while (post.HasError)
+            {
+                Thread.Sleep(5000);
                 post.PatchComment(orderId, value.Comment);
-                while (post.HasError)
-                {
-                    Thread.Sleep(5000);
-                    post.PatchComment(orderId, value.Comment);
-                }
-                #endregion
             }
         }
 
@@ -193,7 +167,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         /* 
          * A class that Get request from brightpearl
          */
-        [Serializable()]
+        [Serializable]
         private class GetRequest
         {
             // fields for web request
@@ -488,7 +462,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         /* 
          * A class that Post request to brightpearl 
          */
-        [Serializable()]
+        [Serializable]
         private class PostRequest
         {
             #region Fields Declaration
@@ -1041,13 +1015,13 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a supporting method that return the base price of the given sku */
-        private static double GetPrice(string sku)
+        public double GetPrice(string sku)
         {
             double basePrice;
 
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
             {
-                SqlCommand command = new SqlCommand("SELECT Base_Price FROM master_SKU_Attributes WHERE SKU_Ashlin = \'" + sku + "\';", connection);
+                SqlCommand command = new SqlCommand("SELECT Base_Price FROM master_SKU_Attributes WHERE SKU_Ashlin = \'" + sku + "\'", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();

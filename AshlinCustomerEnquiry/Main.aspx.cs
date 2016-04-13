@@ -28,9 +28,19 @@ namespace AshlinCustomerEnquiry
             {
                 Initialization();
 
-                // initialize ASI object and store it
-                if (Session["ASI"] == null)
-                    Session["ASI"] = new Asi();
+                try
+                {
+                    // initialize ASI object and store it
+                    if (Session["ASI"] == null)
+                        Session["ASI"] = new Asi();
+                }
+                catch (WebException ex)
+                {
+                    // the case if there is error from asi -> disable asi function
+                    asiTextbox.Text = ex.Message;
+                    asiTextbox.Enabled = false;
+                    asiNextButton.Enabled = false;
+                }
 
                 // initialize BPconnect object and store it
                 if (Session["BPconnect"] == null)
@@ -592,6 +602,7 @@ namespace AshlinCustomerEnquiry
             List<int> qtyList = new List<int>();
             List<double> basePriceList = new List<double>();
             List<int> pricingTierList = new List<int>();
+            int[] count = { rushCheckboxList.Items.Cast<ListItem>().Count(li => li.Selected), logoCheckboxList.Items.Cast<ListItem>().Count(li => li.Selected) };
 
             #region Email 
             // get the order detail
@@ -601,15 +612,19 @@ namespace AshlinCustomerEnquiry
                                   "\nPostal Code: " + postalCodeTextbox.Text + "\nCountry: " + countryTextbox.Text + "\n\n\r" +
                                   "Order Detail:\n\r" +
                                   "Rush Order: ";
-            if (rushCheckboxList.SelectedIndex == 0)
+            if (count[0] > 1)
+                orderDetail += "Yes, No\n";
+            else if (rushCheckboxList.SelectedIndex == 0)
                 orderDetail += "Yes\n";
             else
                 orderDetail += "No\n";
             orderDetail += "With Logo: ";
-            if (logoCheckboxList.SelectedIndex == 0)
-                orderDetail += "Yes";
-            else
+            if (count[1] > 1)
+                orderDetail += "Yes, No";
+            else if (logoCheckboxList.SelectedIndex == 1)
                 orderDetail += "No";
+            else
+                orderDetail += "Yes";
             for (int i = 0; i < table.Rows.Count; i++)
             {
                 orderDetail += "\n\nItem " + (i + 1) + ": " + table.Rows[i][0] + "\nShort Description: " + table.Rows[i][1] + "\nGift Box: " + table.Rows[i][2] + "\nQuantity: " + table.Rows[i][3];
@@ -628,7 +643,7 @@ namespace AshlinCustomerEnquiry
             SmtpClient client = new SmtpClient("smtp.gmail.com");
 
             mail.From = new MailAddress("intern1002@ashlinbpg.com");
-            mail.To.Add("juanne.kochhar@ashlinbpg.com");
+            mail.To.Add("intern1002@ashlinbpg.com");
             mail.Subject = "NEW ORDER QUOTE";
             mail.Body = orderDetail;
 
@@ -639,24 +654,117 @@ namespace AshlinCustomerEnquiry
             #endregion
 
             #region Brightpearl
-            // asssign boolean values
-            bool rush; bool logo;
-            if (rushCheckboxList.SelectedIndex != 0 && rushCheckboxList.SelectedIndex != 1)
-                rush = false;
-            else
-                rush = Convert.ToBoolean(rushCheckboxList.SelectedValue);
-            if (logoCheckboxList.SelectedIndex != 0 && logoCheckboxList.SelectedIndex != 1)
-                logo = true;
-            else
-                logo = Convert.ToBoolean(logoCheckboxList.SelectedValue);
-
             // declare BPvalues object
             BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
-                                            postalCodeTextbox.Text, countryTextbox.Text, skuList.ToArray(), descriptionList.ToArray(), qtyList.ToArray(), basePriceList.ToArray(), pricingTierList.ToArray(), logo, rush, additionalInfoTextbox.Text, 
+                                            postalCodeTextbox.Text, countryTextbox.Text, skuList, descriptionList, qtyList, basePriceList, pricingTierList, true, false, additionalInfoTextbox.Text, 
                                             DateTime.ParseExact(dateDeliveryTextbox.Text, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
 
-            // post order
-            bp.PostOrder(bpValue);
+            // price list determination
+            if (count[0] > 1)
+            {
+                if (count[1] > 1)
+                {
+                    // 4 cases
+                    // 1 st case
+                    bpValue.Rush = true;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                    // 2nd case
+                    bpValue.Rush = true;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                    // 3rd case
+                    bpValue.Rush = false;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                    // 4th case
+                    bpValue.Rush = false;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                }
+                else if (logoCheckboxList.SelectedIndex == 1)
+                {
+                    // 2 cases
+                    // 1st case 
+                    bpValue.Rush = true;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                    // 2nd case
+                    bpValue.Rush = false;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                }
+                else
+                {
+                    // 2 cases
+                    // 1st case 
+                    bpValue.Rush = true;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                    // 2nd case
+                    bpValue.Rush = false;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                }
+            }
+            else if (rushCheckboxList.SelectedIndex == 0)
+            {
+                if (count[1] > 1)
+                {
+                    // 2 cases
+                    // 1 st case
+                    bpValue.Rush = true;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                    // 2nd case
+                    bpValue.Rush = true;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                }
+                else if (logoCheckboxList.SelectedIndex == 1)
+                {
+                    // 1 case 
+                    bpValue.Rush = true;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                }
+                else
+                {
+                    // 1 case
+                    bpValue.Rush = true;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                }
+            }
+            else
+            {
+                if (count[1] > 1)
+                {
+                    // 2 cases
+                    // 1 st case
+                    bpValue.Rush = false;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                    // 2nd case
+                    bpValue.Rush = false;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                }
+                else if (logoCheckboxList.SelectedIndex == 1)
+                {
+                    // 1 case 
+                    bpValue.Rush = false;
+                    bpValue.Logo = false;
+                    bp.PostOrder(bpValue);
+                }
+                else
+                {
+                    // 1 case
+                    bpValue.Rush = false;
+                    bpValue.Logo = true;
+                    bp.PostOrder(bpValue);
+                }
+            }
             #endregion
 
             // set label to visible to inidcate success

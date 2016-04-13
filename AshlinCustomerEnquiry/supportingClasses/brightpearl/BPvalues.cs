@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 {
@@ -22,11 +23,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         public string Country { get; set; }
 
         // field for order information
-        public string[] Sku { get; set; }
-        public string[] Description { get; set; }
-        public int[] Quantity { get; set; }
-        public double[] BasePrice { get; set; }
-        public int[] PricingTier { get; set; }
+        public List<string> Sku { get; set; }
+        public List<string> Description { get; set; }
+        public List<int> Quantity { get; set; }
+        public List<double> BasePrice { get; set; }
+        public List<int> PricingTier { get; set; }
         public bool Logo { get; set; }
         public bool Rush { get; set; }
         public string Comment { get; set; }
@@ -49,11 +50,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Country = "";
 
             // order field
-            Sku = new string[0];
-            Description = new string[0];
-            Quantity = new int[0];
-            BasePrice = new double[0];
-            PricingTier = new int[0];
+            Sku = new List<string>();
+            Description = new List<string>();
+            Quantity = new List<int>();
+            BasePrice = new List<double>();
+            PricingTier = new List<int>();
             Logo = true;
             Rush = false;
             Comment = "";
@@ -62,7 +63,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
         /* seconde constructor that accept all fields parameters */
         public BPvalues(string firstName, string lastName, string company, string phone, string email, string address1, string address2, string city, string province, string postalCode, string country,
-                        string[] sku, string[] description, int[] quantity, double[] basePrice, int[] pricingTier, bool logo, bool rush, string comment, DateTime deliveryDate)
+                        List<string> sku, List<string> description, List<int> quantity, List<double> basePrice, List<int> pricingTier, bool logo, bool rush, string comment, DateTime deliveryDate)
         {
             // customer information
             FirstName = firstName;

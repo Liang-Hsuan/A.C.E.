@@ -34,7 +34,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
             {
                 // [0] username, [1] password, [2] ASI number
-                SqlCommand command = new SqlCommand("SELECT Username, Password, Field1_Value FROM ASCM_Credentials WHERE Source = 'ASI API';", connection);
+                SqlCommand command = new SqlCommand("SELECT Username, Password, Field1_Value FROM ASCM_Credentials WHERE Source = 'ASI API'", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
