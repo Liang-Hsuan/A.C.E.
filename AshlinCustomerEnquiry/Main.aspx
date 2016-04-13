@@ -105,11 +105,6 @@
             border-style: solid; 
             border-width: 3px;
         }
-        .auto-style126 {
-            width: 293px;
-            height: 23px;
-            text-align: right;
-        }
         .auto-style127 {
             width: 253px;
             height: 23px;
@@ -118,10 +113,6 @@
             text-align: right;
             height: 33px;
             background-color: tan;
-        }
-        .auto-style131 {
-            text-align: center;
-            height: 105px;
         }
         .modalBackground {
             background-color: white;
@@ -725,8 +716,7 @@
                         <td class="auto-style65"></td>
                         <td class="auto-style65"></td>
                         <td class="auto-style65"></td>
-                        <td class="auto-style65">
-                        </td>
+                        <td class="auto-style65"></td>
                         <td class="auto-style66"></td>
                         <td class="auto-style67"></td>
                         <td style="width: 122px;height: 24px"></td>
@@ -855,7 +845,7 @@
                         <td class="auto-style127"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style126">Do you want to use <strong>Look Up Wizard</strong> ?</td>
+                        <td style="width: 293px;height: 23px;text-align: right">Do you want to use <strong>Look Up Wizard</strong> ?</td>
                         <td class="auto-style127">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
                             <asp:Button ID="yesButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Yes" Width="50px" OnClick="yesButton_Click" TabIndex="1" />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -863,7 +853,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style131" colspan="2">
+                        <td style="text-align: center;height: 105px" colspan="2">
                             <asp:Image ID="welcomeWizardImage" runat="server" Height="70px" ImageUrl="~/image/wizard-black.png" Width="60px" TabIndex="3" />
                         </td>
                     </tr>
@@ -1095,24 +1085,5 @@
         <ajax:ModalPopupExtender ID="updatePopup" runat="server" TargetControlID="uselessLabel" PopupControlID="updatePanel" CancelControlID="updateCancelButton"
             BackgroundCssClass="modalBackground"/>
     </form>
-    <script type="text/javascript">
-        //the funciton for rush checkbox list
-        var objChkd1;
-        var chkLst1 = document.getElementById('rushCheckboxList');
-        function HandleOnCheckRush() {
-            if (objChkd1 && objChkd1.checked)
-                objChkd1.checked = false;
-            objChkd1 = event.srcElement;
-        }
-
-        // the function for logo checkbox list
-        var objChkd2;
-        var chkLst2 = document.getElementById('logoCheckboxList');
-        function HandleOnCheckLogo() {
-            if (objChkd2 && objChkd2.checked)
-                objChkd2.checked = false;
-            objChkd2 = event.srcElement;
-        }
-    </script>
 </body>
 </html>

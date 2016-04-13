@@ -718,10 +718,6 @@ namespace AshlinCustomerEnquiry
                     Application["PASSWORD"] = reader.GetString(1);
                 }
             }
-
-            // add function to checkbox list -> only allow one selection
-            rushCheckboxList.Attributes.Add("onclick", "return HandleOnCheckRush()");
-            logoCheckboxList.Attributes.Add("onclick", "return HandleOnCheckLogo()");
         }
 
         /* a supporting method that take a BPvalues object and display the value on the controls */
