@@ -244,7 +244,7 @@ namespace AshlinCustomerEnquiry
             if (firstName.Equals("") && lastName.Equals("") && company.Equals("") && email.Equals(""))
             {
                 const string script = "<script>alert(\"Please provide some information about the customer\");</script>";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", script);
+                Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
                 searchPopup.Show();
 
                 return;

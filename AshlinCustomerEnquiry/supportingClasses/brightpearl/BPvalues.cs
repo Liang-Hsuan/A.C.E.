@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 {
     /* 
-    * A supporting class for BPsearch that store all necessary data 
-    */
+     * A supporting class for BPsearch that store all necessary data 
+     */
     [Serializable]
     public class BPvalues : IComparable<BPvalues>
     {

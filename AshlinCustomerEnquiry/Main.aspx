@@ -218,9 +218,6 @@
             height: 23px;
             text-align: right;
         }
-        .auto-style196 {
-            height: 33px;
-        }
         .auto-style199 {
             width: 249px;
             height: 23px;
@@ -240,34 +237,6 @@
             width: 125px;
             text-align: right;
             height: 23px;
-        }
-        .auto-style240 {
-            width: 122px;
-            height: 60px;
-        }
-        .auto-style241 {
-            width: 151px;
-            overflow: auto;
-            height: 60px;
-        }
-        .auto-style242 {
-            height: 60px;
-        }
-        .auto-style245 {
-            height: 60px;
-            text-align: center;
-        }
-        .auto-style246 {
-            font-size: medium;
-            color: #FFFFFF;
-        }
-        .auto-style247 {
-            width: 121px;
-            height: 62px;
-        }
-        .auto-style248 {
-            width: 15px;
-            height: 62px;
         }
         .auto-style249 {
             width: 121px;
@@ -589,7 +558,7 @@
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
-                        <td style="height: 23px;text-align: right" class="auto-style246">Item # :</td>
+                        <td style="height: 23px; text-align: right;font-size: medium;color: #FFFFFF">Item # :</td>
                         <td style="font-size: small;height: 23px;width: 121px">
                             <asp:DropDownList ID="skuDropdownlist" runat="server" AutoPostBack="True" TabIndex="56" Width="151px">
                             </asp:DropDownList>
@@ -783,11 +752,11 @@
                         <td class="auto-style249"></td>
                         <td class="auto-style249"></td>
                         <td class="auto-style250"></td>
-                        <td class="auto-style245" colspan="2"></td>
+                        <td style="height: 60px;text-align: center" colspan="2"></td>
                         <td class="auto-style250"></td>
-                        <td class="auto-style240"></td>
-                        <td class="auto-style241"></td>
-                        <td class="auto-style242" colspan="2"></td>
+                        <td style="width: 122px;height: 60px"></td>
+                        <td style="width: 151px;overflow: auto;height: 60px"></td>
+                        <td style="height: 60px" colspan="2"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34"></td>
@@ -918,7 +887,7 @@
                             About the Customer</strong></td>
                     </tr>
                     <tr>
-                        <td class="auto-style196" colspan="2"><strong>Customer Information :</strong></td>
+                        <td style="height: 33px" colspan="2"><strong>Customer Information :</strong></td>
                         <td class="auto-style191">
                             <asp:Label ID="tooManyResultLabel" runat="server" Font-Size="11pt" ForeColor="Red" Text="Too many results found" Visible="False" Font-Bold="True" TabIndex="10"></asp:Label>
                         </td>
@@ -1014,7 +983,7 @@
             <asp:Panel ID="loginPanel" runat="server" DefaultButton="loginButton" Height="170px" Width="350px" BackColor="White" TabIndex="26">
                 <table style="width: 350px;height: 170px;border-style: solid;border-width: 3px">
                     <tr>
-                        <td colspan="2" style="background-color: tan"><strong>Please Login To Continue</strong></td>
+                        <td colspan="2" style="background-color: tan"><b>Please Login To Continue</b></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 20px"></td>
@@ -1044,9 +1013,9 @@
                 </table>
             </asp:Panel>
             <asp:Panel ID="updatePanel" runat="server" DefaultButton="updateButton" BackColor="White" Height="170px" Width="350px" TabIndex="31">
-                <table style="width: 350px;height: 100%;border-style: solid;border-width: 3px">
+                <table style="width: 350px;height: 170px;border-style: solid;border-width: 3px">
                     <tr>
-                        <td colspan="2" style="background-color: tan"><strong>Enter New Credentials</strong></td>
+                        <td colspan="2" style="background-color: tan"><b>Enter New Credentials</b></td>
                     </tr>
                     <tr>
                         <td class="auto-style236">New Username :</td>

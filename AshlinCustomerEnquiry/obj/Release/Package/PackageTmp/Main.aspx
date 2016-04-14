@@ -105,11 +105,6 @@
             border-style: solid; 
             border-width: 3px;
         }
-        .auto-style126 {
-            width: 293px;
-            height: 23px;
-            text-align: right;
-        }
         .auto-style127 {
             width: 253px;
             height: 23px;
@@ -118,10 +113,6 @@
             text-align: right;
             height: 33px;
             background-color: tan;
-        }
-        .auto-style131 {
-            text-align: center;
-            height: 105px;
         }
         .modalBackground {
             background-color: white;
@@ -227,9 +218,6 @@
             height: 23px;
             text-align: right;
         }
-        .auto-style196 {
-            height: 33px;
-        }
         .auto-style199 {
             width: 249px;
             height: 23px;
@@ -250,33 +238,13 @@
             text-align: right;
             height: 23px;
         }
-        .auto-style240 {
-            width: 122px;
-            height: 51px;
-        }
-        .auto-style241 {
-            width: 151px;
-            overflow: auto;
-            height: 51px;
-        }
-        .auto-style242 {
-            height: 51px;
-        }
-        .auto-style243 {
+        .auto-style249 {
             width: 121px;
-            height: 51px;
+            height: 60px;
         }
-        .auto-style244 {
+        .auto-style250 {
             width: 15px;
-            height: 51px;
-        }
-        .auto-style245 {
-            height: 51px;
-            text-align: center;
-        }
-        .auto-style246 {
-            font-size: medium;
-            color: #FFFFFF;
+            height: 60px;
         }
     </style>
 </head>
@@ -590,7 +558,7 @@
                     <tr>
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
-                        <td style="height: 23px;text-align: right" class="auto-style246">Item # :</td>
+                        <td style="height: 23px; text-align: right;font-size: medium;color: #FFFFFF">Item # :</td>
                         <td style="font-size: small;height: 23px;width: 121px">
                             <asp:DropDownList ID="skuDropdownlist" runat="server" AutoPostBack="True" TabIndex="56" Width="151px">
                             </asp:DropDownList>
@@ -725,8 +693,7 @@
                         <td class="auto-style65"></td>
                         <td class="auto-style65"></td>
                         <td class="auto-style65"></td>
-                        <td class="auto-style65">
-                        </td>
+                        <td class="auto-style65"></td>
                         <td class="auto-style66"></td>
                         <td class="auto-style67"></td>
                         <td style="width: 122px;height: 24px"></td>
@@ -780,16 +747,16 @@
                         <td class="auto-style35"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style243"></td>
-                        <td class="auto-style243"></td>
-                        <td class="auto-style243"></td>
-                        <td class="auto-style243"></td>
-                        <td class="auto-style244"></td>
-                        <td class="auto-style245" colspan="2"></td>
-                        <td class="auto-style244"></td>
-                        <td class="auto-style240"></td>
-                        <td class="auto-style241"></td>
-                        <td class="auto-style242" colspan="2"></td>
+                        <td class="auto-style249"></td>
+                        <td class="auto-style249"></td>
+                        <td class="auto-style249"></td>
+                        <td class="auto-style249"></td>
+                        <td class="auto-style250"></td>
+                        <td style="height: 60px;text-align: center" colspan="2"></td>
+                        <td class="auto-style250"></td>
+                        <td style="width: 122px;height: 60px"></td>
+                        <td style="width: 151px;overflow: auto;height: 60px"></td>
+                        <td style="height: 60px" colspan="2"></td>
                     </tr>
                     <tr>
                         <td class="auto-style34"></td>
@@ -840,7 +807,7 @@
                         <td class="auto-style38"></td>
                         <td class="auto-style35"></td>
                         <td class="auto-style39"></td>
-                        <td colspan="2">&</td>
+                        <td colspan="2"></td>
                     </tr>
                 </table>
                 
@@ -855,7 +822,7 @@
                         <td class="auto-style127"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style126">Do you want to use <strong>Look Up Wizard</strong> ?</td>
+                        <td style="width: 293px;height: 23px;text-align: right">Do you want to use <strong>Look Up Wizard</strong> ?</td>
                         <td class="auto-style127">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
                             <asp:Button ID="yesButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Yes" Width="50px" OnClick="yesButton_Click" TabIndex="1" />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -863,7 +830,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style131" colspan="2">
+                        <td style="text-align: center;height: 105px" colspan="2">
                             <asp:Image ID="welcomeWizardImage" runat="server" Height="70px" ImageUrl="~/image/wizard-black.png" Width="60px" TabIndex="3" />
                         </td>
                     </tr>
@@ -920,7 +887,7 @@
                             About the Customer</strong></td>
                     </tr>
                     <tr>
-                        <td class="auto-style196" colspan="2"><strong>Customer Information :</strong></td>
+                        <td style="height: 33px" colspan="2"><strong>Customer Information :</strong></td>
                         <td class="auto-style191">
                             <asp:Label ID="tooManyResultLabel" runat="server" Font-Size="11pt" ForeColor="Red" Text="Too many results found" Visible="False" Font-Bold="True" TabIndex="10"></asp:Label>
                         </td>
@@ -1016,7 +983,7 @@
             <asp:Panel ID="loginPanel" runat="server" DefaultButton="loginButton" Height="170px" Width="350px" BackColor="White" TabIndex="26">
                 <table style="width: 350px;height: 170px;border-style: solid;border-width: 3px">
                     <tr>
-                        <td colspan="2" style="background-color: tan"><strong>Please Login To Continue</strong></td>
+                        <td colspan="2" style="background-color: tan"><b>Please Login To Continue</b></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 20px"></td>
@@ -1046,9 +1013,9 @@
                 </table>
             </asp:Panel>
             <asp:Panel ID="updatePanel" runat="server" DefaultButton="updateButton" BackColor="White" Height="170px" Width="350px" TabIndex="31">
-                <table style="width: 350px;height: 100%;border-style: solid;border-width: 3px">
+                <table style="width: 350px;height: 170px;border-style: solid;border-width: 3px">
                     <tr>
-                        <td colspan="2" style="background-color: tan"><strong>Enter New Credentials</strong></td>
+                        <td colspan="2" style="background-color: tan"><b>Enter New Credentials</b></td>
                     </tr>
                     <tr>
                         <td class="auto-style236">New Username :</td>
@@ -1095,24 +1062,5 @@
         <ajax:ModalPopupExtender ID="updatePopup" runat="server" TargetControlID="uselessLabel" PopupControlID="updatePanel" CancelControlID="updateCancelButton"
             BackgroundCssClass="modalBackground"/>
     </form>
-    <script type="text/javascript">
-        //the funciton for rush checkbox list
-        var objChkd1;
-        var chkLst1 = document.getElementById('rushCheckboxList');
-        function HandleOnCheckRush() {
-            if (objChkd1 && objChkd1.checked)
-                objChkd1.checked = false;
-            objChkd1 = event.srcElement;
-        }
-
-        // the function for logo checkbox list
-        var objChkd2;
-        var chkLst2 = document.getElementById('logoCheckboxList');
-        function HandleOnCheckLogo() {
-            if (objChkd2 && objChkd2.checked)
-                objChkd2.checked = false;
-            objChkd2 = event.srcElement;
-        }
-    </script>
 </body>
 </html>
