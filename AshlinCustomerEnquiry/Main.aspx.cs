@@ -37,7 +37,7 @@ namespace AshlinCustomerEnquiry
                 catch (WebException ex)
                 {
                     // the case if there is error from asi -> disable asi function
-                    asiTextbox.Text = ex.Message;
+                    asiTextbox.Text = ((HttpWebResponse)ex.Response).StatusDescription;
                     asiTextbox.Enabled = false;
                     asiNextButton.Enabled = false;
                 }
