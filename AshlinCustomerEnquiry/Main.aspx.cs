@@ -643,7 +643,7 @@ namespace AshlinCustomerEnquiry
             SmtpClient client = new SmtpClient("smtp.gmail.com");
 
             mail.From = new MailAddress("intern1002@ashlinbpg.com");
-            mail.To.Add("intern1002@ashlinbpg.com");
+            mail.To.Add("juanne.kochhar@ashlinbpg.com");
             mail.Subject = "NEW ORDER QUOTE";
             mail.Body = orderDetail;
 

@@ -791,8 +791,7 @@
                         </td>
                         <td class="auto-style34"></td>
                         <td class="auto-style218" colspan="2">
-                            <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" OnClick="updateLinkButton_Click" TabIndex="66" ForeColor="White">update Username and Password</asp:LinkButton>
-                        </td>
+                            &nbsp;</td>
                         <td class="auto-style38"></td>
                         <td class="auto-style38"></td>
                         <td class="auto-style35"></td>
@@ -802,7 +801,9 @@
                     <tr>
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
-                        <td class="auto-style218" colspan="2">&nbsp;</td>
+                        <td class="auto-style218" colspan="2">
+                            <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" ForeColor="White" OnClick="updateLinkButton_Click" TabIndex="66">update Username and Password</asp:LinkButton>
+                        </td>
                         <td class="auto-style38"></td>
                         <td class="auto-style38"></td>
                         <td class="auto-style35"></td>

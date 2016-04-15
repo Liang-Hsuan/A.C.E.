@@ -594,7 +594,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 #endregion
 
                 // generate JSON file for order post
-                string textJson = "{\"orderTypeCode\":\"SO\",\"reference\":\"" + reference + "\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":3},\"delivery\":{\"deliveryDate\":\"" 
+                string textJson = "{\"orderTypeCode\":\"SO\",\"reference\":\"" + reference + "\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":1},\"delivery\":{\"deliveryDate\":\"" 
                                 + value.DeliveryDate.ToString("yyyy-MM-dd") + "T00:00:00+00:00\"}" + ",\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactId + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
 
 
