@@ -97,6 +97,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 value.Quantity.Add(1);
                 value.BasePrice.Add(new Price().GetPrice("DIESETUP-SVC-SVC"));
                 value.PricingTier.Add(0);
+                value.GiftBox.Add(false);
             }
 
             // post order row
@@ -121,6 +122,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 value.Quantity.RemoveAt(index);
                 value.BasePrice.RemoveAt(index);
                 value.PricingTier.RemoveAt(index);
+                value.GiftBox.RemoveAt(index);
             }
 
             // post comment
@@ -195,13 +197,16 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 switch (choice)
                 {
                     case 1:
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?firstName=" + firstName;
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?columns=contactId&firstName=" 
+                             + firstName;
                         break;
                     case 2:
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?lastName=" + lastName;
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?columns=contactId&lastName=" 
+                             + lastName;
                         break;
                     case 3:
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?firstName=" + firstName + "&lastName=" + lastName;
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?columns=contactId&firstName=" 
+                             + firstName + "&lastName=" + lastName;
                         break;
                     default:
                         return null;
@@ -249,13 +254,16 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 switch (choice)
                 {
                     case 1:
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?primaryEmail=" + email;
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?columns=contactId&primaryEmail=" 
+                             + email;
                         break;
                     case 2:
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?companyName=" + company.Replace(" ", "%20");
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?columns=contactId&companyName=" 
+                             + company.Replace(" ", "%20");
                         break;
                     case 3:
-                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?primaryEmail=" + email + "&companyName=" + company.Replace(" ", "%20");
+                        uri = "https://ws-use.brightpearl.com/public-api/ashlin/contact-service/contact-search?columns=contactId&primaryEmail="
+                             + email + "&companyName=" + company.Replace(" ", "%20");
                         break;
                     default:
                         return null;
@@ -403,20 +411,23 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                             LastName = info["response"][j]["lastName"]
                         };
 
+                        // the case contact is not a person
+                        if (value.FirstName == "") continue;
+
                         #region Data Retrieve
                         // get address id to get postal code
                         string addressId = info["response"][j]["postAddressIds"]["DEF"].ToString();
 
                         // get postal code
-                        try { value.Address1 = info["response"][j]["postalAddresses"][addressId]["addressLine1"]; } catch { /* ignore */ }
-                        try { value.Address2 = info["response"][j]["postalAddresses"][addressId]["addressLine2"]; } catch { /* ignore */ }
-                        try { value.City = info["response"][j]["postalAddresses"][addressId]["addressLine3"]; } catch { /* ignore */ }
-                        try { value.Province = info["response"][j]["postalAddresses"][addressId]["addressLine4"]; } catch { /* ignore */ }
-                        try { value.PostalCode = info["response"][j]["postalAddresses"][addressId]["postalCode"]; } catch { /* ignore */ }
-                        try { value.Country = info["response"][j]["postalAddresses"][addressId]["countryIsoCode"]; } catch { /* ignore */ }
-                        try { value.Email = info["response"][j]["communication"]["emails"]["PRI"]["email"]; } catch { /* ignore */ }
-                        try { value.Phone = info["response"][j]["communication"]["telephones"]["PRI"]; } catch { /* ignore */ }
-                        try { value.Company = info["response"][j]["organisation"]["name"]; } catch { /* ignore */ }
+                        try { value.Address1 = info["response"][j]["postalAddresses"][addressId]["addressLine1"]; } catch { /* ignore -> null case */ }
+                        try { value.Address2 = info["response"][j]["postalAddresses"][addressId]["addressLine2"]; } catch { /* ignore -> null case */ }
+                        try { value.City = info["response"][j]["postalAddresses"][addressId]["addressLine3"]; } catch { /* ignore -> null case */ }
+                        try { value.Province = info["response"][j]["postalAddresses"][addressId]["addressLine4"]; } catch { /* ignore -> null case */ }
+                        try { value.PostalCode = info["response"][j]["postalAddresses"][addressId]["postalCode"]; } catch { /* ignore -> null case */ }
+                        try { value.Country = info["response"][j]["postalAddresses"][addressId]["countryIsoCode"]; } catch { /* ignore -> null case */ }
+                        try { value.Email = info["response"][j]["communication"]["emails"]["PRI"]["email"]; } catch { /* ignore -> null case */ }
+                        try { value.Phone = info["response"][j]["communication"]["telephones"]["PRI"]; } catch { /* ignore -> null case */ }
+                        try { value.Company = info["response"][j]["organisation"]["name"]; } catch { /* ignore -> null case */ }
                         #endregion
 
                         valueList.Add(value);
@@ -572,25 +583,24 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 string reference;
                 if (value.Logo && value.Rush)
                 {
-                    priceListId = 8;
+                    priceListId = value.Country.Contains("US") ? 16 : 8;
                     reference = "Rush - Imprint";
                 }
                 else if (value.Logo && !value.Rush)
                 {
-                    priceListId = 5;
+                    priceListId = value.Country.Contains("US") ? 13 : 5;
                     reference = "Standard - Imprint";
                 }
                 else if (!value.Logo && value.Rush)
                 {
-                    priceListId = 7;
+                    priceListId = value.Country.Contains("US") ? 14 : 7;
                     reference = "Rush - Blank";
                 }
                 else
                 {
-                    priceListId = 6;
+                    priceListId = value.Country.Contains("US") ? 15 : 6;
                     reference = "Standard - Blank";
                 }
-
                 #endregion
 
                 // generate JSON file for order post
@@ -647,7 +657,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 int quantity = value.Quantity[index];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
-                double netPrice = price.GetPrice(value.BasePrice[index], value.PricingTier[index], quantity, imprint, rush) * quantity;
+                double netPrice = price.GetPrice(value.BasePrice[index], value.PricingTier[index], quantity, imprint, rush, value.Country.Contains("US")) * quantity;
 
                 string taxCode;
                 double taxRate;
@@ -724,9 +734,9 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // generate JSON file for order row post
                 string textJson;
                 if (productId != null)
-                    textJson = "{\"productId\":\"" + productId + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
+                    textJson = "{\"productId\":\"" + productId + "\",\"productName\":\"" + value.Description[index] + " - Gift Box Include: " + value.GiftBox[index] + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
                 else
-                    textJson = "{\"productName\":\"" + value.Description[index] + " " + sku + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
+                    textJson = "{\"productName\":\"" + sku + ' ' + value.Description[index] + " - Gift Box Include: " + value.GiftBox[index] + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
@@ -890,7 +900,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a method that return the price from the given information of the product */
-        public double GetPrice(double basePrice, int pricingTier, int quantity, bool imprint, bool rush)
+        public double GetPrice(double basePrice, int pricingTier, int quantity, bool imprint, bool rush, bool oversea)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
             double msrp = list[5][0] * basePrice;
@@ -930,45 +940,45 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 {
                     // the case if it is rush
                     if (quantity < 6)
-                        return (msrp + runcharge) * list[row][0] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][0] * list[row][9];
                     if (quantity >= 6 && quantity < 24)
-                        return (msrp + runcharge) * list[row][1] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][1] * list[row][9];
                     if (quantity >= 24 && quantity < 50)
-                        return (msrp + runcharge) * list[row][2] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][2] * list[row][9];
                     if (quantity >= 50 && quantity < 100)
-                        return (msrp + runcharge) * list[row][3] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][3] * list[row][9];
                     if (quantity >= 100 && quantity < 250)
-                        return (msrp + runcharge) * list[row][4] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][4] * list[row][9];
                     if (quantity >= 250 && quantity < 500)
-                        return (msrp + runcharge) * list[row][5] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][5] * list[row][9];
                     if (quantity >= 500 && quantity < 1000)
-                        return (msrp + runcharge) * list[row][6] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][6] * list[row][9];
                     if (quantity >= 1000 && quantity < 2500)
-                        return (msrp + runcharge) * list[row][7] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][7] * list[row][9];
                     if (quantity >= 2500)
-                        return (msrp + runcharge) * list[row][8] * list[row][9];
+                        msrp = (msrp + runcharge) * list[row][8] * list[row][9];
                 }
                 else
                 {
                     // the case if it is not rush
                     if (quantity < 6)
-                        return (msrp + runcharge) * list[row][0];
+                        msrp = (msrp + runcharge) * list[row][0];
                     if (quantity >= 6 && quantity < 24)
-                        return (msrp + runcharge) * list[row][1];
+                        msrp = (msrp + runcharge) * list[row][1];
                     if (quantity >= 24 && quantity < 50)
-                        return (msrp + runcharge) * list[row][2];
+                        msrp = (msrp + runcharge) * list[row][2];
                     if (quantity >= 50 && quantity < 100)
-                        return (msrp + runcharge) * list[row][3];
+                        msrp = (msrp + runcharge) * list[row][3];
                     if (quantity >= 100 && quantity < 250)
-                        return (msrp + runcharge) * list[row][4];
+                        msrp = (msrp + runcharge) * list[row][4];
                     if (quantity >= 250 && quantity < 500)
-                        return (msrp + runcharge) * list[row][5];
+                        msrp = (msrp + runcharge) * list[row][5];
                     if (quantity >= 500 && quantity < 1000)
-                        return (msrp + runcharge) * list[row][6];
+                        msrp = (msrp + runcharge) * list[row][6];
                     if (quantity >= 1000 && quantity < 2500)
-                        return (msrp + runcharge) * list[row][7];
+                        msrp = (msrp + runcharge) * list[row][7];
                     if (quantity >= 2500)
-                        return (msrp + runcharge) * list[row][8];
+                        msrp = (msrp + runcharge) * list[row][8];
                 }
             }
             else
@@ -1020,7 +1030,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
             }
 
-            return msrp;
+            return oversea ? msrp*0.8 : msrp;
         }
 
         /* a supporting method that return the base price of the given sku */

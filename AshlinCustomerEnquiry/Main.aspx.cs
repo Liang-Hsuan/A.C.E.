@@ -602,6 +602,7 @@ namespace AshlinCustomerEnquiry
             List<int> qtyList = new List<int>();
             List<double> basePriceList = new List<double>();
             List<int> pricingTierList = new List<int>();
+            List<bool> giftBoxList = new List<bool>();
             int[] count = { rushCheckboxList.Items.Cast<ListItem>().Count(li => li.Selected), logoCheckboxList.Items.Cast<ListItem>().Count(li => li.Selected) };
 
             #region Email 
@@ -632,6 +633,7 @@ namespace AshlinCustomerEnquiry
                 // adding item to the lists
                 skuList.Add(table.Rows[i][0].ToString());
                 descriptionList.Add(table.Rows[i][1].ToString());
+                giftBoxList.Add(Convert.ToBoolean(table.Rows[i][2]));
                 qtyList.Add(Convert.ToInt32(table.Rows[i][3]));
                 basePriceList.Add(Convert.ToDouble(table.Rows[i][4]));
                 pricingTierList.Add(Convert.ToInt32(table.Rows[i][5]));
@@ -656,7 +658,7 @@ namespace AshlinCustomerEnquiry
             #region Brightpearl
             // declare BPvalues object
             BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
-                                            postalCodeTextbox.Text, countryTextbox.Text, skuList, descriptionList, qtyList, basePriceList, pricingTierList, true, false, additionalInfoTextbox.Text, 
+                                            postalCodeTextbox.Text, countryTextbox.Text, skuList, descriptionList, qtyList, basePriceList, pricingTierList, giftBoxList, true, false, additionalInfoTextbox.Text, 
                                             DateTime.ParseExact(dateDeliveryTextbox.Text, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
 
             // price list determination
@@ -808,6 +810,9 @@ namespace AshlinCustomerEnquiry
             skuDropdownlist.DataValueField = "Value";
             skuDropdownlist.DataBind();
             #endregion
+
+            // set default delivery date
+            dateDeliveryTextbox.Text = DateTime.Today.AddDays(30).ToString("yyyy-MM-dd");
 
             // check if the user has cookies login
             if (Request.Cookies["Login"] != null)

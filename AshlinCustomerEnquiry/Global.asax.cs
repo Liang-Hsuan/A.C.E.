@@ -7,6 +7,7 @@ namespace AshlinCustomerEnquiry
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            // entry point of the web app -> I have set the default opening file in configuration file
         }
     }
 }

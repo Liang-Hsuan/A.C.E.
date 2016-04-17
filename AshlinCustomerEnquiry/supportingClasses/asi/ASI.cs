@@ -115,7 +115,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             string country = info["CompanyDetails"]["Addresses"][0]["CountryCode"];
             #endregion
 
-            return new BPvalues("", "", name, phone, email, address1, address2, city, province, postalCode, country, null, null, null, null, null, true, false, null, DateTime.Today);
+            return new BPvalues("", "", name, phone, email, address1, address2, city, province, postalCode, country, null, null, null, null, null, null, true, false, null, DateTime.Today);
         }
     }
 }
