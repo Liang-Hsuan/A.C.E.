@@ -198,7 +198,7 @@ namespace AshlinCustomerEnquiry
                 listbox.Items.Clear();
                 foreach (BPvalues result in value)
                 {
-                    ListItem item = new ListItem(result.FirstName + " " + result.LastName);
+                    ListItem item = new ListItem(result.FirstName + ' ' + result.LastName);
                     listbox.Items.Add(item);
                 }
                 ShowResult(value[0]);
@@ -446,7 +446,7 @@ namespace AshlinCustomerEnquiry
             // start updating username and password
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
             {
-                SqlCommand command = new SqlCommand("UPDATE ASCM_Credentials SET Username = \'" + username + "\', Password = \'" + password[0] + "\' WHERE Source = 'Ashlin Customer Enquiry';", connection);
+                SqlCommand command = new SqlCommand("UPDATE ASCM_Credentials SET Username = \'" + username + "\', Password = \'" + password[0] + "\' WHERE Source = 'Ashlin Customer Enquiry'", connection);
                 connection.Open();
                 command.ExecuteNonQuery();
             }

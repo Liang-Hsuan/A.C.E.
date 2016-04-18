@@ -1040,7 +1040,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
             {
-                SqlCommand command = new SqlCommand("SELECT Base_Price FROM master_SKU_Attributes WHERE SKU_Ashlin = \'" + sku + "\'", connection);
+                SqlCommand command = new SqlCommand("SELECT Base_Price FROM master_SKU_Attributes WHERE SKU_Ashlin = \'" + sku + '\'', connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();

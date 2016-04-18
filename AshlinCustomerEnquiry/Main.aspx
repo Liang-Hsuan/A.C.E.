@@ -120,7 +120,6 @@
             opacity: 0.8;
             z-index: 10000;
         }
-
          .auto-style132 {
             font-size: xx-large;
             text-align: center;
