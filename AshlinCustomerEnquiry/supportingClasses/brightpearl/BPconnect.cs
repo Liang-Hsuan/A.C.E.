@@ -891,11 +891,18 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
             reader.Close();
 
-            // [5] multiplier
+            // [5][0] multiplier
             command.CommandText = "SELECT [MSRP Multiplier] FROM ref_msrp_multiplier";
             reader = command.ExecuteReader();
             reader.Read();
-            list[5] = new[] { reader.GetDouble(0) };
+            list[5] = new[] { reader.GetDouble(0), 0 };
+            reader.Close();
+
+            // [5][1] USD currency
+            command.CommandText = "SELECT Value FROM Currency WHERE Currency = 'USD'";
+            reader = command.ExecuteReader();
+            reader.Read();
+            list[5][1] = reader.GetDouble(0);
             connection.Close();
         }
 
@@ -1030,7 +1037,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 }
             }
 
-            return oversea ? msrp*0.8 : msrp;
+            return oversea ? msrp * list[5][1] : msrp;
         }
 
         /* a supporting method that return the base price of the given sku */
