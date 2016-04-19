@@ -24,7 +24,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         {
             // initialize API authentication
             SqlConnection authenticationConnection = new SqlConnection(Properties.Settings.Default.ASCMcs);
-            SqlCommand getAuthetication = new SqlCommand("SELECT Field3_Value, Field1_Value FROM ASCM_Credentials WHERE Source = 'Brightpearl';", authenticationConnection);
+            SqlCommand getAuthetication = new SqlCommand("SELECT Field3_Value, Field1_Value FROM ASCM_Credentials WHERE Source = 'Brightpearl'", authenticationConnection);
             authenticationConnection.Open();
             SqlDataReader reader = getAuthetication.ExecuteReader();
             reader.Read();
@@ -584,22 +584,22 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 if (value.Logo && value.Rush)
                 {
                     priceListId = value.Country.Contains("US") ? 16 : 8;
-                    reference = "Rush - Imprint";
+                    reference = "Rush Delivery with Logo";
                 }
                 else if (value.Logo && !value.Rush)
                 {
                     priceListId = value.Country.Contains("US") ? 13 : 5;
-                    reference = "Standard - Imprint";
+                    reference = "Standard Delivery with Logo";
                 }
                 else if (!value.Logo && value.Rush)
                 {
                     priceListId = value.Country.Contains("US") ? 14 : 7;
-                    reference = "Rush - Blank";
+                    reference = "Rush Delivery with no Logo";
                 }
                 else
                 {
                     priceListId = value.Country.Contains("US") ? 15 : 6;
-                    reference = "Standard - Blank";
+                    reference = "Standard Delivery with no Logo";
                 }
                 #endregion
 
@@ -734,9 +734,11 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 // generate JSON file for order row post
                 string textJson;
                 if (productId != null)
-                    textJson = "{\"productId\":\"" + productId + "\",\"productName\":\"" + value.Description[index] + " - Gift Box Include: " + value.GiftBox[index] + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
+                    textJson = "{\"productId\":\"" + productId + "\",\"productName\":\"" + value.Description[index] + " - " + (value.GiftBox[index] ? "Includes Gift Boxes" : "Basic packaging included : {gift boxes extra}") + 
+                               "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
                 else
-                    textJson = "{\"productName\":\"" + sku + ' ' + value.Description[index] + " - Gift Box Include: " + value.GiftBox[index] + "\",\"quantity\":{\"magnitude\":\"" + quantity + "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
+                    textJson = "{\"productName\":\"" + sku + ' ' + value.Description[index] + " - " + (value.GiftBox[index] ? "Includes Gift Boxes" : "Basic packaging included : {gift boxes extra}") + "\",\"quantity\":{\"magnitude\":\"" + quantity + 
+                               "\"},\"rowValue\":{\"taxCode\":\"" + taxCode + "\",\"rowNet\":{\"value\":\"" + Math.Round(netPrice, 4) + "\"},\"rowTax\":{\"value\":\"" + Math.Round(netPrice * taxRate, 4) + "\"}}}";
 
                 // turn request string into a byte stream
                 byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
