@@ -100,6 +100,7 @@
     <Content Include="image\ashlin.ico" />
     <Content Include="image\facebook.png" />
     <Content Include="image\linkedin.png" />
+    <Content Include="image\loading bar.gif" />
     <Content Include="image\pinterest.png" />
     <Content Include="image\quote.png" />
     <Content Include="image\search.png" />

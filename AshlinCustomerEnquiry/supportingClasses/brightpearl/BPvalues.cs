@@ -23,6 +23,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         public string Country { get; set; }
 
         // field for order information
+        public string StaffId { get; set; }
         public List<string> Sku { get; set; }
         public List<string> Description { get; set; }
         public List<int> Quantity { get; set; }
@@ -51,6 +52,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Country = "";
 
             // order field
+            StaffId = "";
             Sku = new List<string>();
             Description = new List<string>();
             Quantity = new List<int>();
@@ -64,7 +66,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* seconde constructor that accept all fields parameters */
-        public BPvalues(string firstName, string lastName, string company, string phone, string email, string address1, string address2, string city, string province, string postalCode, string country,
+        public BPvalues(string firstName, string lastName, string company, string phone, string email, string address1, string address2, string city, string province, string postalCode, string country, string staffId,
                         List<string> sku, List<string> description, List<int> quantity, List<double> basePrice, List<int> pricingTier, List<bool> giftBox, bool logo, bool rush, string comment, DateTime deliveryDate)
         {
             // customer information
@@ -81,6 +83,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             Country = country;
 
             // order information
+            StaffId = staffId;
             Sku = sku;
             Description = description;
             Quantity = quantity;

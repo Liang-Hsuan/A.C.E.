@@ -147,6 +147,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         {
             return get.GetProductId(sku);
         }
+
+        /* return all the staff members' id and name */
+        public Dictionary<string, string> GetStaff()
+        {
+            return get.GetStaff();
+        }
         #endregion
 
         #region Supporting Methods
@@ -438,6 +444,37 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             }
             #endregion
 
+            /* a method that return <contactId;email, firstName, lastName> for all the staff memebers */
+            public Dictionary<string, string> GetStaff()
+            {
+                // uri for searching all staff members
+                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/contact-search?columns=contactId,primaryEmail,firstName,lastName&isStaff=true";
+
+                // post request to uri
+                request = WebRequest.Create(uri);
+                request.Headers.Add("brightpearl-app-ref", appRef);
+                request.Headers.Add("brightpearl-account-token", appToken);
+                request.Method = "GET";
+
+                // get the response from the server
+                response = (HttpWebResponse)request.GetResponse();
+
+                // read all the text from JSON response
+                string textJson;
+                using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+                    textJson = streamReader.ReadToEnd();
+
+                // deserialize json to key value
+                var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
+
+                // addint item to the dictionary
+                Dictionary<string, string> dic = new Dictionary<string, string>();
+                foreach (var item in info["response"]["results"])
+                    dic.Add(item[0].ToString() + ';' + item[1], item[2] + ' ' + item[3]);
+
+                return dic;
+            }
+
             /* get the product id from the given sku */
             public string GetProductId(string sku)
             {
@@ -604,8 +641,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 #endregion
 
                 // generate JSON file for order post
-                string textJson = "{\"orderTypeCode\":\"SO\",\"reference\":\"" + reference + "\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":1},\"delivery\":{\"deliveryDate\":\"" 
-                                + value.DeliveryDate.ToString("yyyy-MM-dd") + "T00:00:00+00:00\"}" + ",\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactId + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + "}}}";
+                string textJson = "{\"orderTypeCode\":\"SO\",\"reference\":\"" + reference + "\",\"priceListId\":" + priceListId + ",\"placeOn\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T') + "+00:00\",\"orderStatus\":{\"orderStatusId\":1},\"delivery\":{\"deliveryDate\":\"" + value.DeliveryDate.ToString("yyyy-MM-dd") + "T00:00:00+00:00\"}" + 
+                                  ",\"currency\":{\"orderCurrencyCode\":\"" + currencyAndchannelId[0] + "\"},\"parties\":{\"customer\":{\"contactId\":" + contactId + "}},\"assignment\":{\"current\":{\"channelId\":" + currencyAndchannelId[1] + ",\"staffOwnerContactId\":" + value.StaffId + "}}}";
 
 
                 // turn request string into a byte stream

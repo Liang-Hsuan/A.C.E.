@@ -310,13 +310,31 @@ namespace AshlinCustomerEnquiry {
         protected global::System.Web.UI.WebControls.Button dateDeliveryButton;
         
         /// <summary>
-        /// newQuoteLabel control.
+        /// staffDropdownlist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label newQuoteLabel;
+        protected global::System.Web.UI.WebControls.DropDownList staffDropdownlist;
+        
+        /// <summary>
+        /// udpateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress udpateProgress;
+        
+        /// <summary>
+        /// quoteUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel quoteUpdatePanel;
         
         /// <summary>
         /// quoteButton control.

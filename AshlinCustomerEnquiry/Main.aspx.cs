@@ -25,29 +25,7 @@ namespace AshlinCustomerEnquiry
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
                 Initialization();
-
-                try
-                {
-                    // initialize ASI object and store it
-                    if (Session["ASI"] == null)
-                        Session["ASI"] = new Asi();
-                }
-                catch (WebException ex)
-                {
-                    // the case if there is error from asi -> disable asi function
-                    asiTextbox.Text = ((HttpWebResponse)ex.Response).StatusDescription;
-                    asiTextbox.Enabled = false;
-                    asiNextButton.Enabled = false;
-                }
-
-                // initialize BPconnect object and store it
-                if (Session["BPconnect"] == null)
-                    Session["BPconnect"] = new BPconnect();     
-
-                welcomePopup.Show();
-            }
             else
             {
                 // after a post back return to the position as before
@@ -252,29 +230,26 @@ namespace AshlinCustomerEnquiry
             #endregion
 
             #region Searching and Adding
-            // down to business
-            BPconnect search = new BPconnect();
-
             // supporting local field -> [0] name, [1] contact info
             BPvalues[][] list = new BPvalues[2][];
 
             // search with name
             if (firstName != "" && lastName != "")      // the case both firstname and lastname are supplied
-                list[0] = search.GetCustomerWithName(firstName, lastName, 3);
+                list[0] = bp.GetCustomerWithName(firstName, lastName, 3);
             else if (firstName != "" && lastName == "") // the case only firstname is supplied
-                list[0] = search.GetCustomerWithName(firstName, null, 1);
+                list[0] = bp.GetCustomerWithName(firstName, null, 1);
             else if (firstName == "" && lastName != "") // the case only lastname is supplied
-                list[0] = search.GetCustomerWithName(null, lastName, 2);
+                list[0] = bp.GetCustomerWithName(null, lastName, 2);
             else
                 list[0] = null;
 
             // search with contact info
             if (company != "" && email != "")           // the case both company and email are supplied
-                list[1] = search.GetCustomerWithInfo(email, company, 3);
+                list[1] = bp.GetCustomerWithInfo(email, company, 3);
             else if (company != "" && email == "")      // the case only company is supplied
-                list[1] = search.GetCustomerWithInfo(null, company, 2);
+                list[1] = bp.GetCustomerWithInfo(null, company, 2);
             else if (company == "" && email != "")      // the case only email is supplied
-                list[1] = search.GetCustomerWithInfo(email, null, 1);
+                list[1] = bp.GetCustomerWithInfo(email, null, 1);
             else
                 list[1] = null;
 
@@ -385,6 +360,9 @@ namespace AshlinCustomerEnquiry
 
                 return;
             }
+
+            // now the user has successfully log in -> set link button to update
+            updateLinkButton.Text = "udpate Username and Password";
 
             // set textboxes back color to normal
             newUsernameTextbox.BackColor = Color.White;
@@ -569,29 +547,23 @@ namespace AshlinCustomerEnquiry
         /* the event for quote button clicks that will call login panel if the user has not logged in and create quote */
         protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
         {
-            // set label to visible
-            newQuoteLabel.Visible = false;
-
-            // the case if the user first time click quote button -> they need to log in
+            #region Error Checking
+            // the user need to login in order to proceed
             if (Session["HasLogged"] == null)
             {
-                usernameTextbox.BackColor = Color.White;
-                passwordTextbox.BackColor = Color.White;
-
-                loginPopup.Show();
-
+                const string script = "alert(\"Please login first in order to create quote\");";
+                System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "ClientScript", script, true);
                 return;
             }
 
-            #region Error Checking
             // get table
             DataTable table = (DataTable)ViewState["DataTable"];
 
             if (firstNameTextbox.Text == "" || lastNameTextbox.Text == "" || address1Textbox.Text == "" || cityTextbox.Text == "" || dateDeliveryTextbox.Text == "" ||
                 provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || table.Rows.Count < 1)
             {
-                const string script = "<script>alert(\"Please provide information on all the necessary fields (*)\");</script>";
-                Page.ClientScript.RegisterStartupScript(GetType(), "Scripts", script);
+                const string script = "alert(\"Please provide information on all the necessary fields (*)\");";
+                System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "ClientScript", script, true);
                 return;
             }
             #endregion
@@ -645,7 +617,8 @@ namespace AshlinCustomerEnquiry
             SmtpClient client = new SmtpClient("smtp.gmail.com");
 
             mail.From = new MailAddress("intern1002@ashlinbpg.com");
-            mail.To.Add("juanne.kochhar@ashlinbpg.com");
+            mail.To.Add("ashlin@ashlinbpg.com");
+            mail.To.Add(staffDropdownlist.SelectedValue.Substring(staffDropdownlist.SelectedValue.IndexOf(';') + 1));
             mail.Subject = "NEW ORDER QUOTE";
             mail.Body = orderDetail;
 
@@ -658,8 +631,8 @@ namespace AshlinCustomerEnquiry
             #region Brightpearl
             // declare BPvalues object
             BPvalues bpValue = new BPvalues(firstNameTextbox.Text, lastNameTextbox.Text, companyTextbox.Text, phoneTextbox.Text, emailTextbox.Text, address1Textbox.Text, address2Textbox.Text, cityTextbox.Text, provinceTextbox.Text,
-                                            postalCodeTextbox.Text, countryTextbox.Text, skuList, descriptionList, qtyList, basePriceList, pricingTierList, giftBoxList, true, false, additionalInfoTextbox.Text, 
-                                            DateTime.ParseExact(dateDeliveryTextbox.Text, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
+                                            postalCodeTextbox.Text, countryTextbox.Text, staffDropdownlist.SelectedValue.Remove(staffDropdownlist.SelectedValue.IndexOf(';')), skuList, descriptionList, qtyList, basePriceList, pricingTierList, giftBoxList, 
+                                            true, false, additionalInfoTextbox.Text, DateTime.ParseExact(dateDeliveryTextbox.Text, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
 
             // price list determination
             if (count[0] > 1)
@@ -768,9 +741,6 @@ namespace AshlinCustomerEnquiry
                 }
             }
             #endregion
-
-            // set label to visible to inidcate success
-            newQuoteLabel.Visible = true;
         }
 
         #region Supporting Methods
@@ -791,7 +761,7 @@ namespace AshlinCustomerEnquiry
 
             #region Drop Down List
             // local field for storing data
-            List<ListItem> skuList = new List<ListItem> {new ListItem("")};
+            List<ListItem> list = new List<ListItem> {new ListItem("")};
 
             // adding SKUs to the dropdown list
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs))
@@ -802,21 +772,59 @@ namespace AshlinCustomerEnquiry
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
-                    skuList.Add(new ListItem(reader.GetString(0), reader.GetString(1) + ';' + reader.GetBoolean(2) + ';' + reader.GetValue(3) + ';' + reader.GetInt32(4)));
+                    list.Add(new ListItem(reader.GetString(0), reader.GetString(1) + ';' + reader.GetBoolean(2) + ';' + reader.GetValue(3) + ';' + reader.GetInt32(4)));
             }
 
-            skuDropdownlist.DataSource = skuList;
+            skuDropdownlist.DataSource = list;
             skuDropdownlist.DataTextField = "Text";
             skuDropdownlist.DataValueField = "Value";
             skuDropdownlist.DataBind();
+
+            // declare BPconnect object for staff search and reset list
+            bp = new BPconnect();
+            list.Clear();
+
+            // get staff dictionary
+            Dictionary<string, string> dic = bp.GetStaff();
+
+            // put staff into dropboxlist
+            foreach (KeyValuePair<string, string> pair in dic)
+                list.Add(new ListItem(pair.Value, pair.Key));
+            staffDropdownlist.DataSource = list;
+            staffDropdownlist.DataTextField = "Text";
+            staffDropdownlist.DataValueField = "Value";
+            staffDropdownlist.DataBind();
             #endregion
 
             // set default delivery date
             dateDeliveryTextbox.Text = DateTime.Today.AddDays(30).ToString("yyyy-MM-dd");
 
+            #region Session Declaration
+            try
+            {
+                // initialize ASI object and store it
+                if (Session["ASI"] == null)
+                    Session["ASI"] = new Asi();
+            }
+            catch (WebException ex)
+            {
+                // the case if there is error from asi -> disable asi function
+                asiTextbox.Text = ((HttpWebResponse)ex.Response).StatusDescription;
+                asiTextbox.Enabled = false;
+                asiNextButton.Enabled = false;
+            }
+
+            // initialize BPconnect object and store it
+            if (Session["BPconnect"] == null)
+                Session["BPconnect"] = bp;
+            #endregion
+
             // check if the user has cookies login
-            if (Request.Cookies["Login"] != null)
+            if (Session["HasLogged"] != null || Request.Cookies["Login"] != null)
+            {
                 Session["HasLogged"] = true;
+                updateLinkButton.Text = "update Username and Password";
+            }
             else
             {
                 // the case has no cookies login -> retrieve username and password
@@ -831,6 +839,8 @@ namespace AshlinCustomerEnquiry
                     Application["PASSWORD"] = reader.GetString(1);
                 }
             }
+
+            welcomePopup.Show();
         }
 
         /* a supporting method that take a BPvalues object and display the value on the controls */
