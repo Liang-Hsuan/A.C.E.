@@ -50,6 +50,7 @@ namespace AshlinCustomerEnquiry
         protected void calendar_SelectionChanged(object sender, EventArgs e)
         {
             dateDeliveryTextbox.Text = calendar.SelectedDate.ToString("yyyy-MM-dd");
+            calendar.Visible = false;
         }
 
         /* set the canlender can only select the day after today */
@@ -428,6 +429,44 @@ namespace AshlinCustomerEnquiry
         }
         #endregion
 
+        /* clear screen link button clicks that clear all the information on the page */
+        protected void clearScreenLinkButton_Click(object sender, EventArgs e)
+        {
+            // clear customer information textboxes
+            firstNameTextbox.Text = string.Empty;
+            lastNameTextbox.Text = string.Empty;
+            phoneTextbox.Text = string.Empty;
+            emailTextbox.Text = string.Empty;
+            companyTextbox.Text = string.Empty;
+            address1Textbox.Text = string.Empty;
+            address2Textbox.Text = string.Empty;
+            cityTextbox.Text = string.Empty;
+            provinceTextbox.Text = string.Empty;
+            postalCodeTextbox.Text = string.Empty;
+            countryTextbox.Text = string.Empty;
+
+            // clear order information
+            skuDropdownlist.SelectedIndex = 0;
+            foreach (ListItem item in rushCheckboxList.Items) item.Selected = false;
+            foreach (ListItem item in logoCheckboxList.Items) item.Selected = false;
+            foreach (ListItem item in quantityCheckboxList.Items) item.Selected = false;
+
+            // clear item in grid view
+            DataTable table = (DataTable)ViewState["DataTable"];
+            table.Rows.Clear();
+
+            // bind the data source
+            gridview.EditIndex = -1;
+            gridview.DataSource = table;
+            gridview.DataBind();
+            ViewState["DataTable"] = table;
+
+            // additional info set to default
+            additionalInfoTextbox.Text = string.Empty;
+            dateDeliveryTextbox.Text = DateTime.Today.AddDays(30).ToString("yyyy-MM-dd");
+            staffDropdownlist.SelectedIndex = 0;
+        }
+
         /* add button clicks that add new item to the grid view */
         protected void addButton_Click(object sender, EventArgs e)
         {
@@ -797,6 +836,10 @@ namespace AshlinCustomerEnquiry
 
             // set default delivery date
             dateDeliveryTextbox.Text = DateTime.Today.AddDays(30).ToString("yyyy-MM-dd");
+
+            // add confirm attribute to buttons
+            clearScreenLinkButton.Attributes.Add("onclick", "javascript:return confirm('Are you sure you want to clear all the information on the page?');");
+            quoteButton.Attributes.Add("onclick", "javascript:return confirm('Are you sure you want to create the quote for this order?');");
 
             #region Session Declaration
             try

@@ -95,7 +95,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 value.Sku.Add("DIESETUP-SVC-SVC");
                 value.Description.Add("Imprint Fee");
                 value.Quantity.Add(1);
-                value.BasePrice.Add(new Price().GetPrice("DIESETUP-SVC-SVC"));
+                value.BasePrice.Add(Price.GetPrice("DIESETUP-SVC-SVC"));
                 value.PricingTier.Add(0);
                 value.GiftBox.Add(false);
             }
@@ -508,7 +508,6 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         [Serializable]
         private class PostRequest
         {
-            #region Fields Declaration
             // fields for web request
             private HttpWebRequest request;
             private HttpWebResponse response;
@@ -517,12 +516,8 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             private readonly string appRef;
             private readonly string appToken;
 
-            // field for getting price information
-            private readonly Price price = new Price();
-
             // field for error indication
             public bool HasError { get; private set; }
-            #endregion
 
             /* constructor to initialize the web request of app reference and app token */
             public PostRequest(string appRef, string appToken)
@@ -694,7 +689,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 int quantity = value.Quantity[index];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
-                double netPrice = price.GetPrice(value.BasePrice[index], value.PricingTier[index], quantity, imprint, rush, value.Country.Contains("US")) * quantity;
+                double netPrice = Price.GetPrice(value.BasePrice[index], value.PricingTier[index], quantity, imprint, rush, value.Country.Contains("US")) * quantity;
 
                 string taxCode;
                 double taxRate;
@@ -895,13 +890,13 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
      * A class that calculate the price 
      */
     [Serializable]
-    public class Price
+    public static class Price
     {
         // fields for storing discount matrix values
-        private readonly double[][] list = new double[6][];
+        private static readonly double[][] list = new double[6][];
 
         /* constructor that initialize discount matrix list field */
-        public Price()
+        static Price()
         {
             SqlConnection connection = new SqlConnection(Properties.Settings.Default.Designcs);
 
@@ -946,7 +941,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a method that return the price from the given information of the product */
-        public double GetPrice(double basePrice, int pricingTier, int quantity, bool imprint, bool rush, bool oversea)
+        public static double GetPrice(double basePrice, int pricingTier, int quantity, bool imprint, bool rush, bool oversea)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
             double msrp = list[5][0] * basePrice;
@@ -1080,7 +1075,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
         }
 
         /* a supporting method that return the base price of the given sku */
-        public double GetPrice(string sku)
+        public static double GetPrice(string sku)
         {
             double basePrice;
 
