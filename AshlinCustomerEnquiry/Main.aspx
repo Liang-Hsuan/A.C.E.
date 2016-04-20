@@ -164,24 +164,8 @@
             font-size: xx-large;
             text-align: center;
         }
-        .auto-style170 {
-            height: 76px;
-            text-align: center;
-            font-size: xx-large;
-            background-color: tan;
-        }
-        .auto-style174 {
-            width: 550px;
-            height: 325px;
-            border-style: solid; 
-            border-width: 3px;
-        }
         .auto-style177 {
             width: 274px;
-        }
-        .auto-style179 {
-            width: 242px;
-            text-align: center;
         }
         .auto-style186 {
             width: 170px;
@@ -192,26 +176,8 @@
             width: 224px;
             height: 23px;
         }
-        .auto-style191 {
-            width: 249px;
-            height: 33px;
-        }
-        .auto-style192 {
-            height: 33px;
-            text-align: right;
-            background-color: tan;
-        }
-        .auto-style194 {
-            width: 274px;
-            height: 23px;
-        }
         .search:hover {
             background-color: lightblue;
-        }
-        .auto-style195 {
-            width: 274px;
-            height: 23px;
-            text-align: right;
         }
         .auto-style199 {
             width: 249px;
@@ -232,29 +198,6 @@
             width: 125px;
             text-align: right;
             height: 23px;
-        }
-        .auto-style251 {
-            overflow: auto;
-        }
-        .auto-style255 {
-            width: 122px;
-            height: 75px;
-        }
-        .auto-style256 {
-            width: 151px;
-            overflow: auto;
-            height: 75px;
-        }
-        .auto-style263 {
-            width: 121px;
-            height: 65px;
-        }
-        .auto-style264 {
-            width: 15px;
-            height: 65px;
-        }
-        .auto-style265 {
-            height: 65px;
         }
         .auto-style266 {
             width: 121px;
@@ -581,7 +524,7 @@
                         <td class="auto-style40"></td>
                         <td style="height: 23px; text-align: right;font-size: medium;color: #FFFFFF">Item # :</td>
                         <td style="font-size: small;height: 23px;width: 121px">
-                            <asp:DropDownList ID="skuDropdownlist" runat="server" AutoPostBack="True" TabIndex="57" Width="151px">
+                            <asp:DropDownList ID="skuDropdownlist" runat="server" TabIndex="57" Width="151px">
                             </asp:DropDownList>
                         </td>
                         <td class="auto-style41"></td>
@@ -725,8 +668,8 @@
                         <td class="auto-style40"></td>
                         <td class="auto-style40"></td>
                         <td class="auto-style45"><span style="color: #ffffff">Additional Info :</span></td>
-                        <td colspan="4" rowspan="4">
-                            <asp:TextBox ID="additionalInfoTextbox" runat="server" Height="95px" TextMode="MultiLine" Width="445px" TabIndex="63" CssClass="auto-style251"></asp:TextBox>
+                        <td colspan="4" rowspan="4" style="vertical-align: top;height: 100%">
+                              <asp:TextBox ID="additionalInfoTextbox" runat="server" TextMode="MultiLine" TabIndex="63" Height="100%" Width="95%" style="overflow: auto;margin: 0;padding: 0"></asp:TextBox>
                         </td>
                         <td class="auto-style103" colspan="2"><span style="color: #ffffff">Date of&nbsp; Delivery :</span></td>
                     </tr>
@@ -771,8 +714,8 @@
                         <td class="auto-style267"></td>
                         <td style="text-align: center" colspan="2" class="auto-style268"></td>
                         <td class="auto-style267"></td>
-                        <td class="auto-style255"></td>
-                        <td class="auto-style256"></td>
+                        <td style="width: 122px;height: 75px"></td>
+                        <td style="width: 151px;overflow: auto;height: 75px"></td>
                         <td colspan="2" class="auto-style268"></td>
                     </tr>
                     <tr>
@@ -914,7 +857,7 @@
                     </tr>
                     <tr>
                         <td style="height: 33px" colspan="2"><strong>Customer Information :</strong></td>
-                        <td class="auto-style191">
+                        <td style="width: 249px;height: 33px">
                             <asp:Label ID="tooManyResultLabel" runat="server" Font-Size="11pt" ForeColor="Red" Text="Too many results found" Visible="False" Font-Bold="True" TabIndex="11"></asp:Label>
                         </td>
                     </tr>
@@ -958,15 +901,15 @@
                 
             </asp:Panel>
             <asp:Panel ID="resultPanel" runat="server" Height="325px" Width="550px" BackColor="White" TabIndex="19">
-                <table class="auto-style174">
+                <table style="width: 550px;height: 325px;border-style: solid; border-width: 3px">
                     <tr>
-                        <td class="auto-style170" colspan="2"><strong>Customer Search Result</strong></td>
+                        <td style="height: 76px;text-align: center;font-size: xx-large;background-color: tan" colspan="2"><strong>Customer Search Result</strong></td>
                     </tr>
                     <tr>
-                        <td class="auto-style179" rowspan="8">
+                        <td style="width: 242px;text-align: center" rowspan="8">
                             <asp:ListBox ID="listbox" runat="server" Height="185px" Width="210px" AutoPostBack="True" OnSelectedIndexChanged="listbox_SelectedIndexChanged" TabIndex="20"></asp:ListBox>
                         </td>
-                        <td class="auto-style195">
+                        <td style="width: 274px;height: 23px;text-align: right">
                             <asp:Button ID="resultSelectButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" OnClick="resultSelectButton_Click" Text="Select" Width="70px" TabIndex="21" />
                         </td>
                     </tr>
@@ -995,10 +938,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style194"></td>
+                        <td style="width: 274px;height: 23px"></td>
                     </tr>
                     <tr>
-                        <td class="auto-style192" colspan="2">
+                        <td style="height: 33px;text-align: right;background-color: tan" colspan="2">
                             <asp:Button ID="enterManuallyButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Text="Enter Info Manually" TabIndex="25" />
                             &nbsp;&nbsp;
                             <asp:Button ID="resultBackButton" runat="server" Text="Back" Width="70px" OnClick="resultBackButton_Click" TabIndex="26" />

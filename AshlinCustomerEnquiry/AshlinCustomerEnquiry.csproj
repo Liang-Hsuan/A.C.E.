@@ -150,7 +150,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="supportingClasses\asi\ASI.cs" />
+    <Compile Include="supportingClasses\asi\Asi.cs" />
     <Compile Include="supportingClasses\brightpearl\BPconnect.cs" />
     <Compile Include="supportingClasses\brightpearl\BPvalues.cs" />
   </ItemGroup>

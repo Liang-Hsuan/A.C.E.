@@ -448,7 +448,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
             public Dictionary<string, string> GetStaff()
             {
                 // uri for searching all staff members
-                string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/contact-search?columns=contactId,primaryEmail,firstName,lastName&isStaff=true";
+                const string uri = "https://ws-use.brightpearl.com/2.0.0/ashlin/contact-service/contact-search?columns=contactId,primaryEmail,firstName,lastName&isStaff=true";
 
                 // post request to uri
                 request = WebRequest.Create(uri);

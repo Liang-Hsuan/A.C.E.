@@ -254,7 +254,7 @@ namespace AshlinCustomerEnquiry
                 list[1] = null;
 
             // allocating data
-            if (list[0] != null & list[1] != null)
+            if (list[0] != null && list[1] != null)
                 value = list[0].Length < list[1].Length ? list[0] : list[1];
             else if (list[0] == null)
                 value = list[1];
@@ -360,9 +360,6 @@ namespace AshlinCustomerEnquiry
 
                 return;
             }
-
-            // now the user has successfully log in -> set link button to update
-            updateLinkButton.Text = "udpate Username and Password";
 
             // set textboxes back color to normal
             newUsernameTextbox.BackColor = Color.White;
@@ -534,6 +531,9 @@ namespace AshlinCustomerEnquiry
                     Expires = DateTime.Now.AddDays(7)
                 };
                 Response.Cookies.Add(cookie);
+
+                // now the user has successfully log in -> set link button to update
+                updateLinkButton.Text = "udpate Username and Password";
             }
             else
             {
@@ -788,8 +788,7 @@ namespace AshlinCustomerEnquiry
             Dictionary<string, string> dic = bp.GetStaff();
 
             // put staff into dropboxlist
-            foreach (KeyValuePair<string, string> pair in dic)
-                list.Add(new ListItem(pair.Value, pair.Key));
+            list.AddRange(dic.Select(pair => new ListItem(pair.Value, pair.Key)));
             staffDropdownlist.DataSource = list;
             staffDropdownlist.DataTextField = "Text";
             staffDropdownlist.DataValueField = "Value";
