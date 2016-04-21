@@ -153,6 +153,7 @@
     <Compile Include="supportingClasses\asi\Asi.cs" />
     <Compile Include="supportingClasses\brightpearl\BPconnect.cs" />
     <Compile Include="supportingClasses\brightpearl\BPvalues.cs" />
+    <Compile Include="supportingClasses\Price.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

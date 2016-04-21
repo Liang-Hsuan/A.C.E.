@@ -656,7 +656,7 @@ namespace AshlinCustomerEnquiry
             SmtpClient client = new SmtpClient("smtp.gmail.com");
 
             mail.From = new MailAddress("intern1002@ashlinbpg.com");
-            mail.To.Add("ashlin@ashlinbpg.com");
+            // mail.To.Add("ashlin@ashlinbpg.com");
             mail.To.Add(staffDropdownlist.SelectedValue.Substring(staffDropdownlist.SelectedValue.IndexOf(';') + 1));
             mail.Subject = "NEW ORDER QUOTE";
             mail.Body = orderDetail;
