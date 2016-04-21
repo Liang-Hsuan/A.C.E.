@@ -104,12 +104,6 @@
             opacity: 0.8;
             z-index: 10000;
         }
-         .auto-style132 {
-            font-size: xx-large;
-            text-align: center;
-            height: 76px;
-            background-color: tan;
-        }
         .auto-style144 {
             width: 249px;
         }
@@ -140,17 +134,6 @@
         .auto-style153 {
             width: 118px;
             height: 30px;
-        }
-        .auto-style154 {
-            width: 249px;
-            height: 30px;
-            text-align: center;
-        }
-        .auto-style160 {
-            height: 86px;
-            background-color: tan;
-            font-size: xx-large;
-            text-align: center;
         }
         .auto-style177 {
             width: 274px;
@@ -773,7 +756,7 @@
             <asp:Panel ID="welcomePanel" runat="server" Height="280px" Width="500px" BackColor="White">
                 <table class="auto-style111">
                     <tr>
-                        <td class="auto-style64" colspan="2" style="background-color: tan"><strong><span class="auto-style106">Welcome To</span><br class="auto-style106"/> <span class="auto-style106">Ashlin Customer Enquiry Form</span></strong></td>
+                        <td class="auto-style64" colspan="2" style="background-color: tan"><strong><span class="auto-style106">Welcome To</span><br/> <span class="auto-style106">Ashlin Customer Enquiry Form</span></strong></td>
                     </tr>
                     <tr>
                         <td style="width: 293px;height: 23px"></td>
@@ -802,7 +785,7 @@
             <asp:Panel ID="asiPanel" runat="server" DefaultButton="asiNextButton" BackColor="White" Height="280px" Width="500px" TabIndex="5">
                 <table class="auto-style111">
                     <tr>
-                        <td colspan="2" class="auto-style132"><strong>Please Enter Your ASI Number</strong></td>
+                        <td colspan="2" style="font-size: xx-large;text-align: center;height: 76px;background-color: tan"><strong>Please Enter Your ASI Number</strong></td>
                     </tr>
                     <tr>
                         <td class="auto-style148"></td>
@@ -821,7 +804,7 @@
                     </tr>
                     <tr>
                         <td class="auto-style153"></td>
-                        <td class="auto-style154">
+                        <td style=" width: 249px;height: 30px;text-align: center">
                             <em>System powered by ASI<span> ®</span></em></td>
                     </tr>
                     <tr>
@@ -840,7 +823,7 @@
             <asp:Panel ID="searchPanel" runat="server" DefaultButton="searchButton" BackColor="White" Height="280px" Width="500px" TabIndex="10">
                 <table class="auto-style111">
                     <tr>
-                        <td class="auto-style160" colspan="3"><strong>Please Enter Information
+                        <td style="height: 86px;background-color: tan;font-size: xx-large;text-align: center" colspan="3"><strong>Please Enter Information
                             <br />
                             About the Customer</strong></td>
                     </tr>
