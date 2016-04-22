@@ -465,6 +465,9 @@ namespace AshlinCustomerEnquiry
             additionalInfoTextbox.Text = string.Empty;
             dateDeliveryTextbox.Text = DateTime.Today.AddDays(30).ToString("yyyy-MM-dd");
             staffDropdownlist.SelectedIndex = 0;
+
+            // set new quote created label to invisible
+            newQuoteCreatedLabel.Visible = false;
         }
 
         /* add button clicks that add new item to the grid view */
@@ -585,7 +588,7 @@ namespace AshlinCustomerEnquiry
 
         /* the event for quote button clicks that will call login panel if the user has not logged in and create quote */
         protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
-        {
+        {         
             #region Error Checking
             // the user need to login in order to proceed
             if (Session["HasLogged"] == null)
@@ -606,6 +609,9 @@ namespace AshlinCustomerEnquiry
                 return;
             }
             #endregion
+
+            // set new quote created label to invisible
+            newQuoteCreatedLabel.Visible = false;
 
             // local fields for BPvalue generation
             List<string> skuList = new List<string>();
@@ -656,7 +662,7 @@ namespace AshlinCustomerEnquiry
             SmtpClient client = new SmtpClient("smtp.gmail.com");
 
             mail.From = new MailAddress("intern1002@ashlinbpg.com");
-            // mail.To.Add("ashlin@ashlinbpg.com");
+            mail.To.Add("ashlin@ashlinbpg.com");
             mail.To.Add(staffDropdownlist.SelectedValue.Substring(staffDropdownlist.SelectedValue.IndexOf(';') + 1));
             mail.Subject = "NEW ORDER QUOTE";
             mail.Body = orderDetail;
@@ -780,6 +786,9 @@ namespace AshlinCustomerEnquiry
                 }
             }
             #endregion
+
+            // set new quote created label to visible
+            newQuoteCreatedLabel.Visible = true;
         }
 
         #region Supporting Methods

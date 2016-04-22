@@ -1,7 +1,6 @@
 ﻿using AshlinCustomerEnquiry.supportingClasses.brightpearl;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -31,12 +30,12 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             string password;
 
             // get credentials first from database
-            using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
+            using (var connection = new System.Data.SqlClient.SqlConnection(Properties.Settings.Default.ASCMcs))
             {
                 // [0] username, [1] password, [2] ASI number
-                SqlCommand command = new SqlCommand("SELECT Username, Password, Field1_Value FROM ASCM_Credentials WHERE Source = 'ASI API'", connection);
+                var command = new System.Data.SqlClient.SqlCommand("SELECT Username, Password, Field1_Value FROM ASCM_Credentials WHERE Source = 'ASI API'", connection);
                 connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                var reader = command.ExecuteReader();
                 reader.Read();
 
                 username = reader.GetString(0);

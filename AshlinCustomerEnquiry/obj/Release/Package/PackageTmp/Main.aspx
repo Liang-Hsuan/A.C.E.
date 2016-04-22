@@ -716,7 +716,9 @@
                         <td class="auto-style64" colspan="2" rowspan="3">
                             <asp:UpdatePanel ID="quoteUpdatePanel" runat="server">
                                 <ContentTemplate>
-                                    <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" OnClick="quoteButton_Click" TabIndex="69" Width="50px" />
+                                    <asp:Label ID="newQuoteCreatedLabel" runat="server" Text="New Quote Created" Visible="False" ForeColor="White" TabIndex="69"></asp:Label>
+                                    <br>
+                                    <asp:ImageButton ID="quoteButton" runat="server" CssClass="quote" ImageUrl="~/image/quote.png" OnClick="quoteButton_Click" TabIndex="70" Width="50px" />
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </td>
@@ -746,7 +748,7 @@
                         <td class="auto-style38"></td>
                         <td class="auto-style38"></td>
                         <td colspan="2">
-                            <asp:LinkButton ID="clearScreenLinkButton" runat="server" Font-Size="Small" ForeColor="Red" TabIndex="70" OnClick="clearScreenLinkButton_Click">Clear Screen</asp:LinkButton>
+                            <asp:LinkButton ID="clearScreenLinkButton" runat="server" Font-Size="Small" ForeColor="Red" TabIndex="71" OnClick="clearScreenLinkButton_Click">Clear Screen</asp:LinkButton>
                         </td>
                         <td colspan="2"></td>
                     </tr>
