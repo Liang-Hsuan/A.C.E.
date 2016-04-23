@@ -155,8 +155,8 @@ namespace AshlinCustomerEnquiry
                     postalCodeTextbox.Text = asiValue.PostalCode;
                     countryTextbox.Text = asiValue.Country;
 
-                    firstNameTextbox.Text = "";
-                    lastNameTextbox.Text = "";
+                    firstNameTextbox.Text = string.Empty;
+                    lastNameTextbox.Text = string.Empty;
 
                     return;
                 }

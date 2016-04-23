@@ -42,9 +42,6 @@
         .auto-style50 {
             width: 101px;
         }
-        .auto-style74 {
-            font-size: medium;
-        }
         .auto-style41 {
             width: 15px;
             height: 23px;
@@ -157,9 +154,6 @@
         .auto-style200 {
             width: 274px;
             height: 22px;
-        }
-        .auto-style218 {
-            text-align: right;
         }
         .auto-style235 {
             height: 23px;
@@ -465,7 +459,7 @@
                     <tr>
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
-                        <td class="auto-style74" colspan="2"></td>
+                        <td colspan="2"></td>
                         <td class="auto-style38"></td>
                         <td></td>
                         <td></td>
@@ -478,8 +472,8 @@
                     <tr>
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
-                        <td class="auto-style74" colspan="2">
-                            <h4><span style="color: #ffffff"><strong>Order Information:</strong></span></h4>
+                        <td colspan="2">
+                            <h4><span style="color: #ffffff;font-size: medium"><strong>Order Information:</strong></span></h4>
                         </td>
                         <td class="auto-style38"></td>
                         <td></td>
@@ -557,7 +551,7 @@
                     <tr>
                         <td></td>
                         <td></td>
-                        <td class="auto-style64" colspan="8">
+                        <td colspan="8">
                             <asp:GridView ID="gridview" runat="server" BackColor="LightGoldenrodYellow" ForeColor="Black" BorderWidth="1px" CellPadding="2" BorderColor="Tan" GridLines="None" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" TabIndex="62" OnRowEditing="gridview_RowEditing" OnRowCancelingEdit="gridview_RowCancelingEdit" OnRowDeleting="gridview_RowDeleting" OnRowUpdating="gridview_RowUpdating">
                                 <AlternatingRowStyle BackColor="PaleGoldenrod" />
                                 <Columns>
@@ -604,14 +598,14 @@
                     <tr>
                         <td></td>
                         <td></td>
-                        <td class="auto-style64"></td>
-                        <td class="auto-style64"></td>
-                        <td class="auto-style64"></td>
-                        <td class="auto-style64"></td>
-                        <td class="auto-style64"></td>
-                        <td class="auto-style64"></td>
-                        <td class="auto-style64"></td>
-                        <td class="auto-style64" colspan="3" rowspan="7">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" rowspan="7">
                             <asp:Calendar ID="calendar" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" OnDayRender="calendar_DayRender" OnSelectionChanged="calendar_SelectionChanged" TabIndex="66" Visible="False" Width="200px">
                                 <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
                                 <NextPrevStyle VerticalAlign="Bottom" />
@@ -673,7 +667,7 @@
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
                         <td class="auto-style38"></td>
-                        <td class="auto-style64" colspan="2"></td>
+                        <td colspan="2"></td>
                         <td class="auto-style38"></td>
                         <td class="auto-style35"></td>
                     </tr>
@@ -695,7 +689,7 @@
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
                         <td class="auto-style38"></td>
-                        <td class="auto-style64" colspan="2">
+                        <td colspan="2">
                             <asp:UpdateProgress ID="udpateProgress" runat="server">
                                 <ProgressTemplate>
                                     <img src="image/loading bar.gif" alt="loading bar" />
@@ -732,7 +726,7 @@
                             <asp:Label ID="uselessLabel" runat="server" style="display: none"></asp:Label>
                         </td>
                         <td class="auto-style34"></td>
-                        <td class="auto-style218" colspan="2"></td>
+                        <td colspan="2"></td>
                         <td class="auto-style38"></td>
                         <td class="auto-style38"></td>
                         <td class="auto-style35"></td>
@@ -742,12 +736,12 @@
                     <tr>
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
-                        <td class="auto-style218" colspan="2">
+                        <td style="text-align: right;vertical-align: bottom" colspan="2">
                             <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" ForeColor="White" OnClick="updateLinkButton_Click" TabIndex="68">Click me to Login</asp:LinkButton>
                         </td>
                         <td class="auto-style38"></td>
                         <td class="auto-style38"></td>
-                        <td colspan="2">
+                        <td style="vertical-align: bottom" colspan="2">
                             <asp:LinkButton ID="clearScreenLinkButton" runat="server" Font-Size="Small" ForeColor="Red" TabIndex="71" OnClick="clearScreenLinkButton_Click">Clear Screen</asp:LinkButton>
                         </td>
                         <td colspan="2"></td>
