@@ -9,7 +9,7 @@ namespace AshlinCustomerEnquiry.supportingClasses
     public static class Price
     {
         // fields for storing discount matrix values
-        private static readonly double[][] list = new double[6][];
+        private static readonly double[][] List = new double[6][];
 
         /* constructor that initialize discount matrix list field */
         static Price()
@@ -37,7 +37,7 @@ namespace AshlinCustomerEnquiry.supportingClasses
                         itemList[j] = 0;
                     }
                 }
-                list[i] = itemList;
+                List[i] = itemList;
             }
             reader.Close();
 
@@ -45,14 +45,14 @@ namespace AshlinCustomerEnquiry.supportingClasses
             command.CommandText = "SELECT [MSRP Multiplier] FROM ref_msrp_multiplier";
             reader = command.ExecuteReader();
             reader.Read();
-            list[5] = new[] { reader.GetDouble(0), 0 };
+            List[5] = new[] { reader.GetDouble(0), 0 };
             reader.Close();
 
             // [5][1] USD currency
             command.CommandText = "SELECT Value FROM Currency WHERE Currency = 'USD'";
             reader = command.ExecuteReader();
             reader.Read();
-            list[5][1] = reader.GetDouble(0);
+            List[5][1] = reader.GetDouble(0);
             connection.Close();
         }
 
@@ -60,7 +60,7 @@ namespace AshlinCustomerEnquiry.supportingClasses
         public static double GetPrice(double basePrice, int pricingTier, int quantity, bool imprint, bool rush, bool oversea)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
-            double msrp = list[5][0] * basePrice;
+            double msrp = List[5][0] * basePrice;
 
             // get the corresponding row number for the pricing tier
             int row;
@@ -97,45 +97,45 @@ namespace AshlinCustomerEnquiry.supportingClasses
                 {
                     // the case if it is rush
                     if (quantity < 6)
-                        msrp = (msrp + runcharge) * list[row][0] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][0] * List[row][9];
                     if (quantity >= 6 && quantity < 24)
-                        msrp = (msrp + runcharge) * list[row][1] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][1] * List[row][9];
                     if (quantity >= 24 && quantity < 50)
-                        msrp = (msrp + runcharge) * list[row][2] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][2] * List[row][9];
                     if (quantity >= 50 && quantity < 100)
-                        msrp = (msrp + runcharge) * list[row][3] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][3] * List[row][9];
                     if (quantity >= 100 && quantity < 250)
-                        msrp = (msrp + runcharge) * list[row][4] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][4] * List[row][9];
                     if (quantity >= 250 && quantity < 500)
-                        msrp = (msrp + runcharge) * list[row][5] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][5] * List[row][9];
                     if (quantity >= 500 && quantity < 1000)
-                        msrp = (msrp + runcharge) * list[row][6] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][6] * List[row][9];
                     if (quantity >= 1000 && quantity < 2500)
-                        msrp = (msrp + runcharge) * list[row][7] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][7] * List[row][9];
                     if (quantity >= 2500)
-                        msrp = (msrp + runcharge) * list[row][8] * list[row][9];
+                        msrp = (msrp + runcharge) * List[row][8] * List[row][9];
                 }
                 else
                 {
                     // the case if it is not rush
                     if (quantity < 6)
-                        msrp = (msrp + runcharge) * list[row][0];
+                        msrp = (msrp + runcharge) * List[row][0];
                     if (quantity >= 6 && quantity < 24)
-                        msrp = (msrp + runcharge) * list[row][1];
+                        msrp = (msrp + runcharge) * List[row][1];
                     if (quantity >= 24 && quantity < 50)
-                        msrp = (msrp + runcharge) * list[row][2];
+                        msrp = (msrp + runcharge) * List[row][2];
                     if (quantity >= 50 && quantity < 100)
-                        msrp = (msrp + runcharge) * list[row][3];
+                        msrp = (msrp + runcharge) * List[row][3];
                     if (quantity >= 100 && quantity < 250)
-                        msrp = (msrp + runcharge) * list[row][4];
+                        msrp = (msrp + runcharge) * List[row][4];
                     if (quantity >= 250 && quantity < 500)
-                        msrp = (msrp + runcharge) * list[row][5];
+                        msrp = (msrp + runcharge) * List[row][5];
                     if (quantity >= 500 && quantity < 1000)
-                        msrp = (msrp + runcharge) * list[row][6];
+                        msrp = (msrp + runcharge) * List[row][6];
                     if (quantity >= 1000 && quantity < 2500)
-                        msrp = (msrp + runcharge) * list[row][7];
+                        msrp = (msrp + runcharge) * List[row][7];
                     if (quantity >= 2500)
-                        msrp = (msrp + runcharge) * list[row][8];
+                        msrp = (msrp + runcharge) * List[row][8];
                 }
             }
             else
@@ -145,49 +145,49 @@ namespace AshlinCustomerEnquiry.supportingClasses
                 {
                     // the case if it is rush
                     if (quantity < 6)
-                        msrp *= list[row][0] * list[row][9];
+                        msrp *= List[row][0] * List[row][9];
                     else if (quantity >= 6 && quantity < 24)
-                        msrp *= list[row][1] * list[row][9];
+                        msrp *= List[row][1] * List[row][9];
                     else if (quantity >= 24 && quantity < 50)
-                        msrp *= list[row][2] * list[row][9];
+                        msrp *= List[row][2] * List[row][9];
                     else if (quantity >= 50 && quantity < 100)
-                        msrp *= list[row][3] * list[row][9];
+                        msrp *= List[row][3] * List[row][9];
                     else if (quantity >= 100 && quantity < 250)
-                        msrp *= list[row][4] * list[row][9];
+                        msrp *= List[row][4] * List[row][9];
                     else if (quantity >= 250 && quantity < 500)
-                        msrp *= list[row][5] * list[row][9];
+                        msrp *= List[row][5] * List[row][9];
                     else if (quantity >= 500 && quantity < 1000)
-                        msrp *= list[row][6] * list[row][9];
+                        msrp *= List[row][6] * List[row][9];
                     else if (quantity >= 1000 && quantity < 2500)
-                        msrp *= list[row][7] * list[row][9];
+                        msrp *= List[row][7] * List[row][9];
                     else
-                        msrp *= list[row][8] * list[row][9];
+                        msrp *= List[row][8] * List[row][9];
                 }
                 else
                 {
                     // the case if it is not rush
                     if (quantity < 6)
-                        msrp *= list[row][0];
+                        msrp *= List[row][0];
                     else if (quantity >= 6 && quantity < 24)
-                        msrp *= list[row][1];
+                        msrp *= List[row][1];
                     else if (quantity >= 24 && quantity < 50)
-                        msrp *= list[row][2];
+                        msrp *= List[row][2];
                     else if (quantity >= 50 && quantity < 100)
-                        msrp *= list[row][3];
+                        msrp *= List[row][3];
                     else if (quantity >= 100 && quantity < 250)
-                        msrp *= list[row][4];
+                        msrp *= List[row][4];
                     else if (quantity >= 250 && quantity < 500)
-                        msrp *= list[row][5];
+                        msrp *= List[row][5];
                     else if (quantity >= 500 && quantity < 1000)
-                        msrp *= list[row][6];
+                        msrp *= List[row][6];
                     else if (quantity >= 1000 && quantity < 2500)
-                        msrp *= list[row][7];
+                        msrp *= List[row][7];
                     else
-                        msrp *= list[row][8];
+                        msrp *= List[row][8];
                 }
             }
 
-            return oversea ? msrp * list[5][1] : msrp;
+            return oversea ? msrp * List[5][1] : msrp;
         }
 
         /* a supporting method that return the base price of the given sku */

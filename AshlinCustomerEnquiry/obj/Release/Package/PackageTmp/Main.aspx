@@ -175,6 +175,9 @@
         .auto-style268 {
             height: 75px;
         }
+        .center-alignment {
+            text-align: center;
+        }
     </style>
 </head>
 <body style="height: 100%; background-color:tan">
@@ -551,7 +554,7 @@
                     <tr>
                         <td></td>
                         <td></td>
-                        <td colspan="8">
+                        <td class="center-alignment" colspan="8">
                             <asp:GridView ID="gridview" runat="server" BackColor="LightGoldenrodYellow" ForeColor="Black" BorderWidth="1px" CellPadding="2" BorderColor="Tan" GridLines="None" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" TabIndex="62" OnRowEditing="gridview_RowEditing" OnRowCancelingEdit="gridview_RowCancelingEdit" OnRowDeleting="gridview_RowDeleting" OnRowUpdating="gridview_RowUpdating">
                                 <AlternatingRowStyle BackColor="PaleGoldenrod" />
                                 <Columns>
@@ -689,7 +692,7 @@
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
                         <td class="auto-style38"></td>
-                        <td colspan="2">
+                        <td class="center-alignment" colspan="2">
                             <asp:UpdateProgress ID="udpateProgress" runat="server">
                                 <ProgressTemplate>
                                     <img src="image/loading bar.gif" alt="loading bar" />
