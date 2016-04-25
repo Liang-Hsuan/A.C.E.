@@ -740,7 +740,7 @@
                         <td class="auto-style34"></td>
                         <td class="auto-style34"></td>
                         <td style="text-align: right;vertical-align: bottom" colspan="2">
-                            <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" ForeColor="White" OnClick="updateLinkButton_Click" TabIndex="68">Click me to Login</asp:LinkButton>
+                            <asp:LinkButton ID="updateLinkButton" runat="server" Font-Size="Small" ForeColor="White" OnClick="updateLinkButton_Click" TabIndex="68">update Username and Password</asp:LinkButton>
                         </td>
                         <td class="auto-style38"></td>
                         <td class="auto-style38"></td>
@@ -997,8 +997,7 @@
             BackgroundCssClass="modalBackground"/>
         <ajax:ModalPopupExtender ID="resultPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="resultPanel" CancelControlID="enterManuallyButton"
             BackgroundCssClass="modalBackground"/>
-        <ajax:ModalPopupExtender ID="loginPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="loginPanel" CancelControlID="loginCancelButton"
-            BackgroundCssClass="modalBackground"/>
+        <ajax:ModalPopupExtender ID="loginPopup" runat="server" TargetControlID="uselessLabel" PopupControlID="loginPanel" BackgroundCssClass="modalBackground"/>
         <ajax:ModalPopupExtender ID="updatePopup" runat="server" TargetControlID="uselessLabel" PopupControlID="updatePanel" CancelControlID="updateCancelButton"
             BackgroundCssClass="modalBackground"/>
     </form>

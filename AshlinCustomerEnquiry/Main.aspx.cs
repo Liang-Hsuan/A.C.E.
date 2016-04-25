@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace AshlinCustomerEnquiry
@@ -351,17 +352,6 @@ namespace AshlinCustomerEnquiry
         /* update link button clicks that show the update panel */
         protected void updateLinkButton_Click(object sender, EventArgs e)
         {
-            // the case if the user first time click quote button -> they need to log in
-            if (Session["HasLogged"] == null)
-            {
-                usernameTextbox.BackColor = Color.White;
-                passwordTextbox.BackColor = Color.White;
-
-                loginPopup.Show();
-
-                return;
-            }
-
             // set textboxes back color to normal
             newUsernameTextbox.BackColor = Color.White;
             newPasswordTextbox.BackColor = Color.White;
@@ -422,12 +412,51 @@ namespace AshlinCustomerEnquiry
             // start updating username and password
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
             {
-                SqlCommand command = new SqlCommand("UPDATE ASCM_Credentials SET Username = \'" + username + "\', Password = \'" + password[0] + "\' WHERE Source = 'Ashlin Customer Enquiry'", connection);
+                SqlCommand command = new SqlCommand("UPDATE ASCM_Credentials SET Username = \'" + username + "\', Password = \'" + password[0] + 
+                                                   "\' WHERE Source = 'Ashlin Customer Enquiry' AND Username = \'" + Application["USERNAME"] + '\'', connection);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
         }
         #endregion
+
+        /* the event for login button in the login board */
+        protected void loginButton_Click(object sender, EventArgs e)
+        {
+            // get username 
+            string username = usernameTextbox.Text.Trim();
+
+            // get the number of user that correspond to the credential input
+            SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs);
+            connection.Open();
+            SqlCommand command = new SqlCommand("SELECT COUNT(*) from ASCM_Credentials WHERE Source = 'Ashlin Customer Enquiry' AND Username = \'"
+                                              + username + "\' AND [Password] = \'" + passwordTextbox.Text + '\'', connection);
+
+            // check if the user put the right username and password
+            if ((int)command.ExecuteScalar() == 1)
+            {
+                // correct credential case -> set login cookie to current logged in username
+                Application["USERNAME"] = username;
+                HttpCookie cookie = new HttpCookie("Login")
+                {
+                    Value = username,
+                    Expires = DateTime.Now.AddDays(7)
+                };
+                Response.Cookies.Add(cookie);
+
+                // show welcome panel
+                welcomePopup.Show();
+            }
+            else
+            {
+                // wrong credential case -> show the login borad again and signal them wrong
+                loginPopup.Show();
+                usernameTextbox.BackColor = Color.Red;
+                passwordTextbox.BackColor = Color.Red;
+            }
+
+            connection.Close();
+        }
 
         /* clear screen link button clicks that clear all the information on the page */
         protected void clearScreenLinkButton_Click(object sender, EventArgs e)
@@ -559,45 +588,10 @@ namespace AshlinCustomerEnquiry
         }
         #endregion
 
-        /* the event for login button in the login board */
-        protected void loginButton_Click(object sender, EventArgs e)
-        {
-             // check if the user put the right username and password
-            if (usernameTextbox.Text.Trim().Equals((string)Application["USERNAME"]) && passwordTextbox.Text.Equals((string)Application["PASSWORD"]))
-            {
-                // correct credential case -> set HasLogged to true and login cookie
-                Session["HasLogged"] = true;
-                HttpCookie cookie = new HttpCookie("Login")
-                {
-                    Value = "Success",
-                    Expires = DateTime.Now.AddDays(7)
-                };
-                Response.Cookies.Add(cookie);
-
-                // now the user has successfully log in -> set link button to update
-                updateLinkButton.Text = "udpate Username and Password";
-            }
-            else
-            {
-                // wrong credential case -> show the login borad again and signal them wrong
-                loginPopup.Show();
-                usernameTextbox.BackColor = Color.Red;
-                passwordTextbox.BackColor = Color.Red;
-            }
-        }
-
         /* the event for quote button clicks that will call login panel if the user has not logged in and create quote */
-        protected void quoteButton_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        protected void quoteButton_Click(object sender, ImageClickEventArgs e)
         {         
             #region Error Checking
-            // the user need to login in order to proceed
-            if (Session["HasLogged"] == null)
-            {
-                const string script = "alert(\"Please login first in order to create quote\");";
-                System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "ClientScript", script, true);
-                return;
-            }
-
             // get table
             DataTable table = (DataTable)ViewState["DataTable"];
 
@@ -605,7 +599,7 @@ namespace AshlinCustomerEnquiry
                 provinceTextbox.Text == "" || postalCodeTextbox.Text == "" || countryTextbox.Text == "" || table.Rows.Count < 1)
             {
                 const string script = "alert(\"Please provide information on all the necessary fields (*)\");";
-                System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "ClientScript", script, true);
+                ScriptManager.RegisterStartupScript(Page, GetType(), "ClientScript", script, true);
                 return;
             }
             #endregion
@@ -871,27 +865,14 @@ namespace AshlinCustomerEnquiry
             #endregion
 
             // check if the user has cookies login
-            if (Session["HasLogged"] != null || Request.Cookies["Login"] != null)
+            if (Request.Cookies["Login"] != null)
             {
-                Session["HasLogged"] = true;
-                updateLinkButton.Text = "update Username and Password";
+                Application["USERNAME"] = Request.Cookies["Login"].Value;
+                welcomePopup.Show();
             }
             else
-            {
-                // the case has no cookies login -> retrieve username and password
-                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.ASCMcs))
-                {
-                    SqlCommand command = new SqlCommand("SELECT [Username], [Password] FROM ASCM_Credentials WHERE Source = 'Ashlin Customer Enquiry'", connection);
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    reader.Read();
-
-                    Application["USERNAME"] = reader.GetString(0);
-                    Application["PASSWORD"] = reader.GetString(1);
-                }
-            }
-
-            welcomePopup.Show();
+                // the case has no cookies login -> show login panel for login
+                loginPopup.Show();
         }
 
         /* a supporting method that take a BPvalues object and display the value on the controls */
