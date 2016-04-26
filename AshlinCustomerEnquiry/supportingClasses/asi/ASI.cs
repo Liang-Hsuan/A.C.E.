@@ -1,17 +1,13 @@
 ﻿using AshlinCustomerEnquiry.supportingClasses.brightpearl;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text;
-using System.Web.Script.Serialization;
 
 namespace AshlinCustomerEnquiry.supportingClasses.asi
 {
     /*
      * A class that connect to ASI and retrieve company informaiton
      */
-    [Serializable]
+    [System.Serializable]
     public class Asi
     {
         // fields for web request
@@ -55,7 +51,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             string textJson = "{\"asi\":\"" + asi + "\",\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
 
             // turn request string into a byte stream
-            byte[] postBytes = Encoding.UTF8.GetBytes(textJson);
+            byte[] postBytes = System.Text.Encoding.UTF8.GetBytes(textJson);
 
             // send request
             using (Stream requestStream = request.GetRequestStream())
@@ -99,7 +95,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
                 textJson = streamReader.ReadToEnd();
 
             // deserialize json to key value
-            var info = new JavaScriptSerializer().Deserialize<Dictionary<string, dynamic>>(textJson);
+            var info = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<System.Collections.Generic.Dictionary<string, dynamic>>(textJson);
 
             #region Data Retrieve
             // start getting data
@@ -114,7 +110,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.asi
             string country = info["CompanyDetails"]["Addresses"][0]["CountryCode"];
             #endregion
 
-            return new BPvalues("", "", name, phone, email, address1, address2, city, province, postalCode, country, null, null, null, null, null, null, null, true, false, null, DateTime.Today);
+            return new BPvalues("", "", name, phone, email, address1, address2, city, province, postalCode, country, null, null, null, null, null, null, null, true, false, null, System.DateTime.Today);
         }
     }
 }

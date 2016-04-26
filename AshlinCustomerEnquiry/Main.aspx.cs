@@ -6,8 +6,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -652,17 +650,17 @@ namespace AshlinCustomerEnquiry
             orderDetail += "\n\nDelivery Date: " + dateDeliveryTextbox.Text + "\n\nAdditional Info:\n" + additionalInfoTextbox.Text;
 
             // send message
-            MailMessage mail = new MailMessage();
-            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            var mail = new System.Net.Mail.MailMessage();
+            var client = new System.Net.Mail.SmtpClient("smtp.gmail.com");
 
-            mail.From = new MailAddress("intern1002@ashlinbpg.com");
+            mail.From = new System.Net.Mail.MailAddress("intern1002@ashlinbpg.com");
             mail.To.Add("ashlin@ashlinbpg.com");
             mail.To.Add(staffDropdownlist.SelectedValue.Substring(staffDropdownlist.SelectedValue.IndexOf(';') + 1));
             mail.Subject = "NEW ORDER QUOTE";
             mail.Body = orderDetail;
 
             client.Port = 587;
-            client.Credentials = new NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
+            client.Credentials = new System.Net.NetworkCredential("intern1002@ashlinbpg.com", "AshlinIntern2");
             client.EnableSsl = true;
             client.Send(mail);
             #endregion
@@ -851,10 +849,10 @@ namespace AshlinCustomerEnquiry
                 if (Session["ASI"] == null)
                     Session["ASI"] = new Asi();
             }
-            catch (WebException ex)
+            catch (System.Net.WebException ex)
             {
                 // the case if there is error from asi -> disable asi function
-                asiTextbox.Text = ((HttpWebResponse)ex.Response).StatusDescription;
+                asiTextbox.Text = ((System.Net.HttpWebResponse)ex.Response).StatusDescription;
                 asiTextbox.Enabled = false;
                 asiNextButton.Enabled = false;
             }

@@ -942,7 +942,7 @@
                     </tr>
                     <tr>
                         <td style="height: 43px;text-align: center" colspan="2">
-                            <asp:Button ID="loginCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" TabIndex="30" OnClientClick="javaScript:self.close(); return false;" />
+                            <asp:Button ID="loginCancelButton" runat="server" BackColor="Red" Font-Bold="True" ForeColor="White" Height="23px" Text="Cancel" Width="60px" TabIndex="30" OnClientClick="javaScript:window.close();return false;" />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <asp:Button ID="loginButton" runat="server" BackColor="Green" Font-Bold="True" ForeColor="White" Height="23px" Text="Login" Width="60px" OnClick="loginButton_Click" TabIndex="31" />
                         </td>

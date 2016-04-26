@@ -545,7 +545,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 request.Headers.Add("brightpearl-account-token", appToken);
 
                 // get country ISO code
-                string country = address.Country.Contains("US") ? "USA" : "CAN";
+                string country = address.Country.ToUpper().Contains("CA") ? "CAN" : "USA";
 
                 // generate the JSON file for address post
                 string textJson = "{\"addressLine1\":\"" + address.Address1 + "\",\"addressLine2\":\"" + address.Address2 + "\",\"addressLine3\":\"" + address.City + "\",\"addressLine4\":\"" + address.Province + "\",\"postalCode\":\"" + address.PostalCode + "\",\"countryIsoCode\":\"" + country + "\"}";
@@ -615,29 +615,29 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 #region Flags
                 // get channel id from the country of the customer
-                string[] currencyAndchannelId = value.Country.Contains("US") ? new[]{ "USD", "13"} : new[]{ "CAD", "14"}; 
+                string[] currencyAndchannelId = value.Country.ToUpper().Contains("CA") ? new[]{ "CAD", "14" } : new[]{ "USD", "13" };
 
                 // get price list id and reference depending on rush and logo
                 int priceListId;
                 string reference;
                 if (value.Logo && value.Rush)
                 {
-                    priceListId = value.Country.Contains("US") ? 16 : 8;
+                    priceListId = value.Country.ToUpper().Contains("CA") ? 8 : 16;
                     reference = "Rush Delivery with Logo";
                 }
                 else if (value.Logo && !value.Rush)
                 {
-                    priceListId = value.Country.Contains("US") ? 13 : 5;
+                    priceListId = value.Country.ToUpper().Contains("CA") ? 5 : 13;
                     reference = "Standard Delivery with Logo";
                 }
                 else if (!value.Logo && value.Rush)
                 {
-                    priceListId = value.Country.Contains("US") ? 14 : 7;
+                    priceListId = value.Country.ToUpper().Contains("CA") ? 7 : 14;
                     reference = "Rush Delivery with no Logo";
                 }
                 else
                 {
-                    priceListId = value.Country.Contains("US") ? 15 : 6;
+                    priceListId = value.Country.ToUpper().Contains("CA") ? 6 : 15;
                     reference = "Standard Delivery with no Logo";
                 }
                 #endregion
@@ -696,7 +696,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
                 int quantity = value.Quantity[index];
                 bool imprint = value.Logo;
                 bool rush = value.Rush;
-                double netPrice = Price.GetPrice(value.BasePrice[index], value.PricingTier[index], quantity, imprint, rush, value.Country.Contains("US")) * quantity;
+                double netPrice = Price.GetPrice(value.BasePrice[index], value.PricingTier[index], quantity, imprint, rush, !value.Country.ToUpper().Contains("CA")) * quantity;
 
                 string taxCode;
                 double taxRate;
