@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace AshlinCustomerEnquiry
 {
-    public partial class Main : System.Web.UI.Page
+    public partial class Main : Page
     {
         // field for storing customer data
         private BPvalues[] value;
