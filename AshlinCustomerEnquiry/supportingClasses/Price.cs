@@ -9,7 +9,7 @@ namespace AshlinCustomerEnquiry.supportingClasses
     public static class Price
     {
         // fields for storing discount matrix values
-        private static readonly double[][] List = new double[6][];
+        private static readonly double[][] List = new double[8][];
 
         /* constructor that initialize discount matrix list field */
         static Price()
@@ -22,7 +22,7 @@ namespace AshlinCustomerEnquiry.supportingClasses
 
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
-            for (int i = 0; i <= 4; i++)
+            for (int i = 0; i <= 6; i++)
             {
                 double[] itemList = new double[10];
                 reader.Read();
@@ -45,14 +45,14 @@ namespace AshlinCustomerEnquiry.supportingClasses
             command.CommandText = "SELECT [MSRP Multiplier] FROM ref_msrp_multiplier";
             reader = command.ExecuteReader();
             reader.Read();
-            List[5] = new[] { reader.GetDouble(0), 0 };
+            List[7] = new[] { reader.GetDouble(0), 0 };
             reader.Close();
 
             // [5][1] USD currency
             command.CommandText = "SELECT Value FROM Currency WHERE Currency = 'USD'";
             reader = command.ExecuteReader();
             reader.Read();
-            List[5][1] = reader.GetDouble(0);
+            List[7][1] = reader.GetDouble(0);
             connection.Close();
         }
 
@@ -60,7 +60,7 @@ namespace AshlinCustomerEnquiry.supportingClasses
         public static double GetPrice(double basePrice, int pricingTier, int quantity, bool imprint, bool rush, bool oversea)
         {
             // first get the base price of the sku and calculate msrp -> msrp will also be the return value
-            double msrp = List[5][0] * basePrice;
+            double msrp = List[7][0] * basePrice;
 
             // get the corresponding row number for the pricing tier
             int row;
@@ -77,6 +77,12 @@ namespace AshlinCustomerEnquiry.supportingClasses
                     break;
                 case 4:
                     row = 4;
+                    break;
+                case 5:
+                    row = 5;
+                    break;
+                case 6:
+                    row = 6;
                     break;
                 default:
                     row = 0;
@@ -187,7 +193,7 @@ namespace AshlinCustomerEnquiry.supportingClasses
                 }
             }
 
-            return oversea ? msrp * List[5][1] : msrp;
+            return oversea ? msrp * List[7][1] : msrp;
         }
 
         /* a supporting method that return the base price of the given sku */
