@@ -179,6 +179,7 @@
             text-align: center;
         }
     </style>
+    <meta name="robots" content="noindex" />
 </head>
 <body style="height: 100%; background-color:tan">
     <form id="form1" runat="server">
