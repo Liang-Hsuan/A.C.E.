@@ -131,6 +131,7 @@
     <Content Include="Main.aspx" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="style\stylesheet.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
