@@ -700,7 +700,7 @@ namespace AshlinCustomerEnquiry.supportingClasses.brightpearl
 
                 string taxCode;
                 double taxRate;
-                if (value.Country.Contains("US"))
+                if (!value.Country.ToUpper().Contains("CA"))
                 {
                     // the case if it's US order, no need tax
                     taxCode = "Z";
