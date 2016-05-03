@@ -13,8 +13,8 @@
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=kpjvpp867r.database.windows.net;Initial Catalog=ChannelPartner_Databa" +
-            "se;Integrated Security=False;User ID=database_admin;Password=AshlinData1;Connect" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=server;Initial Catalog=ChannelPartner_Databa" +
+            "se;Integrated Security=False;User ID=username;Password=password;Connect" +
             " Timeout=60;Encrypt=False;TrustServerCertificate=False;")]
         public string ASCMcs {
             get {
@@ -24,8 +24,8 @@
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=kpjvpp867r.database.windows.net;Initial Catalog=Design_Database;Integ" +
-            "rated Security=False;User ID=database_admin;Password=AshlinData1;Connect Timeout" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=server;Integ" +
+            "rated Security=False;User ID=username;Password=password;Connect Timeout" +
             "=60;Encrypt=False;TrustServerCertificate=False;")]
         public string Designcs {
             get {
