@@ -840,7 +840,8 @@ namespace AshlinCustomerEnquiry
 
             // add confirm attribute to buttons
             clearScreenLinkButton.Attributes.Add("onclick", "javascript:return confirm('Are you sure you want to clear all the information on the page?');");
-            quoteButton.Attributes.Add("onclick", "javascript:return confirm('Are you sure you want to create the quote for this order?');");
+            quoteButton.Attributes.Add("onclick", "javascript:return confirm('Are you sure you want to create the quote for this order?');this.disabled=true;"
+                                                + ClientScript.GetPostBackEventReference(quoteButton, null) + ';');
 
             #region Session Declaration
             try
