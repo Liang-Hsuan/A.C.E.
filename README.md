@@ -1,8 +1,6 @@
 # A.C.E. #
 ## A web application that can search existing customer and create a quote for the new order | my 1st Web Application ##
 
-[Ashlin Customer Enquiry site](http://ashlinbpg.azurewebsites.net)
-
 **The main function of this web application:**
 
 * It helps eCommerce team to search a customer via ASI number and customer info.
